@@ -1,0 +1,19 @@
+{
+  "name": "backend",
+  "version": "0.0.1",
+  "author": "yawn <yawn.localhost@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/yawnt/backend.git" 
+  },
+  "dependencies": {
+    "resourceful": ">= 0.0.0",
+    "flatiron": ">= 0.0.0"
+  },
+  "devDependencies": {
+    "api-easy": ">= 0.0.0"
+  },
+  "scripts": {
+    "test": "vows --spec --isolate test/*.js"
+  }
+}
