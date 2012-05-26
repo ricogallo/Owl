@@ -8,10 +8,12 @@
   },
   "dependencies": {
     "resourceful": ">= 0.0.0",
-    "flatiron": ">= 0.0.0"
+    "flatiron": ">= 0.0.0",
+    "union": ">= 0.0.0"
   },
   "devDependencies": {
-    "api-easy": ">= 0.0.0"
+    "api-easy": ">= 0.0.0",
+    "vows": ">= 0.0.0"
   },
   "scripts": {
     "test": "vows --spec --isolate test/*.js"
