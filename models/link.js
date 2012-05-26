@@ -1,5 +1,5 @@
 module.exports = function() {
-  this.url('uri');
+  this.string('uri');
   
   this.parent('User');
 };
