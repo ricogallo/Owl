@@ -1,5 +1,4 @@
-var resourceful = require('resourceful'),
-  repl = require("repl");
+var resourceful = require('resourceful');
   
 resourceful.use('memory');
 
