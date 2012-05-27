@@ -1,9 +1,10 @@
-var resourceful = require('resourceful');
-
+var resourceful = require('resourceful'),
+  repl = require("repl");
+  
 resourceful.use('memory');
 
 var models = exports;
 
 models.User = resourceful.define('User', require('./user'));
-models.Link = resourceful.define('Link', require('./tag'));
-models.Tag  = resourceful.define('Tag', require('./link'));
+models.Link = resourceful.define('Link', require('./link'));
+models.Tag  = resourceful.define('Tag', require('./tag'));
