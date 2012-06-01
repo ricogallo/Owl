@@ -9,7 +9,7 @@ app.router.get('/', function () {
   this.res.end();
 });
 
-app.router.get('/links', links.showAll);
+app.router.get('/links', links.all);
 
 
 app.start(8080);
