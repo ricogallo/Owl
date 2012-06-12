@@ -9,7 +9,7 @@ function toBasicAuth(username, password) {
 
 
 api
-  .describe('app.js')
+  .describe('links.js')
   .use('localhost', 8080)
   .setHeader('Content-Type', 'application/json')
   .post('/users', {username: 'test', password: 'test'}) // registration
