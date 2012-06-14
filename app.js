@@ -5,7 +5,6 @@ var flatiron = require('flatiron'),
     passport = require('passport'),
     crypto   = require('crypto'),
     Basic    = require('passport-http').BasicStrategy,
-    connect  = require('connect'),
     app      = flatiron.app;
 
 passport.use(new Basic(
@@ -31,19 +30,16 @@ passport.use(new Basic(
   }
 ));
 
-
-var authorize = function(fn) {
-  return function() {
-    passport.authorize('basic', {session: false});
-    fn.call(this);
-  }
-}
-
 app.use(flatiron.plugins.http, {
   before: [
-    connect.cookieParser(),
-    connect.session({ key: 'sid', secret: 'herpderp', cookie: { maxAge: 60000 } }),
-    passport.initialize()
+    passport.initialize(),
+    function(req, res, next) {
+      if(req.url === '/users' && req.method === 'POST') {
+        return next();
+      }
+      
+      passport.authorize('basic', {session: false})(req, res, next);
+    }
   ]
 });
 
@@ -52,9 +48,9 @@ app.router.get('/', function () {
   this.res.end();
 });
 
-app.router.get('/links', authorize(links.all));
-app.router.post('/links', authorize(links.create));
-app.router.get('/links/:id', authorize(links.get));
+app.router.get('/links', links.all);
+app.router.post('/links', links.create);
+app.router.get('/links/:id', links.get);
 
 app.router.post('/users', users.create);
 
