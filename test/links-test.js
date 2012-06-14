@@ -8,7 +8,7 @@ api
   .use('localhost', 8080)
   .setHeader('Content-Type', 'application/json')
   .post('/users', {username: 'testo', password: 'testo'}) // registration
-    .expect(200)
+    .expect(201)
   .next()
   .setHeader('Authorization', toBasicAuth('testo', 'testo'))
   .path('/links')

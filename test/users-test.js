@@ -14,7 +14,7 @@ suite
         .expect(500)
      .next()
      .post('/users', {username: 'test', password: 'test'})
-        .expect(200)
+        .expect(201)
      .next()
      .setHeader('Authorization', toBasicAuth('nonexistentuser', 'nonexistentpassword'))
      .get('/links')
