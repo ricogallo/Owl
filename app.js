@@ -1,32 +1,45 @@
 var flatiron = require('flatiron'),
     links    = require('./lib/links'),
     users    = require('./lib/users'),
-    connect  = require('connect'),
+    models   = require('./models/'),
+    passport = require('passport'),
+    crypto   = require('crypto'),
+    Basic    = require('passport-http').BasicStrategy,
     app      = flatiron.app;
-  
+
+passport.use(new Basic(
+  function(username, password, done) {
+    models.User.find({username: username}, function(err, docs) {
+      var sha512 = crypto.createHash('sha512'), hash;
+
+      if(err) return done(err);
+
+      if(!docs.length) { return done(null, false); }
+      
+      var user = docs.shift();
+
+      hash = sha512.update(user.salt + password).digest('hex');
+
+      if (hash === user.password) {
+        done(null, user);
+      } else {
+        done(null, false);
+      }
+
+    });
+  }
+));
+
 app.use(flatiron.plugins.http, {
   before: [
-    function(req, res, next) { // handles basic auth
-      var head, auth, username, password; 
-
-      if (typeof req.headers.authorization === 'undefined')
+    passport.initialize(),
+    function(req, res, next) {
+      if(req.url === '/users' && req.method === 'POST') {
         return next();
-
-      head = req.headers.authorization.split(' ')[1] || '';
-      auth = new Buffer(head, 'base64').toString('utf8');
-      username = auth.split(":")[0];
-      password = auth.split(":")[1];
-
-      if (!username || !password)
-        return next();
-
-      req.username = username;
-      req.password = password;
-
-      return next();
-    },
-    connect.cookieParser(),
-    connect.session({ key: 'sid', secret: 'herpderp', cookie: { maxAge: 60000 } })
+      }
+      
+      passport.authorize('basic', {session: false})(req, res, next);
+    }
   ]
 });
 
@@ -40,6 +53,5 @@ app.router.post('/links', links.create);
 app.router.get('/links/:id', links.get);
 
 app.router.post('/users', users.create);
-app.router.get('/users/login', users.login);
 
 app.start(8080);
