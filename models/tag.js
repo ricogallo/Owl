@@ -5,5 +5,7 @@ module.exports = function() {
     pattern: /^[A-Za-z]+$/
   });
   
+  this.timestamps();
+  
   this.parent('Link');
 };

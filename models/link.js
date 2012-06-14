@@ -5,5 +5,7 @@ module.exports = function() {
     pattern: /^(http|https):\/\//
   });
   
+  this.timestamps();
+  
   this.parent('User');
 };
