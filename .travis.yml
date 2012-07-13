@@ -5,3 +5,5 @@ node_js:
 before_script:
   - npm start &
   - sleep 5
+notifications:
+  irc: "undefined.irc.so#undefined"
