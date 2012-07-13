@@ -6,4 +6,4 @@ before_script:
   - npm start &
   - sleep 5
 notifications:
-  irc: "undefined.irc.so#undefined"
+  irc: "irc.urlship.com#undefined"
