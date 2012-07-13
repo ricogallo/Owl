@@ -1,13 +1,13 @@
 {
-  "name": "backend",
+  "name": "owl",
   "version": "0.0.1",
   "author": "yawn <yawn.localhost@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "http://github.com/yawnt/backend.git" 
+    "url": "git://github.com/urlship/Owl.git" 
   },
   "dependencies": {
-    "resourceful": ">= 0.0.0",
+    "resourceful": "git://github.com/flatiron/resourceful.git",
     "flatiron": ">= 0.0.0",
     "union": ">= 0.0.0",
     "passport": ">= 0.0.0",
