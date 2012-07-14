@@ -53,3 +53,25 @@ var findClient = function(client_id, client_secret, done ) {
 
 auth.Basic = new Basic(findClient);
 auth.Client = new Client(findClient);
+
+auth.Bearer = new Bearer(function(token, done) {
+  db.Token.find({ access_token: token }, function(err, tokens) {
+    var token = tokens.shift();
+
+    if(err || !token) {
+      return err ?
+        done(err) :
+        done(null, false);
+    }
+
+    db.User.get(token.parent_id, function(e, user) {
+      if(err || !user) { 
+        return err ?
+          done(err) :
+          done(null, false);
+      }
+      
+      done(null. user, {scope: '*'});
+    });
+  }); 
+});
