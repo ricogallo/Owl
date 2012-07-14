@@ -71,7 +71,7 @@ auth.Bearer = new Bearer(function(token, done) {
           done(null, false);
       }
       
-      done(null. user, {scope: '*'});
+      done(null, user, {scope: '*'});
     });
   }); 
 });
