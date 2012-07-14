@@ -3,7 +3,7 @@ var passport = require('passport'),
     Basic    = require('passport-http').BasicStrategy,
     Client   = require('passport-oauth2-client-password').Strategy,
     Bearer   = require('passport-http-bearer').Strategy,
-    crypto   = require('crypto'),
+    common   = require('../lib/common'),
     models   = require('../models/');
 
 var auth     = exports;
@@ -17,9 +17,9 @@ auth.Local = new Local(function(usr, pwd, done) {
         done(null, false) ;
     }
     
-   pwd = crypto.createHash('sha512').update(user.salt + pwd).digest('hex'); 
+   pwd = common.crypt(user.salt + pwd); 
     
-    return user.password === 'pwd' ?
+    return user.password === pwd ?
       done(null, user) :
       done(null, false)  ;
   });
