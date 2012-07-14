@@ -1,5 +1,6 @@
 var oauth  = require('oauth2rize'),
     models = require('../models/'),
+    common = require('../lib/commons');
     server = oauth.createServer();
 
 server.serializeClient(function(client, done) {
@@ -19,3 +20,20 @@ server.deserializeClient(function(id, done) {
     done(null, client);
   });
 });
+
+server.grant(
+  oauth.grant.code(function(client, redirect_uri, user, ares, done) {
+    var code = common.code();
+
+    models.Code.create({
+      authorization_code: code,
+      redirect_uri: redirect_uri,
+      client_id: client.id,
+      user_id: user.id
+    }, function(err, code) {
+      if(err) return done(err); 
+
+      done(null, code);
+    });
+  })
+);
