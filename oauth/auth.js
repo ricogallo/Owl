@@ -19,8 +19,33 @@ auth.Local = new Local(function(usr, pwd, done) {
     
    pwd = common.crypt(user.salt + pwd); 
     
-    return user.password === pwd ?
-      done(null, user) :
-      done(null, false)  ;
+   done(null, user.password === pwd ? user : false);
+  });
+});
+
+auth.serializeUser = function(usr, done) {
+  done(null, user.username);
+};
+
+auth.deserializeUser = function(usr, done) {
+  models.User.find({ username: usr }, function(err, users) {
+    done(err, users.shift());
+  });
+};
+
+auth.Basic = new Basic(function(client_id, client_secret, done ) {
+  db.Client.find({
+    client_id: client_id,
+    client_secret: client_secret
+    }, function(err, clients) {
+    
+    var client = clients.shift();
+
+    if(err || !client) {
+      return err ?
+        done(err) :
+        done(null, false);
+    }
+    done(null, client.client_secret === client_secret ? client : false);
   });
 });
