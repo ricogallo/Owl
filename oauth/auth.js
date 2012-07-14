@@ -33,7 +33,7 @@ auth.deserializeUser = function(usr, done) {
   });
 };
 
-auth.Basic = new Basic(function(client_id, client_secret, done ) {
+var findClient = function(client_id, client_secret, done ) {
   db.Client.find({
     client_id: client_id,
     client_secret: client_secret
@@ -48,4 +48,8 @@ auth.Basic = new Basic(function(client_id, client_secret, done ) {
     }
     done(null, client.client_secret === client_secret ? client : false);
   });
-});
+};
+
+
+auth.Basic = new Basic(findClient);
+auth.Client = new Client(findClient);
