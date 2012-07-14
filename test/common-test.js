@@ -15,7 +15,7 @@ vows
     },
     '#crypt': {
       topic: function() {
-        return common.crypt('salt' + 'pwd');
+        return common.crypt('salt', 'pwd');
       },
       'should digest hex': function(res) {
         assert.isString(res);
