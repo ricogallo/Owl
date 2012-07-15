@@ -87,7 +87,7 @@ var authorizeClient = function(client_id, redirect_uri, done) {
 };
 
 config.auth = [
-  login.ensureLogin(),
+  login.ensureLoggedIn(),
   server.authorization(authorizeClient),
   function(req, res) {
     views.handlebars('../views/dialog', {
@@ -101,7 +101,7 @@ config.auth = [
 ];
 
 config.decision = [
-  login.ensureLogin(),
+  login.ensureLoggedIn(),
   server.decision()
 ];
 
