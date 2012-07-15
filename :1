@@ -1,5 +1,4 @@
 var oauth  = require('oauth2rize'),
-    passpr = require('passport'),
     models = require('../models/'),
     common = require('../lib/commons'),
     login  = require('connect-ensure-login'),
@@ -88,7 +87,6 @@ var authorizeClient = function(client_id, redirect_uri, done) {
 config.auth = [
   login.ensureLogin(),
   server.authorization(authorizeClient)
-  // here goes the view
 ];
 
 config.decision = [
@@ -97,7 +95,5 @@ config.decision = [
 ];
 
 config.token = [
-  passport.authenticate(['basic', 'oauth2-client-password'], { session: false }),
-  server.token(),
-  server.errorHandler()
+  passport
 ]
