@@ -1,7 +1,7 @@
-var oauth  = require('oauth2rize'),
+var oauth  = require('oauth2orize'),
     passpr = require('passport'),
     models = require('../models/'),
-    common = require('../lib/commons'),
+    common = require('../lib/common'),
     login  = require('connect-ensure-login'),
     views  = require('consolidate'),
     server = oauth.createServer(),
@@ -106,7 +106,7 @@ config.decision = [
 ];
 
 config.token = [
-  passport.authenticate(['basic', 'oauth2-client-password'], { session: false }),
+  passpr.authenticate(['basic', 'oauth2-client-password'], { session: false }),
   server.token(),
   server.errorHandler()
 ]

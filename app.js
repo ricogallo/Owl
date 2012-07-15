@@ -1,10 +1,13 @@
-var flatiron = require('flatiron')
-  , links    = require('./lib/links')
-  , users    = require('./lib/users')
-  , models   = require('./models/')
-  , passport = require('passport')
-  , connect  = require('connect')
-  , app      = flatiron.app;
+var flatiron = require('flatiron'),
+    links    = require('./lib/links'),
+    users    = require('./lib/users'),
+    models   = require('./models/'),
+    passport = require('passport'),
+    connect  = require('connect'),
+    views    = require('consolidate'),
+    server   = require('./oauth/server'),
+    auth     = require('./oauth/auth'),
+    app      = flatiron.app;
 
 app.use(flatiron.plugins.http, {
   before: [
@@ -19,6 +22,15 @@ app.use(flatiron.plugins.http, {
 app.router.get('/', function () {
   this.res.writeHead(200);
   this.res.end();
+});
+
+app.router.get('/sign_up', function() {
+  var res = this.res;
+
+  views.handlebars('views/register.handlebars', {}, function(err, html) {
+    res.writeHead(200, {'Content-Type':'text/html'});
+    res.end(html);
+  });
 });
 
 app.router.get('/links', links.all);
