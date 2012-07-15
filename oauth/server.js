@@ -3,6 +3,7 @@ var oauth  = require('oauth2rize'),
     models = require('../models/'),
     common = require('../lib/commons'),
     login  = require('connect-ensure-login'),
+    views  = require('consolidate'),
     server = oauth.createServer(),
     config = exports;
 
@@ -87,8 +88,16 @@ var authorizeClient = function(client_id, redirect_uri, done) {
 
 config.auth = [
   login.ensureLogin(),
-  server.authorization(authorizeClient)
-  // here goes the view
+  server.authorization(authorizeClient),
+  function(req, res) {
+    views.hogan('../views/dialog', {
+    transactionId: req.oauth2.transactionId,
+    user: req.user,
+    client: req.oauth2.client
+    }, function(err, html) {
+      res.end(html);
+    });
+  }
 ];
 
 config.decision = [
