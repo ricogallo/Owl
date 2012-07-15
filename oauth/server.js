@@ -37,3 +37,32 @@ server.grant(
     });
   })
 );
+
+server.exchange(
+  oauth.exchange.code(function(client, code, redirect_uri, done) {
+    models.Code.find({authorization_code: code}, function(err, codes) {
+      var code = codes.shift();
+
+      if(err) return done(err);
+
+      if(
+        !code ? true
+        : code.client_id !== client ? true
+        : code.redirect_uri === redirect_uri ? true
+        : false
+      ) return done(null, false); 
+
+      var token = common.token();
+      models.Token.create({
+        client_id: code.client_id,
+        access_token: token,
+        user_id: code.user_id 
+      }, function(err, tok) {
+        if(err) return done(err);
+
+        done(null, tok);
+      });
+
+    });
+  })
+);
