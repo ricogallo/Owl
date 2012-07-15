@@ -90,8 +90,8 @@ config.auth = [
   login.ensureLogin(),
   server.authorization(authorizeClient),
   function(req, res) {
-    views.hogan('../views/dialog', {
-    transactionId: req.oauth2.transactionId,
+    views.handlebars('../views/dialog', {
+    transaction_id: req.oauth2.transactionId,
     user: req.user,
     client: req.oauth2.client
     }, function(err, html) {
