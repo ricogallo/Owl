@@ -9,7 +9,7 @@
   "dependencies": {
     "resourceful": "git://github.com/flatiron/resourceful.git",
     "flatiron": ">= 0.0.0",
-    "union": ">= 0.0.0",
+    "union": "git://github.com/yawnt/union.git",
     "passport": ">= 0.0.0",
     "passport-http": ">= 0.0.0",
     "passport-http-bearer": ">= 0.0.0",
