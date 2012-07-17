@@ -1,11 +1,18 @@
-<p>Hi {{ user.name}}!</p>
-<p><b>{{client.name}}></b> is requesting access to your account.</p>
+<p>Hi {{#with user}}{{username}}{{/with}} %>!</p>
+<p><b>{{#with client}}{{client_id}}{{/with}}</b> is requesting access to your account.</p>
 <p>Do you approve?</p>
 
 <form action="/dialog/authorize/decision" method="post">
-  <input name="transaction_id" type="hidden" value="{{transaction_id}}">
-  <div>
-  <input type="submit" value="Allow" id="allow">
-  <input type="submit" value="Deny" name="cancel" id="deny">
+  <fieldset>
+    <div class="control-group">
+      <div class="controls">
+        <input name="transaction_id" class="input-xlarge" type="hidden" value="{{transactionID}}">
+      </div>
+    </div>
+  <div class="control-group">
+    <div class="controls">
+      <input type="submit" value="Allow" id="allow">
+    </div>
   </div>
+  <input type="submit" value="Deny" class="input-xlarge" name="cancel" id="deny">
 </form>
