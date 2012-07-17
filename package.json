@@ -1,10 +1,10 @@
 {
   "name": "owl",
-  "version": "0.0.1",
+  "version": "0.0.1-1",
   "author": "yawn <yawn.localhost@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/urlship/Owl.git" 
+    "url": "git://github.com/urlship/Owl.git"
   },
   "dependencies": {
     "resourceful": "git://github.com/flatiron/resourceful.git",
@@ -19,15 +19,19 @@
     "connect": ">= 0.0.0",
     "connect-ensure-login": ">= 0.0.0",
     "consolidate": ">= 0.0.0",
-    "handlebars": ">= 0.0.0"
+    "handlebars": ">= 0.0.0",
+    "utile": ">= 0.0.0"
   },
   "devDependencies": {
     "api-easy": ">= 0.0.0",
-    "vows": ">= 0.0.0",
-    "utile": ">= 0.0.0"
+    "vows": ">= 0.0.0"
   },
   "scripts": {
     "test": "vows --spec --isolate test/*-test.js",
     "start": "node app.js"
+  },
+  "subdomain": "owl",
+  "engines": {
+    "node": "0.6.x"
   }
 }

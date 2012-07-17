@@ -1,6 +1,6 @@
 var resourceful = require('resourceful');
   
-resourceful.use('memory');
+resourceful.use('couchdb', { database: 'urlship' });
 
 var models = exports;
 

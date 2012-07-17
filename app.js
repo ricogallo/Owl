@@ -11,8 +11,11 @@ var flatiron = require('flatiron'),
 
 app.use(flatiron.plugins.http, {
   before: [
+    function (req, res) {
+      req.originalUrl = req.url;
+      res.emit('next');
+    },
     connect.cookieParser(),
-    connect.bodyParser(),
     connect.session({secret: process.env.SESSION_SECRET || 'keyboard cat'}),
     passport.initialize(),
     passport.session()
@@ -28,15 +31,32 @@ app.router.get('/sign_up', function() {
   var res = this.res;
 
   views.handlebars('views/register.handlebars', {}, function(err, html) {
-    res.writeHead(200, {'Content-Type':'text/html'});
-    res.end(html);
+    res.html(html);
   });
 });
+app.router.post('/sign_up', users.create);
+
 
 app.router.get('/links', links.all);
 app.router.post('/links', links.create);
 app.router.get('/links/:id', links.get);
 
-app.router.post('/users', users.create);
+/* 
+ * User routes
+*/
 
-app.start(8080);
+app.router.get('/login');
+app.router.post('/login');
+app.router.del('/logout');
+app.router.get('/account');
+
+
+/*
+ * Oauth routes
+*/
+app.router.get('/oauth/authorize', server.authorization);
+app.router.post('/oauth/authorize/decision', server.decision);
+app.router.post('/oauth/token', server.token);
+
+
+app.start(8000);
