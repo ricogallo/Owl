@@ -1,7 +1,7 @@
 var flatiron = require('flatiron'),
     links    = require('./lib/links'),
     users    = require('./lib/users'),
-    profile  = require('./lib/profile'),
+    web      = require('./lib/web'),
     models   = require('./models/'),
     passport = require('passport'),
     connect  = require('connect'),
@@ -47,10 +47,10 @@ app.router.get('/links/:id', links.get);
  * User routes
 */
 
-app.router.get('/login', profile.signIn);
-app.router.post('/login', profile.login);
-app.router.delete('/logout', [login.ensureLoggedIn(), profile.logout]);
-app.router.get('/account', [login.ensureLoggedIn(), profile.account]);
+app.router.get('/login', web.signIn);
+app.router.post('/login', web.login);
+app.router.delete('/logout', [login.ensureLoggedIn(), web.logout]);
+app.router.get('/account', [login.ensureLoggedIn(), web.account]);
 
 
 /*
