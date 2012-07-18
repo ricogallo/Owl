@@ -1,77 +1,67 @@
 var passport = require('passport'),
+    models   = require('../models/'),
     Local    = require('passport-local').Strategy,
     Basic    = require('passport-http').BasicStrategy,
     Client   = require('passport-oauth2-client-password').Strategy,
     Bearer   = require('passport-http-bearer').Strategy,
-    common   = require('../lib/common'),
-    models   = require('../models/');
+    common   = require('../lib/common');
 
-var auth     = exports;
-
-auth.Local = new Local(function(usr, pwd, done) {
-  models.User.find({ username: usr }, function(err, users) {
-    var user = users.shift();
+passport.use(new Local(function(usr, pwd, done) {
+  models.User.get('user/' + usr, function(err, user) {
+    console.dir('user/' + usr);
     if(err || !user) {
-      return err ?
-        done(err) :
-        done(null, false) ;
+      return !err ?
+        done(null, false) :
+        done(err) ;
     }
-    
-   pwd = common.crypt(user.salt + pwd); 
-    
-   done(null, user.password === pwd ? user : false);
+    console.log('daje');
+    done(null, common.crypt(user.salt + pwd) === user.password ? user : false);
+  });
+}));
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(user, done) {
+  models.User.get(user.id, function(err, u) {
+    done(err, u);
   });
 });
 
-auth.serializeUser = function(usr, done) {
-  done(null, user.username);
-};
-
-auth.deserializeUser = function(usr, done) {
-  models.User.find({ username: usr }, function(err, users) {
-    done(err, users.shift());
-  });
-};
-
-var findClient = function(client_id, client_secret, done ) {
-  db.Client.find({
-    client_id: client_id,
-    client_secret: client_secret
-    }, function(err, clients) {
-    
-    var client = clients.shift();
-
+var findClient = function(id, secret, done) {
+  models.Client.get('client/' + id, function(err, client) {
     if(err || !client) {
-      return err ?
-        done(err) :
-        done(null, false);
+      return !err ?
+        done(null, false) :
+        done(err) ;
     }
-    done(null, client.client_secret === client_secret ? client : false);
+
+    done(null, client.secret === secret ? client : false);
   });
 };
 
+passport.use(new Basic(findClient));
+passport.use(new Client(findClient));
 
-auth.Basic = new Basic(findClient);
-auth.Client = new Client(findClient);
-
-auth.Bearer = new Bearer(function(token, done) {
-  db.Token.find({ access_token: token }, function(err, tokens) {
+passport.use(new Bearer(function(tkn, done) { 
+  models.Token.find({ access_token: tkn }, function(err, tokens) {
     var token = tokens.shift();
 
     if(err || !token) {
-      return err ?
-        done(err) :
-        done(null, false);
+      return !err ?
+        done(null, false) :
+        done(err);
     }
 
-    db.User.get(token.parent_id, function(e, user) {
-      if(err || !user) { 
-        return err ?
-          done(err) :
-          done(null, false);
+    models.User.get(token.parent_id, function(e, usr) {
+      if(e || !user) {
+        return !e ?
+          done(null, false) :
+          done(e);
       }
-      
+
       done(null, user, {scope: '*'});
     });
   }); 
-});
+}));

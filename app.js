@@ -9,7 +9,6 @@ var express  = require('express'),
     login    = require('connect-ensure-login'),
     views    = require('consolidate'),
     server   = require('./oauth/server'),
-    auth     = require('./oauth/auth'),
     hbs      = require('hbs'),
     app      = express.createServer();
 
@@ -25,12 +24,7 @@ app.set('view engine', 'hbs');
 
 // AUTH BEGIN
 
-passport.use(auth.Local);
-passport.serializeUser(auth.serializeUser);
-passport.deserializeUser(auth.deserializeUser);
-passport.use(auth.Basic);
-passport.use(auth.Client);
-passport.use(auth.Bearer);
+require('./oauth/auth');
 
 // AUTH END
 
