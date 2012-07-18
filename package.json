@@ -8,8 +8,7 @@
   },
   "dependencies": {
     "resourceful": "git://github.com/flatiron/resourceful.git",
-    "flatiron": ">= 0.0.0",
-    "union": "git://github.com/yawnt/union.git",
+    "express": ">= 0.0.0",
     "passport": ">= 0.0.0",
     "passport-http": ">= 0.0.0",
     "passport-http-bearer": ">= 0.0.0",
@@ -20,7 +19,8 @@
     "connect-ensure-login": ">= 0.0.0",
     "consolidate": ">= 0.0.0",
     "handlebars": ">= 0.0.0",
-    "utile": ">= 0.0.0"
+    "utile": ">= 0.0.0",
+    "hbs": ">= 0.0.0"
   },
   "devDependencies": {
     "api-easy": ">= 0.0.0",

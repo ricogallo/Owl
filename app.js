@@ -1,4 +1,4 @@
-var flatiron = require('flatiron'),
+var express  = require('express'),
     links    = require('./lib/links'),
     users    = require('./lib/users'),
     web      = require('./lib/web'),
@@ -9,56 +9,46 @@ var flatiron = require('flatiron'),
     views    = require('consolidate'),
     server   = require('./oauth/server'),
     auth     = require('./oauth/auth'),
-    app      = flatiron.app;
+    hbs      = require('hbs'),
+    app      = express.createServer();
 
-app.use(flatiron.plugins.http, {
-  before: [
-    function (req, res) {
-      req.originalUrl = req.url;
-      res.emit('next');
-    },
-    connect.cookieParser(),
-    connect.session({secret: process.env.SESSION_SECRET || 'keyboard cat'}),
-    passport.initialize(),
-    passport.session()
-  ]
+app.use(express.bodyParser());
+app.use(express.cookieParser());
+app.use(express.session({secret: process.env.SESSION_SECRET || 'keyboard cat'}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.static(__dirname + '/public'));
+
+app.set('views', __dirname + '/views');
+app.set('view engine', 'hbs');
+
+app.get('/', function(req, res) {
+  res.render('index');
 });
 
-app.router.get('/', function () {
-  this.res.writeHead(200);
-  this.res.end();
-});
+app.post('/sign_up', users.create);
 
-app.router.get('/sign_up', function() {
-  var res = this.res;
-
-  views.handlebars('views/register.handlebars', {}, function(err, html) {
-    res.html(html);
-  });
-});
-app.router.post('/sign_up', users.create);
-
-
-app.router.get('/links', links.all);
-app.router.post('/links', links.create);
-app.router.get('/links/:id', links.get);
+app.get('/links', links.all);
+app.post('/links', links.create);
+app.get('/links/:id', links.get);
 
 /* 
  * User routes
 */
 
-app.router.get('/login', web.signIn);
-app.router.post('/login', web.login);
-app.router.delete('/logout', [login.ensureLoggedIn(), web.logout]);
-app.router.get('/account', [login.ensureLoggedIn(), web.account]);
+app.get('/sign_up', web.signUp);
+app.get('/sign_in', web.signIn);
+app.post('/login', web.login);
+app.del('/logout', [login.ensureLoggedIn(), web.logout]);
+app.get('/account', [login.ensureLoggedIn(), web.account]);
 
 
 /*
  * Oauth routes
 */
-app.router.get('/oauth/authorize', server.authorization);
-app.router.post('/oauth/authorize/decision', server.decision);
-app.router.post('/oauth/token', server.token);
+app.get('/oauth/authorize', server.authorization);
+app.post('/oauth/authorize/decision', server.decision);
+app.post('/oauth/token', server.token);
 
 
-app.start(8000);
+app.listen(8000);

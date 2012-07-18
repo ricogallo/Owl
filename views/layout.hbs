@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+
+	<head>
+		<meta charset="utf-8">
+	    <title>Urlship</title>
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="description" content="">
+	    <meta name="author" content="">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+
+		<link rel="stylesheet" href="css/bootstrap.css" />
+		<link href="css/mystyle.css" rel="stylesheet">
+		<link href='http://fonts.googleapis.com/css?family=Oleo+Script:400,700|Concert+One|Ropa+Sans' rel='stylesheet' type='text/css'>
+	</head>
+
+	<body>
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+						<ul class="nav">
+							<li id="mylogo">
+								<a class="brand" href="#">urlship</a>
+							</li>
+							
+						</ul>
+						<div style="text-align: center">
+							<form class="navbar-search offset3">
+								<div class="input-prepend"><input type="text" class="search-query" placeholder="Search..."><span class="add-on"><i class="icon-search"></i></span></div>
+							</form>
+						</div>
+						<ul class="nav pull-right">
+							<li><a href="#">About</a></li>
+							<li><a href="#">Sign In</a></li>
+						</ul>
+
+				</div>
+			</div>
+		</div> 
+
+		<div class="container">
+			<div class="row">
+				<div class="span3">
+					<!--
+					<div class="well fromtop">
+						<input placeholder="URL..." type="text" class="input-medium" style="width: 95%" id="url-input">
+						<textarea placeholder="Tags..." class="input-medium" style="width: 95%" id="tags-input"></textarea>
+						<button class="btn">Send</button>
+					</div>
+					-->
+					<div class="well fromtop">
+						<ul class="nav nav-list">
+							<li class="nav-header">
+								<i class="icon-home"></i>
+								Actions
+							</li>
+							<li>
+								<a href="/sign_up">Sign up</a>
+							</li>
+							<li>
+								<a href="/sign_in">Sign in</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="span9 pull-right">
+					<div class="well fromtop">
+						<div class="row">
+							{{{body}}}
+						<div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<hr class="foot">
+				<div class="offset1">aaa bbb ccc</div>
+			</div>
+		</div>
+		<script src="js/jquery.js"></script>
+		<script src="js/bootstrap.js"></script>
+		<script src="js/scripts.js"></script>
+	</body>
+</html>
