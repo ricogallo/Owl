@@ -1,6 +1,16 @@
 var resourceful = require('resourceful');
-  
-resourceful.use('couchdb', { database: 'urlship' });
+ 
+if(process.env.COUCHDB_URL) {
+  resourceful.use('couchdb', { 
+    uri: process.env.COUCHDB_URL, 
+    auth: { 
+      username: process.env.COUCHDB_USER, 
+      password: process.env.COUCHDB_PWD
+    }
+  });
+} else {
+  resourceful.use('couchdb', { uri: 'couchdb://localhost/urlship' });
+}
 
 var models = exports;
 

@@ -12,8 +12,8 @@ var express  = require('express'),
     hbs      = require('hbs'),
     app      = express.createServer();
 
-app.use(express.bodyParser());
 app.use(express.cookieParser());
+app.use(express.bodyParser());
 app.use(express.session({secret: process.env.SESSION_SECRET || 'keyboard cat'}));
 app.use(passport.initialize());
 app.use(passport.session());
