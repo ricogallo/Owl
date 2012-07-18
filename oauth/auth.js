@@ -22,8 +22,8 @@ passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
 
-passport.deserializeUser(function(user, done) {
-  models.User.get(user.id, function(err, u) {
+passport.deserializeUser(function(id, done) {
+  models.User.get(id, function(err, u) {
     done(err, u);
   });
 });
