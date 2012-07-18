@@ -7,14 +7,13 @@ var passport = require('passport'),
     common   = require('../lib/common');
 
 passport.use(new Local(function(usr, pwd, done) {
-  models.User.get('user/' + usr, function(err, user) {
-    console.dir('user/' + usr);
+  models.User.get(usr, function(err, user) {
     if(err || !user) {
       return !err ?
         done(null, false) :
         done(err) ;
     }
-    console.log('daje');
+    
     done(null, common.crypt(user.salt + pwd) === user.password ? user : false);
   });
 }));
@@ -30,7 +29,7 @@ passport.deserializeUser(function(user, done) {
 });
 
 var findClient = function(id, secret, done) {
-  models.Client.get('client/' + id, function(err, client) {
+  models.Client.get(id, function(err, client) {
     if(err || !client) {
       return !err ?
         done(null, false) :
