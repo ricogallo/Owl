@@ -2,6 +2,7 @@ var express  = require('express'),
     links    = require('./lib/links'),
     users    = require('./lib/users'),
     web      = require('./lib/web'),
+    client   = require('./lib/client'),
     models   = require('./models/'),
     passport = require('passport'),
     connect  = require('connect'),
@@ -21,6 +22,19 @@ app.use(express.static(__dirname + '/public'));
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'hbs');
+
+// AUTH BEGIN
+
+passport.use(auth.Local);
+passport.serializeUser(auth.serializeUser);
+passport.deserializeUser(auth.deserializeUser);
+passport.use(auth.Basic);
+passport.use(auth.Client);
+passport.use(auth.Bearer);
+
+// AUTH END
+
+// ROUTES BEGIN
 
 app.get('/', function(req, res) {
   res.render('index');
@@ -50,5 +64,13 @@ app.get('/oauth/authorize', server.authorization);
 app.post('/oauth/authorize/decision', server.decision);
 app.post('/oauth/token', server.token);
 
+/*
+ * Client routes
+*/
+
+app.get('/client/new', client.createForm);
+app.post('/clients', client.create);
+
+// ROUTES END
 
 app.listen(8000);
