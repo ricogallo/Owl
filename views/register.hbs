@@ -1,19 +1,47 @@
-<form action="/sign_up" method="post" class="form-horizontal">
-  <fieldset>
-    <div class="control-group">
-      <label class="control-label" for="usr">Username</label>
-      <div class="controls">
-        <input type="text" class="input-xlarge" name="username" id="usr">
+<div class="row">
+        <div class="span6 offset3">
+          <div class="well fromtop" style="text-align: center">
+            <form action="/sign_up" method="post" class="form-horizontal">
+              <legend>Register</legend>
+              <div class="control-group">
+                <label class="control-label" for="username">Username</label>
+                <div class="controls">
+                  <input type="text" class="input-medium" placeholder="cat" name="username">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label" for="mail">E-mail</label>
+                <div class="controls">
+                  <input type="text" class="input-medium" placeholder="email@provider.com" name="email">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label" for="name">Name</label>
+                <div class="controls">
+                  <input type="text" class="input-medium" placeholder="Name" name="name">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label" for="surname">Surname</label>
+                <div class="controls">
+                  <input type="text" class="input-medium" placeholder="Surname" name="surname">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label" for="psw">Password</label>
+                <div class="controls">
+                  <input type="password" class="input-medium" placeholder="keyboardcat" name="password">
+                </div>
+              </div>
+              
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Sign Up!</button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label" for="pwd">Password</label>
-      <div class="controls">
-        <input type="password" class="input-xlarge" name="password" id="pwd">
-      </div>
-    </div>
-    <div class="form-actions">
-      <button type="submit" class="btn btn-primary">Sign Up</button>
-    </div>
-  </fieldset>
-</form>

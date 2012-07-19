@@ -1,20 +1,26 @@
-<form class="form-horizontal" action="/login" method="post">
-  <fieldset>
-    <div class="control-group">
-      <label class="control-label" for="usr">Username:</label>
-      <div class="controls">
-        <input type="text" class="input-xlarge" id="usr" name="username"/>
-      </div>
-    </div>
+<div class="row">
+  <div class="span6 offset3">
+    <div class="well fromtop" style="text-align: center">
+      <form class="form-horizontal" action="/login" method="post">
+        <legend>Sign in</legend>
+        <div class="control-group">
+          <label class="control-label" for="username">Username</label>
+          <div class="controls">
+            <input type="text" class="input-medium" placeholder="Username" name="username">
+          </div>
+        </div>
 
-    <div class="control-group">
-      <label class="control-label" for="pwd">Password:</label>
-      <div class="controls">
-        <input type="text" class="input-xlarge" id="pwd" name="password"/>
-      </div>
+        <div class="control-group">
+          <label class="control-label" for="psw">Password</label>
+          <div class="controls">
+            <input type="password" class="input-medium" placeholder="Password" name="password">
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Sign in</button>
+        </div>
+      </form>
     </div>
-    <div class="form-actions">
-      <button type="submit" class="btn btn-primary">Login</button>
-    </div>
-  </fieldset>
-</form>
+  </div>
+</div>
