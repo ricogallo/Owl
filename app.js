@@ -47,7 +47,7 @@ app.get('/links/:id', links.get);
 app.get('/sign_up', web.signUp);
 app.get('/login', web.signIn);
 app.post('/login', web.login);
-app.del('/logout', [login.ensureLoggedIn(), web.logout]);
+app.get('/logout', [login.ensureLoggedIn(), web.logout]);
 app.get('/account', [login.ensureLoggedIn(), web.account]);
 
 
