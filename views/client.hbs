@@ -1,4 +1,58 @@
-<form method="post" action="/clients">
+<div class="row">
+        <div class="span3">
+          <!--
+          <div class="well fromtop">
+            <input placeholder="URL..." type="text" class="input-medium" style="width: 95%" id="url-input">
+            <textarea placeholder="Tags..." class="input-medium" style="width: 95%" id="tags-input"></textarea>
+            <button class="btn">Send</button>
+          </div>
+          -->
+          <div class="well fromtop">
+            <div class="row">
+              <div class="span1">
+                <img class="numbee-thumb" src="https://si0.twimg.com/profile_images/2201732897/notch_weird_reasonably_small.png">
+              </div>
+              <div class="offset1">
+                <span><strong>@{{ user.id }}</strong><br></span>
+                <div style="margin-top: 10px">
+                  <i><span>{{ user.name }}</span></i>
+                  <span>{{ user.email }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="well">
+            <ul class="nav nav-list">
+              <li class="nav-header">
+                <i class="icon-th-large"></i>
+                Clients
+              </li>
+              <li>
+                <a href="/client/new">Create Client</a>
+              </li>
+              <li>
+                <a href="/clients">Manage Clients</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!--<div class="span9"> 
+            <form class="well fromtop">
+              <h3>Share...</h3>
+              <input placeholder="URL..." type="text" class="input-medium" style="width: 98%; margin-left: 1px" id="url-input">
+              <div id="openwwrt" style="display: none">
+                <textarea placeholder="Tags..." class="input-medium" style="width: 98%; margin-left: 1px" id="tags-input"></textarea>
+                <button class="btn pull-right">Send</button>
+                <div style="clear: both"></div>
+              </div>
+            </form>
+        </div>-->
+
+        <div class="span9 pull-right">
+          <div class="well fromtop">
+          <form method="post" action="/clients" class="form-horizontal">
   <fieldset>
     <div class="control-group">
       <label class="control-label">App name: </label>
@@ -13,7 +67,10 @@
       </div>
     </div>
     <div class="form-actions">
-      <button type="submit" class="btn btn-primary">Sign Up</button>
+      <button type="submit" class="btn btn-primary">Create</button>
     </div>
   </fieldset>
 </form>
+          </div>
+        </div>
+    </div>

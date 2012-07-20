@@ -10,6 +10,7 @@ var express  = require('express'),
     views    = require('consolidate'),
     server   = require('./oauth/server'),
     hbs      = require('hbs'),
+    fs       = require('fs'),
     app      = express.createServer();
 
 app.use(express.cookieParser());
@@ -19,8 +20,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(__dirname + '/public'));
 
+// VIEWS BEGIN
+
 app.set('views', __dirname + '/views');
 app.set('view engine', 'hbs');
+
+// VIEWS END
 
 // AUTH BEGIN
 
@@ -54,7 +59,7 @@ app.get('/account', [login.ensureLoggedIn(), web.account]);
 /*
  * Oauth routes
 */
-app.get('/oauth/authorize', server.authorization);
+app.get('/oauth/authorize', server.auth);
 app.post('/oauth/authorize/decision', server.decision);
 app.post('/oauth/token', server.token);
 
