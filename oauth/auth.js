@@ -36,7 +36,7 @@ var findClient = function(id, secret, done) {
         done(err) ;
     }
 
-    done(null, client.secret === secret ? client : false);
+    done(null, client.client_secret === secret ? client : false);
   });
 };
 
@@ -44,23 +44,21 @@ passport.use(new Basic(findClient));
 passport.use(new Client(findClient));
 
 passport.use(new Bearer(function(tkn, done) { 
-  models.Token.find({ access_token: tkn }, function(err, tokens) {
-    var token = tokens.shift();
-
+  models.Token.get(tkn, function(err, token) {
     if(err || !token) {
       return !err ?
         done(null, false) :
         done(err);
     }
 
-    models.User.get(token.parent_id, function(e, usr) {
-      if(e || !user) {
+    models.User.get(token.user_id, function(e, usr) {
+      if(e || !usr) {
         return !e ?
           done(null, false) :
           done(e);
       }
 
-      done(null, user, {scope: '*'});
+      done(null, usr, {scope: '*'});
     });
   }); 
 }));

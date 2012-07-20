@@ -60,7 +60,7 @@ app.get('/account', [login.ensureLoggedIn(), web.account]);
  * Oauth routes
 */
 app.get('/oauth/authorize', server.auth);
-app.post('/oauth/authorize/decision', server.decision);
+app.post('/oauth/decision', server.decision);
 app.post('/oauth/token', server.token);
 
 /*
@@ -69,6 +69,12 @@ app.post('/oauth/token', server.token);
 
 app.get('/client/new', [login.ensureLoggedIn(), client.createForm]);
 app.post('/clients', [login.ensureLoggedIn(), client.create]);
+app.get('/test',  [
+  passport.authenticate('bearer', { session: false }),
+  function(req, res) {
+    res.send('it works');
+  }
+]);
 
 // ROUTES END
 
