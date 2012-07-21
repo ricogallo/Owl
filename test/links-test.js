@@ -1,18 +1,34 @@
 var api         = require('api-easy'),
     assert      = require('assert'),
     toBasicAuth = require('./helpers').toBasicAuth,
-    querystring = require('querystring');
+    querystring = require('querystring'),
+    populate     = require('./populate'),
     o           = require('oauth');
 
 
-var oauth = new o.OAuth2("buh", "-70DwJbpcAFeiixa", "http://localhost:8000/", "oauth/authorize", "oauth/token");
+before(function(done) {
+  var user = {username: 'testusername', password: 'test', email: 'test@testest.te', name: 'lol lol'};
 
+  populate.createUser(user, function(err, user) {
+    //console.dir(err.validate);
+    var client = {client_id: 'buh', redirect_uri: 'http://localhost:8080/callback', client_secret: '-70DwJbpcAFeiixa', user_id: user.id};
 
+    populate.createClient(client, function(err, docs) {
+      populate.createCode({client_id: 'buh', redirect_uri: 'http://localhost:8080/callback', client_secret: '-70DwJbpcAFeiixa', user_id: user.id}, function(err, docs) {
+        populate.createToken({client_id: 'buh', user_id: user.id}, function(err, docs) {
+          done();
+        });
+      });
+    });
+  });
+});
+
+var oauth = new o.OAuth2('buh', '-70DwJbpcAFeiixa', 'http://localhost:8000/', 'oauth/authorize', 'oauth/token');
 
 describe('links.js', function() {
   describe('a POST to /links', function() {
     it('should return 200 if args are correct', function(done) {
-      oauth.getOAuthAccessToken("dSqqtTyX1f4MKlCm", {grant_type: 'authorization_code', "redirect_uri": "http://localhost:8080/callback"}, function(err, token) {   
+      oauth.getOAuthAccessToken('dSqqtTyX1f4MKlCm', {grant_type: 'authorization_code', 'redirect_uri': 'http://localhost:8080/callback'}, function(err, token) {   
         var params = JSON.stringify({uri: 'http://valid.url', tags: 'how,are,you'});
         oauth._request('POST', 'http://localhost:8000/links', {'Content-type': 'application/json'}, params, token, function(err, res) {
           assert.equal(err, null);
@@ -22,7 +38,7 @@ describe('links.js', function() {
     });
 
     it('should return 400 if args are missing', function(done) {
-      oauth.getOAuthAccessToken("dSqqtTyX1f4MKlCm", {grant_type: 'authorization_code', "redirect_uri": "http://localhost:8080/callback"}, function(err, token) {   
+      oauth.getOAuthAccessToken('dSqqtTyX1f4MKlCm', {grant_type: 'authorization_code', 'redirect_uri': 'http://localhost:8080/callback'}, function(err, token) {   
         var params = JSON.stringify({test: 'test', tags: 'how,are,you'});
         oauth._request('POST', 'http://localhost:8000/links', {'Content-type': 'application/json'}, params, token, function(err, res) {
           assert.equal(err.statusCode, 400);
@@ -32,7 +48,7 @@ describe('links.js', function() {
     });
 
     it('should return 400 if args are wrong', function(done) {
-      oauth.getOAuthAccessToken("dSqqtTyX1f4MKlCm", {grant_type: 'authorization_code', "redirect_uri": "http://localhost:8080/callback"}, function(err, token) {   
+      oauth.getOAuthAccessToken('dSqqtTyX1f4MKlCm', {grant_type: 'authorization_code', 'redirect_uri': 'http://localhost:8080/callback'}, function(err, token) {   
         var params = JSON.stringify({uri: 'invalidurl', tags: 'how,are,you'});
         oauth._request('POST', 'http://localhost:8000/links', {'Content-type': 'application/json'}, params, token, function(err, res) {
           assert.equal(err.statusCode, 400);
@@ -44,7 +60,7 @@ describe('links.js', function() {
 
   describe('a GET to /links', function() {
     it('should return an array', function(done) {
-      oauth.getOAuthAccessToken("dSqqtTyX1f4MKlCm", {grant_type: 'authorization_code', "redirect_uri": "http://localhost:8080/callback"}, function(err, token) {   
+      oauth.getOAuthAccessToken('dSqqtTyX1f4MKlCm', {grant_type: 'authorization_code', 'redirect_uri': 'http://localhost:8080/callback'}, function(err, token) {   
         var params = JSON.stringify({uri: 'invalidurl', tags: 'how,are,you'});
         oauth.get('http://localhost:8000/links', token, function(err, res) {
           res = JSON.parse(res);
@@ -58,7 +74,7 @@ describe('links.js', function() {
     });
 
     it('should return a 404 when an invalid/inexistent id is requested', function(done) {
-      oauth.getOAuthAccessToken("dSqqtTyX1f4MKlCm", {grant_type: 'authorization_code', "redirect_uri": "http://localhost:8080/callback"}, function(err, token) {   
+      oauth.getOAuthAccessToken('dSqqtTyX1f4MKlCm', {grant_type: 'authorization_code', 'redirect_uri': 'http://localhost:8080/callback'}, function(err, token) {   
         var params = JSON.stringify({uri: 'invalidurl', tags: 'how,are,you'});
         oauth.get('http://localhost:8000/links/inexistentid', token, function(err, res) {
           assert.equal(err.statusCode, 404);
