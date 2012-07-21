@@ -14,7 +14,10 @@ helpers.createUser = function(obj, cbl) {
   models.User.create(obj, cbl);
 };
 
-helpers.createToken = models.Token.create;
+helpers.createToken = function(obj, cbl) {
+  obj.id = common.token();
+  models.Token.create(obj, cbl);
+}
 
 helpers.createCode = function(obj, cbl) {
   obj.id = common.code();
