@@ -3,7 +3,10 @@ var models = require('../models/'),
 
 var helpers = exports;
 
-helpers.createClient = models.Client.create;
+helpers.createClient = function(obj, cbl) {
+  obj.client_secret = common.client_secret();
+  models.Client.create(obj, cbl);
+};
 
 helpers.createUser = function(obj, cbl) {
   obj.salt = common.salt();
