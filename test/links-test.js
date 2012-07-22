@@ -1,12 +1,7 @@
-var api         = require('api-easy'),
-    assert      = require('assert'),
+var assert      = require('assert'),
     common      = require('../lib/common'),
     models      = require('../models/'),
-    toBasicAuth = require('./helpers').toBasicAuth,
-    querystring = require('querystring'),
-    request     = require('request'),
-    populate    = require('./populate'),
-    o           = require('oauth');
+    request     = require('request');
 
 before(function(done) {
   var user = {id: 'testusername', password: common.crypt('ohaiu' + 'test'), salt: 'ohaiu', email: 'test@testest.te', name: 'lol lol'};

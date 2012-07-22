@@ -1,10 +1,6 @@
-var APIeasy   = require('api-easy'),
-  assert      = require('assert'),
-  expect      = require('expect.js'),
-  toBasicAuth = require('./helpers').toBasicAuth;
-
-var Browser = require('zombie');
-var assert = require('assert');
+var assert  = require('assert'),
+    expect  = require('expect.js'),
+    Browser = require('zombie');
 
 
 browser = new Browser();
@@ -20,7 +16,7 @@ describe('user.js', function() {
       fill('email', 'test@test.te').
 
       pressButton('Sign Up!', function() {
-        expect(browser.success).to.be(true)
+        expect(browser.success).to.be(true);
         done();
       });
     });
