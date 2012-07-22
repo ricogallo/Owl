@@ -54,6 +54,7 @@ app.post('/sign_up', users.create);
 
 app.get('/links', oauth_login(links.all));
 app.post('/links', oauth_login(links.create));
+app.del('/links/:id', oauth_login(links.del));
 app.get('/links/:id', oauth_login(links.get));
 
 /* 

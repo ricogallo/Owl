@@ -87,4 +87,28 @@ describe('links.js', function() {
       });
     });
   });
+
+  describe('a DELETE to /links', function() {
+    it('should delete a link if exists', function(done) {
+      request('http://localhost:8000/links?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
+        assert.equal(null, e);
+        body = JSON.parse(body);
+        
+        // ink/user/testusername/9bb5834b-c523-4f28-b33d-ee634809b6ab
+        var id = body[0]._id.match(/.+?\/.+?\/.+?\/(.+)/)[1];
+
+        request.del('http://localhost:8000/links/'+id+'?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
+          res.statusCode.should.equal(204);
+          done();
+        });
+      });      
+    });
+
+    it('should return 401 if not authorized', function(done) {
+      request.del('http://localhost:8000/links/inexistent?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
+        res.statusCode.should.equal(401);
+        done();
+      });
+    })
+  });
 });
