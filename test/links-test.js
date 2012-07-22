@@ -46,16 +46,17 @@ describe('links.js', function() {
       });  
     });
 
-/*    it('should return 400 if args are missing', function(done) {
-      oauth.getOAuthAccessToken('dSqqtTyX1f4MKlCm', {grant_type: 'authorization_code', 'redirect_uri': 'http://localhost:8080/callback'}, function(err, token) {   
-        var params = JSON.stringify({test: 'test', tags: 'how,are,you'});
-        oauth._request('POST', 'http://localhost:8000/links', {'Content-type': 'application/json'}, params, token, function(err, res) {
-          assert.equal(err.statusCode, 400);
-          done();
-        });
+    it('should return 400 if args are missing', function(done) {
+      request.post({
+        url: 'http://localhost:8000/links?access_token=testoken&client_id=buh&client_secret=keyboardcat',
+        json: true
+      }, function(e, res, body) {
+        assert.equal(null, e);
+        res.statusCode.should.equal(400);
+        done();
       });
     });
-
+/*
     it('should return 400 if args are wrong', function(done) {
       oauth.getOAuthAccessToken('dSqqtTyX1f4MKlCm', {grant_type: 'authorization_code', 'redirect_uri': 'http://localhost:8080/callback'}, function(err, token) {   
         var params = JSON.stringify({uri: 'invalidurl', tags: 'how,are,you'});
