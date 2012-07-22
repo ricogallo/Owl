@@ -94,7 +94,6 @@ describe('links.js', function() {
     it('should update a link if exists', function(done) {
       request('http://localhost:8000/links?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
         assert.equal(null, e);
-        console.dir(res.statusCode);
         body = JSON.parse(body);
         
         // ink/user/testusername/9bb5834b-c523-4f28-b33d-ee634809b6ab
