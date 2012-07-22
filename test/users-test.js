@@ -15,7 +15,7 @@ describe('user.js', function() {
       fill('surname', 'test').
       fill('email', 'test@test.te').
 
-      pressButton('Sign Up!', function() {
+      pressButton('Sign Up', function() {
         expect(browser.success).to.be(true);
         done();
       });
