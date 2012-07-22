@@ -1,7 +1,7 @@
 .navbar-inner
 {
-  background-color: #467F9A !important;
-  background-image: none !important;
+  /*background-color: #467F9A !important;*/
+  background-image: url('http://subtlepatterns.com/patterns/denim.png');
   -webkit-box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.05) !important;
   -moz-box-shadow:    0px 8px 15px rgba(0, 0, 0, 0.05) !important;
   box-shadow:         0px 8px 15px rgba(0, 0, 0, 0.05) !important;
@@ -10,7 +10,7 @@
 body
 {
   /*color: #fff !important;*/
-  background-color: #D8E6ED !important;
+  background-image: url('http://subtlepatterns.com/patterns/fabric_plaid.png');
 }
 
 .navbar-fixed-top a
@@ -20,7 +20,7 @@ body
 
 .nav-list > .active > a
 {
-  background-color: #467F9A !important;
+  /*background-color: #467F9A !important;*/
   color: #fff !important;
 }
 
@@ -34,7 +34,7 @@ a
   color: #fff !important;
 	font-size: 30px !important; 
 	font-family: 'Oleo Script', cursive;
-  margin-top: 8px !important;
+  margin-top: 12px !important;
   margin-left: 0 !important;
   padding-left: 0 !important;
   padding-top: 0 !important;

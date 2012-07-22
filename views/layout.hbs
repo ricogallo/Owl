@@ -45,7 +45,22 @@
 		</div> 
 
 		<div class="container">
-			{{{body}}}
+      <div class="row">
+        {{#if user}}
+          <div class="span9">
+            <div class="well fromtop">
+              {{{body}}}
+            </div>
+          </div>
+          {{> rightMenu}}
+        {{else}}
+          <div class="span12">
+            <div class="well fromtop">
+              {{{body}}}
+            </div>
+          </div> 
+        {{/if}}
+      </div>
 		</div>
 		<script src="/js/jquery.js"></script>
 		<script src="/js/bootstrap.js"></script>
