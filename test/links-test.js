@@ -32,19 +32,21 @@ describe('test', function() {
   });
 });
 
-/*describe('links.js', function() {
+describe('links.js', function() {
   describe('a POST to /links', function() {
     it('should return 200 if args are correct', function(done) {
-      oauth.getOAuthAccessToken('dSqqtTyX1f4MKlCm', {grant_type: 'authorization_code', 'redirect_uri': 'http://localhost:8080/callback'}, function(err, token) {   
-        var params = JSON.stringify({uri: 'http://valid.url', tags: 'how,are,you'});
-        oauth._request('POST', 'http://localhost:8000/links', {'Content-type': 'application/json'}, params, token, function(err, res) {
-          assert.equal(err, null);
-          done();
-        });
-      });
+      request.post({
+        url: 'http://localhost:8000/links?access_token=testoken&client_id=buh&client_secret=keyboardcat',
+        body: JSON.stringify({ uri: 'http://valid.url', tags: 'how,are,you' }),
+        json: true
+      }, function(e, res, body) {
+        res.statusCode.should.equal(201);
+        assert.equal(null, e);
+        done();
+      });  
     });
 
-    it('should return 400 if args are missing', function(done) {
+/*    it('should return 400 if args are missing', function(done) {
       oauth.getOAuthAccessToken('dSqqtTyX1f4MKlCm', {grant_type: 'authorization_code', 'redirect_uri': 'http://localhost:8080/callback'}, function(err, token) {   
         var params = JSON.stringify({test: 'test', tags: 'how,are,you'});
         oauth._request('POST', 'http://localhost:8000/links', {'Content-type': 'application/json'}, params, token, function(err, res) {
@@ -89,6 +91,6 @@ describe('test', function() {
           done();
         });
       });
-    });
+    });*/
   });
-});*/
+});
