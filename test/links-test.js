@@ -23,15 +23,6 @@ before(function(done) {
   });
 });
 
-describe('test', function() {
-  it('should get /test', function(done) {
-    request('http://localhost:8000/test?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(err, res, body) {
-      assert.equal('it works', body);
-      done();
-    }); 
-  });
-});
-
 describe('links.js', function() {
   describe('a POST to /links', function() {
     it('should return 200 if args are correct', function(done) {
@@ -70,30 +61,30 @@ describe('links.js', function() {
     });
   });
 
-/*  describe('a GET to /links', function() {
+  describe('a GET to /links', function() {
     it('should return an array', function(done) {
-      oauth.getOAuthAccessToken('dSqqtTyX1f4MKlCm', {grant_type: 'authorization_code', 'redirect_uri': 'http://localhost:8080/callback'}, function(err, token) {   
-        var params = JSON.stringify({uri: 'invalidurl', tags: 'how,are,you'});
-        oauth.get('http://localhost:8000/links', token, function(err, res) {
-          res = JSON.parse(res);
-
-          assert.equal(err, null);
-          res.should.be.a('object');
-
-          done();
-        });
+      request('http://localhost:8000/links?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
+        assert.equal(null, e);
+        res.statusCode.should.equal(200);
+        JSON.parse(body).should.be.a('object');
+        done();
       });      
     });
 
     it('should return a 404 when an invalid/inexistent id is requested', function(done) {
-      oauth.getOAuthAccessToken('dSqqtTyX1f4MKlCm', {grant_type: 'authorization_code', 'redirect_uri': 'http://localhost:8080/callback'}, function(err, token) {   
-        var params = JSON.stringify({uri: 'invalidurl', tags: 'how,are,you'});
-        oauth.get('http://localhost:8000/links/inexistentid', token, function(err, res) {
-          assert.equal(err.statusCode, 404);
-
-          done();
-        });
+      request('http://localhost:8000/links/lol?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
+        assert.equal(null, e);
+        res.statusCode.should.equal(404);
+        done();
       });
     });
-  });*/
+
+    it('should fail without auth', function(done) {
+      request('http://localhost:8000/links', function(e, res, body) {
+        assert.equal(null, e);
+        res.statusCode.should.equal(401);
+        done();
+      });
+    });
+  });
 });

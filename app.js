@@ -75,13 +75,7 @@ app.post('/oauth/token', server.token);
 */
 
 app.get('/client/new', [login.ensureLoggedIn(), client.createForm]);
-app.post('/clients', [login.ensureLoggedIn(), client.create]);
-app.get('/test',  [
-  passport.authenticate('bearer', { session: false }),
-  function(req, res) {
-    res.send('it works');
-  }
-]);
+app.post('/clients', [login.ensureLoggedIn(), client.create]); 
 
 // ROUTES END
 
