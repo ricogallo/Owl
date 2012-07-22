@@ -9,7 +9,7 @@ if(process.env.COUCHDB_URL) {
     }
   });
 } else {
-  resourceful.use('couchdb', { uri: 'couchdb://localhost/urlship' });
+  resourceful.use('couchdb', { database: 'urlship' });
 }
 
 var models = exports;

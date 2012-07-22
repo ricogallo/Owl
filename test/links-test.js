@@ -1,19 +1,25 @@
 var assert      = require('assert'),
     common      = require('../lib/common'),
     models      = require('../models/'),
-    request     = require('request');
+    request     = require('request'),
+    cradle      = require('cradle');
 
 before(function(done) {
+  var db = new(cradle.Connection)().database('urlship');
   var user = {id: 'testusername', password: common.crypt('ohaiu' + 'test'), salt: 'ohaiu', email: 'test@testest.te', name: 'lol lol'};
   var client = {id: 'buh', redirect_uri: 'http://localhost:8080/callback', client_secret: 'keyboardcat', user_id: 'testusername'};
   var code = {id: 'code', client_id: 'buh', redirect_uri: 'http://localhost:8080/callback', client_secret: 'keyboardcat', user_id: 'testusername'};
   var token = {id: 'testoken', client_id: 'buh', user_id: 'testusername'};
-  models.User.create(user, function() {
-    models.Client.create(client, function() {
-      models.Code.create(code, function() {
-        models.Token.create(token, done);
+  db.destroy(function() {
+  db.create(function() {
+    models.User.create(user, function() {
+      models.Client.create(client, function() {
+        models.Code.create(code, function() {
+          models.Token.create(token, done);
+        });
       });
     });
+  });
   });
 });
 
