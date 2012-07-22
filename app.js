@@ -31,6 +31,13 @@ app.set('view engine', 'hbs');
 
 require('./oauth/auth');
 
+var oauth_login = function(fn) {
+  return [
+    passport.authenticate('bearer', { session: false }),
+    fn
+  ];
+};
+
 // AUTH END
 
 // ROUTES BEGIN
@@ -41,9 +48,9 @@ app.get('/', function(req, res) {
 
 app.post('/sign_up', users.create);
 
-app.get('/links', links.all);
-app.post('/links', links.create);
-app.get('/links/:id', links.get);
+app.get('/links', oauth_login(links.all));
+app.post('/links', oauth_login(links.create));
+app.get('/links/:id', oauth_login(links.get));
 
 /* 
  * User routes

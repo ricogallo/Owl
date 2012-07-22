@@ -1,10 +1,4 @@
-module.exports = function() {
-  this.string('name', {
-    required: true,
-    
-    pattern: /^[A-Za-z]+$/
-  });
-  
+module.exports = function() { 
   this.timestamps();
   
   this.parent('Link');
