@@ -4,12 +4,14 @@ var assert      = require('assert'),
     request     = require('request'),
     cradle      = require('cradle');
 
+
 before(function(done) {
   var db = new(cradle.Connection)().database('urlship');
   var user = {id: 'testusername', password: common.crypt('ohaiu' + 'test'), salt: 'ohaiu', email: 'test@testest.te', name: 'lol lol'};
   var client = {id: 'buh', redirect_uri: 'http://localhost:8080/callback', client_secret: 'keyboardcat', user_id: 'testusername'};
   var code = {id: 'code', client_id: 'buh', redirect_uri: 'http://localhost:8080/callback', client_secret: 'keyboardcat', user_id: 'testusername'};
   var token = {id: 'testoken', client_id: 'buh', user_id: 'testusername'};
+
   db.destroy(function() {
   db.create(function() {
     models.User.create(user, function() {
@@ -25,7 +27,7 @@ before(function(done) {
 
 describe('links.js', function() {
   describe('a POST to /links', function() {
-    it('should return 200 if args are correct', function(done) {
+    it('should return 201 if args are correct', function(done) {
       request.post({
         url: 'http://localhost:8000/links?access_token=testoken&client_id=buh&client_secret=keyboardcat',
         body: JSON.stringify({ uri: 'http://valid.url', tags: 'how,are,you' }),
@@ -88,6 +90,28 @@ describe('links.js', function() {
     });
   });
 
+  describe('a PUT to /links', function() {
+    it('should update a link if exists', function(done) {
+      request('http://localhost:8000/links?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
+        assert.equal(null, e);
+        console.dir(res.statusCode);
+        body = JSON.parse(body);
+        
+        // ink/user/testusername/9bb5834b-c523-4f28-b33d-ee634809b6ab
+        var id = body[0]._id.match(/.+?\/.+?\/.+?\/(.+)/)[1];
+
+        request.put({
+          url: 'http://localhost:8000/links/'+id+'?access_token=testoken&client_id=buh&client_secret=keyboardcat',
+          body: JSON.stringify({ uri: 'http://another.url' }),
+          json: true
+        }, function(e, res, body) {
+          res.statusCode.should.equal(200);
+          done();
+        });
+      });      
+    });
+  });
+
   describe('a DELETE to /links', function() {
     it('should delete a link if exists', function(done) {
       request('http://localhost:8000/links?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
@@ -109,6 +133,6 @@ describe('links.js', function() {
         res.statusCode.should.equal(401);
         done();
       });
-    })
+    });
   });
 });
