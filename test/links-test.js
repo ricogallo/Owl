@@ -1,30 +1,37 @@
 var api         = require('api-easy'),
     assert      = require('assert'),
+    common      = require('../lib/common'),
+    models      = require('../models/'),
     toBasicAuth = require('./helpers').toBasicAuth,
     querystring = require('querystring'),
-    populate     = require('./populate'),
+    request     = require('request'),
+    populate    = require('./populate'),
     o           = require('oauth');
 
-
 before(function(done) {
-  var user = {username: 'testusername', password: 'test', email: 'test@testest.te', name: 'lol lol'};
-
-  populate.createUser(user, function(err, user) {
-    var client = {client_id: 'buh', redirect_uri: 'http://localhost:8080/callback', client_secret: '-70DwJbpcAFeiixa', user_id: user.id};
-
-    populate.createClient(client, function(err, docs) {
-      populate.createCode({client_id: 'buh', redirect_uri: 'http://localhost:8080/callback', client_secret: '-70DwJbpcAFeiixa', user_id: user.id}, function(err, docs) {
-        populate.createToken({client_id: 'buh', user_id: user.id}, function(err, docs) {
-          done();
-        });
+  var user = {id: 'testusername', password: common.crypt('ohaiu' + 'test'), salt: 'ohaiu', email: 'test@testest.te', name: 'lol lol'};
+  var client = {id: 'buh', redirect_uri: 'http://localhost:8080/callback', client_secret: 'keyboardcat', user_id: 'testusername'};
+  var code = {id: 'code', client_id: 'buh', redirect_uri: 'http://localhost:8080/callback', client_secret: 'keyboardcat', user_id: 'testusername'};
+  var token = {id: 'testoken', client_id: 'buh', user_id: 'testusername'};
+  models.User.create(user, function() {
+    models.Client.create(client, function() {
+      models.Code.create(code, function() {
+        models.Token.create(token, done);
       });
     });
   });
 });
 
-var oauth = new o.OAuth2('buh', '-70DwJbpcAFeiixa', 'http://localhost:8000/', 'oauth/authorize', 'oauth/token');
+describe('test', function() {
+  it('should get /test', function(done) {
+    request('http://localhost:8000/test?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(err, res, body) {
+      assert.equal('it works', body);
+      done();
+    }); 
+  });
+});
 
-describe('links.js', function() {
+/*describe('links.js', function() {
   describe('a POST to /links', function() {
     it('should return 200 if args are correct', function(done) {
       oauth.getOAuthAccessToken('dSqqtTyX1f4MKlCm', {grant_type: 'authorization_code', 'redirect_uri': 'http://localhost:8080/callback'}, function(err, token) {   
@@ -83,4 +90,4 @@ describe('links.js', function() {
       });
     });
   });
-});
+});*/
