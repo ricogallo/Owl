@@ -10,7 +10,6 @@ before(function(done) {
   var user = {username: 'testusername', password: 'test', email: 'test@testest.te', name: 'lol lol'};
 
   populate.createUser(user, function(err, user) {
-    //console.dir(err.validate);
     var client = {client_id: 'buh', redirect_uri: 'http://localhost:8080/callback', client_secret: '-70DwJbpcAFeiixa', user_id: user.id};
 
     populate.createClient(client, function(err, docs) {
