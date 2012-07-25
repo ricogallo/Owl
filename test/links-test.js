@@ -117,7 +117,6 @@ describe('links.js', function() {
         assert.equal(null, e);
         body = JSON.parse(body);
         
-        // ink/user/testusername/9bb5834b-c523-4f28-b33d-ee634809b6ab
         var id = body[0]._id.match(/.+?\/.+?\/.+?\/(.+)/)[1];
 
         request.del('http://localhost:8000/links/'+id+'?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {

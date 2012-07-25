@@ -1,5 +1,6 @@
 var assert  = require('assert'),
     expect  = require('expect.js'),
+    request = require('request'),
     Browser = require('zombie');
 
 
@@ -32,6 +33,36 @@ describe('user.js', function() {
           expect(browser.success).to.be(true);
           done();
         });
+    });
+  });
+
+  describe('/users/:id', function() {
+    it('should get an user if exists', function(done) {
+      request('http://localhost:8000/users/testusername?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
+        assert.equal(null, e);
+        res.statusCode.should.equal(200);
+        JSON.parse(body).should.be.a('object');
+        done();
+      });
+    });
+
+    it('should return 404 if an user does not exist', function(done) {
+      request('http://localhost:8000/users/inexistent?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
+        assert.equal(null, e);
+        res.statusCode.should.equal(404);
+        done();
+      });
+    });
+  });
+
+  describe('/me', function() {
+    it('should get current user', function(done) {
+      request('http://localhost:8000/users/testusername?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
+        assert.equal(null, e);
+        res.statusCode.should.equal(200);
+        JSON.parse(body).should.be.a('object');
+        done();
+      });
     });
   });
 });
