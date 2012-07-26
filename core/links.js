@@ -17,6 +17,30 @@ links.get = function(obj, callback) {
   });
 }
 
+links.user = function(obj, callback) {
+  var id = obj.id;
+
+  models.User.get(id, function(err, docs) {
+    if (err) {
+      if (err.error && err.error === 'not_found')
+        return callback(new Error(404));
+      else
+        return callback(new Error(500));
+    }
+
+    docs.links(function(err, docs) {
+      if (err) {
+        if (err.error && err.error === 'not_found')
+          docs = [];
+        else
+          return callback(new Error(500));
+      }
+
+      callback(err, docs);
+    });
+  });
+}
+
 links.all = function(callback) {
   models.Link.all(function(err, docs) {
     if (err)
@@ -33,9 +57,9 @@ links.create = function(obj, callback) {
 
   user.createLink({uri: uri}, function(err, link) {
     if (err) {
-      if (err.validate) {
+      if (err.validate)
         return callback(new Error(400));
-      } else
+      else
         return callback(new Error(500));
     }
 

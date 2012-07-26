@@ -21,3 +21,7 @@ common.code = function() {
 common.client_secret = function() {
   return utile.randomString(16);
 };
+
+common.handleError = function handleError(e, res) {
+  res.send(codes[e.message], parseInt(e.message, 10));
+};
