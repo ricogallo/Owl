@@ -17,6 +17,8 @@ app.set('view engine', 'hbs');
 hbs.registerPartial('rightMenu', fs.readFileSync(__dirname + '/views/right-menu.hbs', 'utf8'));
 hbs.registerPartial('linkEntry', fs.readFileSync(__dirname + '/views/link-entry.hbs', 'utf8'));
 
+require('../oauth/auth');
+
 app.get('/', function(req, res) {
   res.render('index');
 });
