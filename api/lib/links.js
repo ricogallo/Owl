@@ -1,11 +1,7 @@
-var core   = require('../../core/links'),
-    codes = require('http').STATUS_CODES;
+var core        = require('../../core/links'),
+    handleError = require('./common').handleError;
 
 var links = exports;
-
-function handleError(e, res) {
-  res.send(codes[e.message], parseInt(e.message, 10));
-}
 
 links.all = function(req, res) {
   core.all(function(e, link) {
