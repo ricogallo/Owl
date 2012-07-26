@@ -8,8 +8,10 @@ function handleError(e, res) {
 }
 
 links.get = function(req, res) {
+  if(req.params.id) return res.send(400);
+
   core.get({
-    id   : links.params.id,
+    id   : req.params.id,
     user : req.user
   }, function(e, link) {
     if(e)
@@ -20,6 +22,8 @@ links.get = function(req, res) {
 };
 
 links.del = function(req, res) {
+  if(!req.params.id) return res.send(400);
+
   core.del({
     id   : req.params.id,
     user : req.user
@@ -32,6 +36,12 @@ links.del = function(req, res) {
 };
 
 links.update = function(req, res) {
+  if(
+    !req.params.id ? true :
+    !req.body.uri  ? true :
+    false
+  ) return res.send(400);
+
   core.update({
     id   : req.params.id, 
     uri  : req.body.uri,
@@ -45,6 +55,12 @@ links.update = function(req, res) {
 };
 
 links.create = function(req, res) {
+  if(
+    !req.body.uri  ? true :
+    !req.body.tags ? true :
+    false
+  ) return res.send(400);
+
   core.create({
     uri  : req.body.uri,
     tags : req.body.tags,
