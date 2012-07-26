@@ -4,7 +4,7 @@ var passport = require('passport'),
     Basic    = require('passport-http').BasicStrategy,
     Client   = require('passport-oauth2-client-password').Strategy,
     Bearer   = require('passport-http-bearer').Strategy,
-    common   = require('../lib/common');
+    common   = require('../core/common');
 
 passport.use(new Local(function(usr, pwd, done) {
   models.User.get(usr, function(err, user) {

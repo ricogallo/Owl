@@ -36,9 +36,9 @@ describe('user.js', function() {
     });
   });
 
-  describe('/users/:id', function() {
+  describe('/api/users/:id', function() {
     it('should get an user if exists', function(done) {
-      request('http://localhost:8000/users/testusername?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
+      request('http://localhost:8000/api/users/testusername?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
         assert.equal(null, e);
         res.statusCode.should.equal(200);
         JSON.parse(body).should.be.a('object');
@@ -47,7 +47,7 @@ describe('user.js', function() {
     });
 
     it('should return 404 if an user does not exist', function(done) {
-      request('http://localhost:8000/users/inexistent?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
+      request('http://localhost:8000/api/users/inexistent?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
         assert.equal(null, e);
         res.statusCode.should.equal(404);
         done();
@@ -55,9 +55,9 @@ describe('user.js', function() {
     });
   });
 
-  describe('/me', function() {
+  describe('/api/me', function() {
     it('should get current user', function(done) {
-      request('http://localhost:8000/users/testusername?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
+      request('http://localhost:8000/api/me?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
         assert.equal(null, e);
         res.statusCode.should.equal(200);
         JSON.parse(body).should.be.a('object');

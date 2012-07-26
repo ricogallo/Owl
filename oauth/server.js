@@ -1,7 +1,7 @@
 var oauth  = require('oauth2orize'),
     passpr = require('passport'),
     models = require('../models/'),
-    common = require('../lib/common'),
+    common = require('../core/common'),
     login  = require('connect-ensure-login'),
     views  = require('consolidate'),
     server = oauth.createServer(),
