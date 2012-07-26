@@ -73,6 +73,7 @@ describe('links.js', function() {
       });      
     });
 
+
     it('should return a 404 when an invalid/inexistent id is requested', function(done) {
       request('http://localhost:8000/api/links/lol?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
         assert.equal(null, e);
@@ -82,7 +83,7 @@ describe('links.js', function() {
     });
 
     it('should fail without auth', function(done) {
-      request('http://localhost:8000/api/links', function(e, res, body) {
+      request('http://localhost:8000/api/links/lol', function(e, res, body) {
         assert.equal(null, e);
         res.statusCode.should.equal(401);
         done();
@@ -95,6 +96,7 @@ describe('links.js', function() {
       request('http://localhost:8000/api/links?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
         assert.equal(null, e);
         body = JSON.parse(body);
+
         
         // ink/user/testusername/9bb5834b-c523-4f28-b33d-ee634809b6ab
         var id = body[0]._id.match(/.+?\/.+?\/.+?\/(.+)/)[1];

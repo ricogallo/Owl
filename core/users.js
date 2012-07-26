@@ -27,7 +27,7 @@ users.get = function(obj, callback) {
 
 users.me = function(obj, callback) {
   var user = obj.user,
-      whitelist ['email', 'name', 'username'];
+      whitelist = ['email', 'name', 'username'];
 
   models.User.get(user.id, function(err, docs) {
     var json = {};

@@ -17,13 +17,27 @@ links.get = function(obj, callback) {
   });
 }
 
+links.all = function(callback) {
+  models.Link.all(function(err, docs) {
+    if (err)
+      return callback(new Error(500));
+
+    callback(err, docs);
+  });
+}
+
 links.create = function(obj, callback) {
   var uri = obj.uri,
-      tags = obj.tags,
+      tags = obj.tags.split(','),
       user = obj.user;
 
   user.createLink({uri: uri}, function(err, link) {
-    if (err) return callback(new Error(500));
+    if (err) {
+      if (err.validate) {
+        return callback(new Error(400));
+      } else
+        return callback(new Error(500));
+    }
 
     link.tags = [];
     tags.forEach(function(t) {
@@ -33,7 +47,7 @@ links.create = function(obj, callback) {
           return link.createTag(tag);
         }
         
-        link.createTag({ id: t }, function(e, tag) {
+        link.createTag({id: t}, function(e, tag) {
           link.tags.push(tag);
         });
       });

@@ -1,5 +1,5 @@
 var core   = require('../../core/links'),
-    status = require('http').STATUS_CODES;
+    codes = require('http').STATUS_CODES;
 
 var links = exports;
 
@@ -7,9 +7,16 @@ function handleError(e, res) {
   res.send(codes[e.message], parseInt(e.message, 10));
 }
 
-links.get = function(req, res) {
-  if(req.params.id) return res.send(400);
+links.all = function(req, res) {
+  core.all(function(e, link) {
+    if(e)
+      return handleError(e, res);
 
+    res.json(link);
+  });
+};
+
+links.get = function(req, res) {
   core.get({
     id   : req.params.id,
     user : req.user
@@ -22,8 +29,6 @@ links.get = function(req, res) {
 };
 
 links.del = function(req, res) {
-  if(!req.params.id) return res.send(400);
-
   core.del({
     id   : req.params.id,
     user : req.user
@@ -36,11 +41,8 @@ links.del = function(req, res) {
 };
 
 links.update = function(req, res) {
-  if(
-    !req.params.id ? true :
-    !req.body.uri  ? true :
-    false
-  ) return res.send(400);
+  if(!req.body.uri) 
+    return res.send(400);
 
   core.update({
     id   : req.params.id, 
