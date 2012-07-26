@@ -3,8 +3,9 @@ var models = require('../models/'),
 
 var users = exports;
 
-users.get = function(id, callback) {
-  var whitelist = ['email', 'name'];
+users.get = function(obj, callback) {
+  var id = obj.id,
+      whitelist = ['email', 'name'];
 
   models.User.get(id, function(err, user) {
     var json = {};
@@ -24,8 +25,9 @@ users.get = function(id, callback) {
   });
 }
 
-users.me = function(user, callback) {
-  var whitelist = whitelist = ['email', 'name', 'username'];
+users.me = function(obj, callback) {
+  var user = obj.user,
+      whitelist ['email', 'name', 'username'];
 
   models.User.get(user.id, function(err, docs) {
     var json = {};

@@ -2,7 +2,20 @@ var models = require('../models/');
 
 var links = exports;
 
-links.get = models.Link.get;
+links.get = function(obj, callback) {
+  var id = obj.id;
+
+  models.Link.get(id, function(err, docs) {
+    if (err) {
+      if (err.error && err.error === 'not_found')
+        return callback(new Error(404));
+      else
+        return callback(new Error(500));
+    }
+
+    callback(err, docs);
+  });
+}
 
 links.create = function(obj, callback) {
   var uri = obj.uri,
@@ -10,7 +23,6 @@ links.create = function(obj, callback) {
       user = obj.user;
 
   user.createLink({uri: uri}, function(err, link) {
-    
     if (err) return callback(new Error(500));
 
     link.tags = [];

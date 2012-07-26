@@ -1,5 +1,5 @@
 var assert      = require('assert'),
-    common      = require('../lib/common'),
+    common      = require('../core/common'),
     models      = require('../models/'),
     request     = require('request'),
     cradle      = require('cradle');
@@ -26,10 +26,10 @@ before(function(done) {
 });
 
 describe('links.js', function() {
-  describe('a POST to /links', function() {
+  describe('a POST to /api/links', function() {
     it('should return 201 if args are correct', function(done) {
       request.post({
-        url: 'http://localhost:8000/links?access_token=testoken&client_id=buh&client_secret=keyboardcat',
+        url: 'http://localhost:8000/api/links?access_token=testoken&client_id=buh&client_secret=keyboardcat',
         body: JSON.stringify({ uri: 'http://valid.url', tags: 'how,are,you' }),
         json: true
       }, function(e, res, body) {
@@ -41,7 +41,7 @@ describe('links.js', function() {
 
     it('should return 400 if args are missing', function(done) {
       request.post({
-        url: 'http://localhost:8000/links?access_token=testoken&client_id=buh&client_secret=keyboardcat',
+        url: 'http://localhost:8000/api/links?access_token=testoken&client_id=buh&client_secret=keyboardcat',
         json: true
       }, function(e, res, body) {
         assert.equal(null, e);
@@ -53,7 +53,7 @@ describe('links.js', function() {
     it('should return 400 if args are wrong', function(done) {
       request.post({
         json: true,
-        url: 'http://localhost:8000/links?access_token=testoken&client_id=buh&client_secret=keyboardcat',
+        url: 'http://localhost:8000/api/links?access_token=testoken&client_id=buh&client_secret=keyboardcat',
         body: JSON.stringify({uri: 'invalidurl', tags: 'how,are,you'})
       }, function(e, res, body) {
         assert.equal(null, e);
@@ -63,9 +63,9 @@ describe('links.js', function() {
     });
   });
 
-  describe('a GET to /links', function() {
+  describe('a GET to /api/links', function() {
     it('should return an array', function(done) {
-      request('http://localhost:8000/links?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
+      request('http://localhost:8000/api/links?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
         assert.equal(null, e);
         res.statusCode.should.equal(200);
         JSON.parse(body).should.be.a('object');
@@ -74,7 +74,7 @@ describe('links.js', function() {
     });
 
     it('should return a 404 when an invalid/inexistent id is requested', function(done) {
-      request('http://localhost:8000/links/lol?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
+      request('http://localhost:8000/api/links/lol?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
         assert.equal(null, e);
         res.statusCode.should.equal(404);
         done();
@@ -82,7 +82,7 @@ describe('links.js', function() {
     });
 
     it('should fail without auth', function(done) {
-      request('http://localhost:8000/links', function(e, res, body) {
+      request('http://localhost:8000/api/links', function(e, res, body) {
         assert.equal(null, e);
         res.statusCode.should.equal(401);
         done();
@@ -90,9 +90,9 @@ describe('links.js', function() {
     });
   });
 
-  describe('a PUT to /links', function() {
+  describe('a PUT to /api/links', function() {
     it('should update a link if exists', function(done) {
-      request('http://localhost:8000/links?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
+      request('http://localhost:8000/api/links?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
         assert.equal(null, e);
         body = JSON.parse(body);
         
@@ -100,7 +100,7 @@ describe('links.js', function() {
         var id = body[0]._id.match(/.+?\/.+?\/.+?\/(.+)/)[1];
 
         request.put({
-          url: 'http://localhost:8000/links/'+id+'?access_token=testoken&client_id=buh&client_secret=keyboardcat',
+          url: 'http://localhost:8000/api/links/'+id+'?access_token=testoken&client_id=buh&client_secret=keyboardcat',
           body: JSON.stringify({ uri: 'http://another.url' }),
           json: true
         }, function(e, res, body) {
@@ -111,15 +111,15 @@ describe('links.js', function() {
     });
   });
 
-  describe('a DELETE to /links', function() {
+  describe('a DELETE to /api/links', function() {
     it('should delete a link if exists', function(done) {
-      request('http://localhost:8000/links?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
+      request('http://localhost:8000/api/links?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
         assert.equal(null, e);
         body = JSON.parse(body);
         
         var id = body[0]._id.match(/.+?\/.+?\/.+?\/(.+)/)[1];
 
-        request.del('http://localhost:8000/links/'+id+'?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
+        request.del('http://localhost:8000/api/links/'+id+'?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
           res.statusCode.should.equal(204);
           done();
         });
@@ -127,7 +127,7 @@ describe('links.js', function() {
     });
 
     it('should return 401 if not authorized', function(done) {
-      request.del('http://localhost:8000/links/inexistent?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
+      request.del('http://localhost:8000/api/links/inexistent?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
         res.statusCode.should.equal(401);
         done();
       });

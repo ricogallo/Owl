@@ -1,4 +1,4 @@
-var common = require('../lib/common');
+var common = require('../core/common');
 
 describe('salt', function() {
   it('should return a random string', function() {
