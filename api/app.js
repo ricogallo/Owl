@@ -1,6 +1,6 @@
 var express  = require('express'),
     passport = require('passport'),
-    users    = require('./lib/users')
+    users    = require('./lib/users'),
     links    = require('./lib/links');
 
 var app = module.exports = express.createServer();
