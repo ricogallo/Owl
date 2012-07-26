@@ -8,7 +8,11 @@ function handleError(e, res) {
 }
 
 links.get = function(req, res) {
-  core.get(links.params.id, req.body.tags, req.user, function(e, link) {
+  core.get({
+    links : links.params.id,
+    tags  : req.body.tags,
+    user  : req.user
+  }, function(e, link) {
     if(e)
       return handleError(e, res);
 
@@ -17,10 +21,22 @@ links.get = function(req, res) {
 };
 
 links.del = function(req, res) {
-  core.del(req.params.id, req.user, function(e) {
+  core.del({
+    id: req.params.id
+  }, req.user, function(e) {
     if(e)
       return handleError(e, res);
-    
+
+    res.send(204); 
+  });
+};
+
+links.update = function(req, res) {
+  core.update({
+    id   : req.params.id, 
+    url  : req.body.url,
+    user : req.user
+  }, function() {
 
   });
 };
