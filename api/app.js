@@ -1,5 +1,6 @@
 var express  = require('express'),
-    passport = require('passport');
+    passport = require('passport'),
+    links    = require('../lib/links');
 
 var app = module.exports = express.createServer();
 
