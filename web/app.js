@@ -2,7 +2,7 @@ var express  = require('express'),
     passport = require('passport'),
     links    = require('../lib/links'),
     web      = require('../lib/web'),
-    users    = require('../lib/user'),
+    users    = require('../lib/users'),
     client   = require('../lib/client'),
     login    = require('connect-ensure-login'),
     server   = require('../oauth/server');
@@ -14,12 +14,6 @@ app.get('/', function(req, res) {
 });
 
 app.post('/sign_up', users.create);
-
-app.get('/links', oauth_login(links.all));
-app.post('/links', oauth_login(links.create));
-app.del('/links/:id', oauth_login(links.del));
-app.get('/links/:id', oauth_login(links.get));
-app.put('/links/:id', oauth_login(links.update));
 
 /* 
  * User routes
