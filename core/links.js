@@ -4,7 +4,11 @@ var links = exports;
 
 links.get = models.Links.get;
 
-links.create = function(uri, tags, user, callback) {
+links.create = function(obj, callback) {
+  var uri = obj.uri,
+      tags = obj.tags,
+      user = obj.user;
+
   user.createLink({uri: uri}, function(err, link) {
     
     if (err) return callback(new Error(500));
@@ -27,7 +31,10 @@ links.create = function(uri, tags, user, callback) {
   });
 }
 
-links.del = function(id, user, callback) {
+links.del = function(obj, callback) {
+  var id = obj.id,
+      user = obj.user;
+
   user.links(function(err, docs) { // no way to get doc by id, thx resourceful, really
     if (err) {
       if (err.error && err.error === 'not_found')
@@ -53,7 +60,11 @@ links.del = function(id, user, callback) {
   });
 }
 
-links.update = function(id, uri, user, callback) {
+links.update = function(obj, callback) {
+  var id = obj.id,
+      uri = obj.uri,
+      user = obj.user;
+
   user.links(function(err, docs) { // no way to get doc by id, thx resourceful, really
     var update = {};
 
