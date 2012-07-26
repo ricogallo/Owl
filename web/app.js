@@ -38,6 +38,8 @@ app.post('/login', web.login);
 app.get('/logout', [login.ensureLoggedIn(), web.logout]);
 app.get('/account', [login.ensureLoggedIn(), web.account]);
 app.get('/users/:id', [passport.authenticate('bearer', { session: false }), users.get]);
+app.get('/me', [login.ensureLoggedIn(), users.me])
+app.get('/account/:id', [login.ensureLoggedIn(), users.account]);
 //app.get('/me', [passport.authenticate('bearer', { session: false }), users.me]);
 
 /*
@@ -60,5 +62,3 @@ app.post('/clients', [login.ensureLoggedIn(), client.create]);
 
 app.get('/new', [login.ensureLoggedIn(), links.createForm]);
 app.post('/links/new', [login.ensureLoggedIn(), links.create]);
-app.get('/me', [login.ensureLoggedIn(), links.me])
-app.get('/account/:user', [login.ensureLoggedIn(), links.account]);
