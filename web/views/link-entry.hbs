@@ -3,13 +3,13 @@
     <img class="numbee-thumb" src="https://si0.twimg.com/profile_images/2201732897/notch_weird_reasonably_small.png">
   </div>
   <div class="span7">
-    <strong>@notch</strong>
+    <strong>@{{link.user_id}}</strong>
     <div style="margin-top: 5px">
-      <a href="http://www.google.com">http://www.google.com</a>
+      <a href="{{link.uri}}">{{link.uri}}</a>
       <div style="margin-top: 5px">
-      <a href="#">#cool</a>
-      <a href="#">#search-engine</a>
-      <a href="#">#mountain-view</a>
+      {{#each link.tags}}
+        <a href="#">{{this}}<a>
+      {{/each}}
       </div>
     </div>
   </div>
