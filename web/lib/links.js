@@ -22,23 +22,3 @@ links.create = function(req, res) {
     res.redirect('/');
   });
 };
-
-links.me = function(req, res) {
-  core.links.user({id: req.user.id}, function(err, docs) {
-    if (err)
-      return core.common.errorHandler(err, res);
-
-    res.render('links', {links: docs});
-  });
-};
-
-links.account = function(req, res) {
-  var id = req.params.id;
-
-  core.links.user({id: id}, function(err, docs) {
-    if (err)
-      return core.common.errorHandler(err, res);
-
-    res.render('links', {links: docs});
-  });
-};

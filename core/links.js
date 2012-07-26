@@ -20,7 +20,7 @@ links.get = function(obj, callback) {
 links.user = function(obj, callback) {
   var id = obj.id;
 
-  models.User.get(id, function(err, docs) {
+  models.User.get(id, function(err, user) {
     if (err) {
       if (err.error && err.error === 'not_found')
         return callback(new Error(404));
@@ -28,7 +28,7 @@ links.user = function(obj, callback) {
         return callback(new Error(500));
     }
 
-    docs.links(function(err, docs) {
+    user.links(function(err, docs) {
       if (err) {
         if (err.error && err.error === 'not_found')
           docs = [];
@@ -36,7 +36,7 @@ links.user = function(obj, callback) {
           return callback(new Error(500));
       }
 
-      callback(err, docs);
+      callback(err, docs, user);
     });
   });
 }
