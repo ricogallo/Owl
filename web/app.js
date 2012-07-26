@@ -50,3 +50,10 @@ app.post('/oauth/token', server.token);
 
 app.get('/client/new', [login.ensureLoggedIn(), client.createForm]);
 app.post('/clients', [login.ensureLoggedIn(), client.create]); 
+
+/*
+ * Links routes
+*/
+
+app.get('/new', [login.ensureLoggedIn(), links.createForm]);
+
