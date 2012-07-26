@@ -4,10 +4,18 @@ var express  = require('express'),
     web      = require('./lib/web'),
     users    = require('./lib/users'),
     client   = require('./lib/client'),
+    hbs      = require('hbs'),
+    fs       = require('fs'),
     login    = require('connect-ensure-login'),
     server   = require('../oauth/server');
 
 var app = module.exports = express.createServer();
+
+app.set('views', __dirname + '/views');
+app.set('view engine', 'hbs');
+
+hbs.registerPartial('rightMenu', fs.readFileSync(__dirname + '/views/right-menu.hbs', 'utf8'));
+hbs.registerPartial('linkEntry', fs.readFileSync(__dirname + '/views/link-entry.hbs', 'utf8'));
 
 app.get('/', function(req, res) {
   res.render('index');
