@@ -7,7 +7,7 @@ var express  = require('express'),
     passport = require('passport'),
     connect  = require('connect'),
     login    = require('connect-ensure-login'),
-    views    = require('consolidate'),
+    api      = require('./api/app'),
     server   = require('./oauth/server'),
     hbs      = require('hbs'),
     fs       = require('fs'),
@@ -19,6 +19,7 @@ app.use(express.session({secret: process.env.SESSION_SECRET || 'keyboard cat'}))
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(__dirname + '/public'));
+app.use('/api', api);
 
 // VIEWS BEGIN
 
