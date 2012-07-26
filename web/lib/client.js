@@ -1,5 +1,5 @@
-var models = require('../models/'),
-    common = require('./common');
+var models = require('../../models/'),
+    common = require('../../core/common');
 
 var client = exports;
 

@@ -1,3 +1,8 @@
+var common = require('../../core/common'),
+    models = require('../../models');
+
+var users = exports;
+
 users.create = function(req, res) {
   var username = req.body.username,
       password = req.body.password,
