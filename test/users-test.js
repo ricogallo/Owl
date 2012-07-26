@@ -7,7 +7,7 @@ var assert  = require('assert'),
 browser = new Browser();
 
 describe('user.js', function() {
-  it('should register', function(done) {
+  it('should register and login', function(done) {
     browser.visit('http://localhost:8000/sign_up/', function () {
       browser.
       fill('username', 'test').
@@ -18,21 +18,18 @@ describe('user.js', function() {
 
       pressButton('Sign Up', function() {
         expect(browser.success).to.be(true);
-        done();
-      });
-    });
-  });
-  
-  it('should login', function(done) {
-    browser.visit('http://localhost:8000/login', function() {
-      browser.
-        fill('username', 'test').
-        fill('password', 'test').
+      
+        browser.visit('http://localhost:8000/login', function() {
+          browser.
+            fill('username', 'test').
+            fill('password', 'test').
 
-        pressButton('Sign in', function() {
-          expect(browser.success).to.be(true);
-          done();
+            pressButton('Sign in', function() {
+              expect(browser.success).to.be(true);
+              done();
+            });
         });
+      });
     });
   });
 
