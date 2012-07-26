@@ -12,7 +12,7 @@ profile.signIn = function(req, res) {
   res.render('login');
 };
 
-profile.login = passpr.authenticate('local', { successReturnToOrRedirect: '/account', failureRedirect: '/login' });
+profile.login = passpr.authenticate('local', { successReturnToOrRedirect: '/me', failureRedirect: '/login' });
 
 profile.logout = function(req, res) {
   req.logout();
