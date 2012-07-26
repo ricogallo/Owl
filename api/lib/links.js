@@ -9,9 +9,8 @@ function handleError(e, res) {
 
 links.get = function(req, res) {
   core.get({
-    links : links.params.id,
-    tags  : req.body.tags,
-    user  : req.user
+    id   : links.params.id,
+    user : req.user
   }, function(e, link) {
     if(e)
       return handleError(e, res);
@@ -35,12 +34,25 @@ links.del = function(req, res) {
 links.update = function(req, res) {
   core.update({
     id   : req.params.id, 
-    url  : req.body.url,
+    uri  : req.body.uri,
     user : req.user
   }, function(e, link) {
     if(e)
       return handleError(e, res);
     
     res.json(link);
+  });
+};
+
+links.create = function(req, res) {
+  core.create({
+    uri  : req.body.uri,
+    tags : req.body.tags,
+    user : req.user
+  }, function(e, link) {
+    if(e)
+      return handleError(e, res);
+
+    res.json(link, 201);
   });
 };
