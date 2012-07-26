@@ -2,7 +2,7 @@ var models = require('../models/');
 
 var links = exports;
 
-links.get = models.Links.get;
+links.get = models.Link.get;
 
 links.create = function(obj, callback) {
   var uri = obj.uri,

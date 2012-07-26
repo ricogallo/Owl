@@ -1,9 +1,9 @@
 var express  = require('express'),
     passport = require('passport'),
-    links    = require('../lib/links'),
-    web      = require('../lib/web'),
-    users    = require('../lib/users'),
-    client   = require('../lib/client'),
+    links    = require('./lib/links'),
+    web      = require('./lib/web'),
+    users    = require('./lib/users'),
+    client   = require('./lib/client'),
     login    = require('connect-ensure-login'),
     server   = require('../oauth/server');
 
