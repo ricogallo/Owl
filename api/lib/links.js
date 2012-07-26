@@ -22,8 +22,9 @@ links.get = function(req, res) {
 
 links.del = function(req, res) {
   core.del({
-    id: req.params.id
-  }, req.user, function(e) {
+    id   : req.params.id,
+    user : req.user
+  }, function(e) {
     if(e)
       return handleError(e, res);
 
@@ -36,7 +37,10 @@ links.update = function(req, res) {
     id   : req.params.id, 
     url  : req.body.url,
     user : req.user
-  }, function() {
-
+  }, function(e, link) {
+    if(e)
+      return handleError(e, res);
+    
+    res.json(link);
   });
 };
