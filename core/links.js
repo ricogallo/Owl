@@ -4,7 +4,7 @@ var links = exports;
 
 links.get = models.Links.get;
 
-links.create = function(uri, tags, callback) {
+links.create = function(uri, tags, user, callback) {
   user.createLink({uri: uri}, function(err, link) {
     
     if (err) return callback(new Error(500));
