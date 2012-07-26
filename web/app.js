@@ -36,7 +36,6 @@ app.get('/sign_up', web.signUp);
 app.get('/login', web.signIn);
 app.post('/login', web.login);
 app.get('/logout', [login.ensureLoggedIn(), web.logout]);
-app.get('/account', [login.ensureLoggedIn(), web.account]);
 app.get('/users/:id', [passport.authenticate('bearer', { session: false }), users.get]);
 app.get('/me', [login.ensureLoggedIn(), users.me])
 app.get('/account/:id', [login.ensureLoggedIn(), users.account]);
