@@ -30,11 +30,10 @@ describe('links.js', function() {
         .fill('password', 'test')
         .pressButton('Sign in', function() {
           assert.equal(browser.success, true);
-          console.log('here'); 
           browser.visit('http://localhost:8000/new', function() {
             browser
               .fill('uri', 'http://testalicious.com')
-              .fill('tags', '#test #tag #cool')
+              .fill('tags', '["test","asd","cool"]')
               .pressButton('Send', function() {
                 assert.ok(browser.query('a[href="http://testalicious.com"]'));
                 assert.equal(browser.success, true);
