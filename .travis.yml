@@ -6,4 +6,4 @@ before_script:
   - npm start &
   - sleep 5
 notifications:
-  irc: "irc.urlship.com#undefined"
+  irc: "irc.freenode.net#hackatron"
