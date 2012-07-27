@@ -35,8 +35,8 @@ app.use(function(req, res, next) {
   res.send('Not Found');
 });
 
-hbs.registerPartial('rightMenu', fs.readFileSync(__dirname + '/views/right-menu.hbs', 'utf8'));
-hbs.registerPartial('linkEntry', fs.readFileSync(__dirname + '/views/link-entry.hbs', 'utf8'));
+hbs.registerPartial('rightMenu', fs.readFileSync(__dirname + '/views/rightMenu.hbs', 'utf8'));
+hbs.registerPartial('linkEntry', fs.readFileSync(__dirname + '/views/linkEntry.hbs', 'utf8'));
 
 hbs.registerHelper('if_and_not', function(first, second, options) {
   if(first && !second) {
@@ -48,7 +48,7 @@ hbs.registerHelper('if_and_not', function(first, second, options) {
 
 hbs.registerAsyncHelper('gravatar', function(name, cb) {
  user.get(name, function(e, user) {
-    cb(gravatar.url(user.email));
+    cb(gravatar.url(user.email), {'s': 64});
   });
 });
 
