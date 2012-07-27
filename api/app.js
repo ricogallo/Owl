@@ -16,11 +16,44 @@ app.get('/', function(req, res) {
   res.send(200);
 });
 
+/* @api
+ * @path POST /links;
+ * @descr Creates new link;
+ * @param uri String URL to post;
+ * @param tags String List of tags (comma separated);
+*/
 app.post('/links', oauth_login(links.create));
-app.get('/links', oauth_login(links.all));
+
+/* @api
+ * @path DELETE /links/:id;
+ * @descr Deletes link;
+ * @param id String Id of the URL to delete;
+*/
 app.del('/links/:id', oauth_login(links.del));
+
+/* @api
+ * @path GET /links/:id;
+ * @descr Gets link;
+ * @param id String Id of the link to get;
+*/
 app.get('/links/:id', oauth_login(links.get));
+
+/* @api
+ * @path PUT /links/:id;
+ * @descr Updates link;
+ * @param id String Id of the link to update;
+*/
 app.put('/links/:id', oauth_login(links.update));
 
+/* @api
+ * @path GET /users/:id;
+ * @descr Gets user;
+ * @param id String Id of the user to get;
+*/
 app.get('/users/:id', oauth_login(users.get));
+
+/* @api
+ * @path GET /me;
+ * @descr Gets logged user profile;
+*/
 app.get('/me', oauth_login(users.me));
