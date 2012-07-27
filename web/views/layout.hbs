@@ -49,7 +49,7 @@
 
 		<div class="container">
       <div class="row">
-        {{#if user}}
+        {{#if_and_not user status}}
           <div class="span9">
             <div class="well fromtop">
               {{{body}}}
@@ -62,7 +62,7 @@
               {{{body}}}
             </div>
           </div> 
-        {{/if}}
+        {{/if_and_not}}
       </div>
 		</div>
   </body>

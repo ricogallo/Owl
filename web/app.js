@@ -36,6 +36,14 @@ app.use(function(req, res, next) {
 hbs.registerPartial('rightMenu', fs.readFileSync(__dirname + '/views/right-menu.hbs', 'utf8'));
 hbs.registerPartial('linkEntry', fs.readFileSync(__dirname + '/views/link-entry.hbs', 'utf8'));
 
+hbs.registerHelper('if_and_not', function(first, second, options) {
+  if(first && !second) {
+    return options.fn(this);
+  } else {
+    return options.inverse(this);
+  }
+});
+
 require('../oauth/auth');
 
 app.get('/', function(req, res) {
