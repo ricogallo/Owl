@@ -19,8 +19,10 @@ app.set('view engine', 'hbs');
 */
 app.use(function(req, res, next) {
   res.locals.user = req.user;
+  res.locals.csrf = req.session._csrf;
   next();
 });
+app.use(express.csrf());
 
 hbs.registerPartial('rightMenu', fs.readFileSync(__dirname + '/views/right-menu.hbs', 'utf8'));
 hbs.registerPartial('linkEntry', fs.readFileSync(__dirname + '/views/link-entry.hbs', 'utf8'));
