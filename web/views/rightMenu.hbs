@@ -1,0 +1,32 @@
+<div class="span3 pull-right">
+ <div class="well fromtop">
+    <div class="row">
+      <div class="span1">
+        <img class="numbee-thumb" src="{{gravatar user.id}}">
+      </div>
+      <div class="offset1">
+        <span><strong>@{{ user.id }}</strong><br></span>
+        <div style="margin-top: 10px">
+          <i><span>{{ user.name }}</span></i><br>
+          <span><a href="mailto:{{ user.email }}"><i class="icon-envelope"></i></a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="well">
+    <ul class="nav nav-list">
+      <li class="nav-header">
+        <i class="icon-th-large"></i>
+        Clients
+      </li>
+      <li>
+        <a href="/client/new">Create Client</a>
+      </li>
+      <li>
+        <a href="/clients">Manage Clients</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
