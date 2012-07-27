@@ -1,6 +1,8 @@
 Owl
 ===
 
+Urlship's backend, cuz we <3 open source
+
 ## Status
 
 [![Build Status](https://secure.travis-ci.org/urlship/Owl.png?branch=master)](http://travis-ci.org/urlship/Owl)
