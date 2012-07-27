@@ -1,6 +1,6 @@
 {
   "name": "owl",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "author": "yawn <yawn.localhost@gmail.com>",
   "repository": {
     "type": "git",
@@ -35,7 +35,7 @@
     "start": "node app.js"
   },
   "domains": [
-    "u.urlship.com"
+    "alpha.urlship.com"
   ],
   "subdomain": "owl",
   "engines": {
