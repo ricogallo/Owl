@@ -22,3 +22,12 @@ links.create = function(req, res) {
     res.redirect('/');
   });
 };
+
+links.delete = function(req, res) {
+  links.del({id: req.params.id, user: req.user}, function(e, docs) {
+    if (e)
+      return common.errorHandler(e, res);
+
+    res.redirect('/')M
+  });
+};

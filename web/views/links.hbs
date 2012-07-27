@@ -1,3 +1,26 @@
 {{#each links}}
-  {{> linkEntry}}
+  <div class="row">
+  <div class="span1">
+    <img class="numbee-thumb" src="{{gravatar this.user_id}}">
+  </div>
+  <div class="span7">
+    <strong>@{{this.user_id}}</strong>
+    <div style="margin-top: 5px">
+      <a href="{{this.uri}}">{{this.uri}}</a>
+      <div style="margin-top: 5px">
+      {{#each this.tag_ids}}
+        <a href="#">{{this}}<a>
+      {{/each}}
+      </div>
+    </div>
+  </div>
+  <div class="pull-right">
+    {{user.id}}
+    {{#compare this.user_id user.id}}<form action="/delete/{{this.id}}"><input type="hidden" name="_method" value="delete"/><input type="hidden" name="_csrf" value="{{csrf}}" /><i class="icon-remove"><input></i></form>{{/compare}}
+    <a href="#" class="numbee-icon"><i class="icon-heart"></i></a>
+    <a href="#" class="numbee-icon"><i class="icon-star"></i></a>
+    <a href="#" class="numbee-icon"><i class="icon-tag"></i></a>
+  </div>
+  </div>
+<hr>
 {{/each}}

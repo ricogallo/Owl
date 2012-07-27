@@ -7,13 +7,14 @@
     <div style="margin-top: 5px">
       <a href="{{this.uri}}">{{this.uri}}</a>
       <div style="margin-top: 5px">
-      {{#each tag_ids}}
+      {{#each this.tag_ids}}
         <a href="#">{{this}}<a>
       {{/each}}
       </div>
     </div>
   </div>
   <div class="pull-right">
+    {{#compare this.user_id user.id}}<form action="/delete/{{this.id}}"><input type="hidden" name="_method" value="delete"/><input type="hidden" name="_csrf" value="{{csrf}}" /><i class="icon-remove"><input></i></form>{{/compare}}
     <a href="#" class="numbee-icon"><i class="icon-heart"></i></a>
     <a href="#" class="numbee-icon"><i class="icon-star"></i></a>
     <a href="#" class="numbee-icon"><i class="icon-tag"></i></a>

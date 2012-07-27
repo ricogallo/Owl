@@ -46,8 +46,14 @@ hbs.registerHelper('if_and_not', function(first, second, options) {
   }
 });
 
+hbs.registerHelper('compare', function(val, val2, block) {
+  if(val === val2) {
+    return block.fn(this);
+  }
+});
+
 hbs.registerAsyncHelper('gravatar', function(name, cb) {
- user.get(name, function(e, user) {
+  user.get(name, function(e, user) {
     cb(gravatar.url(user.email), {'s': 64});
   });
 });
