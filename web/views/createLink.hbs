@@ -8,7 +8,7 @@
       <form action="/links/new" method="post">
         <input placeholder="URL..." type="text" class="input-medium" style="width: 98%; margin-left: 1px" name="uri" id="url-input">
         <div>
-          <textarea placeholder="Tags..." class="input-medium" style="width: 98%; margin-left: 1px" name="tags" id="tags-input"></textarea>
+          <textarea name="tags" class="input-medium" id="tags-input" rows="1"></textarea>
           <button type="submit" class="btn pull-right">Send</button>
           <div style="clear: both"></div>
         </div>
@@ -16,3 +16,23 @@
     </div>
   </div>
 </div>
+<script>
+$('#tags-input')
+  .textext({
+    plugins : 'tags autocomplete'
+  })
+  .bind('getSuggestions', function(e, data)
+    {
+    var list = [
+      'Basic',
+      'Closure'
+    ],
+    textext = $(e.target).textext()[0],
+    query = (data ? data.query : '') || '';
+    
+    $(this).trigger(
+      'setSuggestions',
+      { result : textext.itemManager().filter(list, query) }
+    );
+  });
+</script>
