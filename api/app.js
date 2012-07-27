@@ -16,6 +16,8 @@ app.get('/', function(req, res) {
   res.send(200);
 });
 
+app.get('/links', oauth_login(links.all));
+
 /* @api
  * @path POST /links;
  * @descr Creates new link;
