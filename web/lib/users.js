@@ -39,7 +39,7 @@ users.me = function(req, res) {
     if (err)
       return core.common.errorHandler(err, res);
 
-    res.render('links', {links: docs, user: req.user});
+    res.render('links', { links: docs });
   });
 };
 
@@ -50,6 +50,6 @@ users.account = function(req, res) {
     if (err)
       return core.common.errorHandler(err, res);
 
-    res.render('links', {links: links, user: user});
+    res.render('links', { links: links });
   });
 };

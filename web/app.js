@@ -14,6 +14,14 @@ var app = module.exports = express.createServer();
 app.set('views', __dirname + '/views');
 app.set('view engine', 'hbs');
 
+/* 
+ * Set up locales
+*/
+app.use(function(req, res, next) {
+  res.locals.user = req.user;
+  next();
+});
+
 hbs.registerPartial('rightMenu', fs.readFileSync(__dirname + '/views/right-menu.hbs', 'utf8'));
 hbs.registerPartial('linkEntry', fs.readFileSync(__dirname + '/views/link-entry.hbs', 'utf8'));
 
@@ -36,10 +44,9 @@ app.get('/sign_up', web.signUp);
 app.get('/login', web.signIn);
 app.post('/login', web.login);
 app.get('/logout', [login.ensureLoggedIn(), web.logout]);
-app.get('/users/:id', [passport.authenticate('bearer', { session: false }), users.get]);
-app.get('/me', [login.ensureLoggedIn(), users.me])
+app.get('/users/:id', [login.ensureLoggedIn(), users.get]);
+app.get('/me', [login.ensureLoggedIn(), users.me]);
 app.get('/account/:id', [login.ensureLoggedIn(), users.account]);
-//app.get('/me', [passport.authenticate('bearer', { session: false }), users.me]);
 
 /*
  * Oauth routes

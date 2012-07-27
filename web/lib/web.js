@@ -5,7 +5,7 @@ var models = require('../../models/'),
 var profile = exports;
 
 profile.account = function(req, res) {
-  res.render('account', {user: req.user});
+  res.render('account');
 };
 
 profile.signIn = function(req, res) {

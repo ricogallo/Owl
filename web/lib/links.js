@@ -2,7 +2,7 @@ var links = exports,
     core = require('../../core');
 
 links.createForm = function(req, res) {
-  res.render('createLink', { user: req.user });
+  res.render('createLink');
 };
 
 links.create = function(req, res) {
