@@ -64,22 +64,29 @@ links.create = function(obj, callback) {
     }
 
     link.tags = [];
-    tags.forEach(function(t) {
+    (function iterate(a_tags) {
+      var t = a_tags.shift();
+      
       models.Tag.get(t, function(e, tag) {
         if(tag) {
-          link.tags.push(tag);
-          return link.createTag(tag);
+          link.createTag(tag, function(e, tag) {
+            link.tags.push(tag);
+            return a_tags.length ?
+              iterate(a_tags) :
+              callback(null, link);
+          });
+        } else {
+          link.createTag({id: t}, function(e, tag) {
+            link.tags.push(tag);
+            return a_tags.length ?
+              iterate(a_tags) :
+              callback(null, link);
+          });
         }
-        
-        link.createTag({id: t}, function(e, tag) {
-          link.tags.push(tag);
-        });
       });
-    });
-    
-    callback(err, link);
-  });
-}
+    })([].slice.call(tags, 0));
+ });
+};
 
 links.del = function(obj, callback) {
   var id = obj.id,

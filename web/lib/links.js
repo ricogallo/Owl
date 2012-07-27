@@ -19,7 +19,6 @@ links.create = function(req, res) {
   }, function(err, docs) {
     if (err)
       return common.errorHandler(e, res);
-
     res.redirect('/');
   });
 };
