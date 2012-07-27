@@ -5,7 +5,9 @@ var express  = require('express'),
     users    = require('./lib/users'),
     client   = require('./lib/client'),
     common   = require('./lib/common'),
+    user     = require('../models/').User,
     hbs      = require('hbs'),
+    gravatar = require('gravatar'),
     fs       = require('fs'),
     login    = require('connect-ensure-login'),
     server   = require('../oauth/server');
@@ -42,6 +44,12 @@ hbs.registerHelper('if_and_not', function(first, second, options) {
   } else {
     return options.inverse(this);
   }
+});
+
+hbs.registerAsyncHelper('gravatar', function(name, cb) {
+ user.get(name, function(e, user) {
+    cb(gravatar.url(user.email));
+  });
 });
 
 require('../oauth/auth');
