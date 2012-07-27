@@ -1,4 +1,4 @@
-var common = require('../../core/common'),
+var common = require('./common'),
     models = require('../../models'),
     core = require('../../core');
 
@@ -10,7 +10,7 @@ users.create = function(req, res) {
       name = req.body.name,
       surname = req.body.surname,
       email = req.body.email,
-      salt = common.salt();
+      salt = core.common.salt();
 
   if (
     typeof username === 'undefined' ||
@@ -20,7 +20,7 @@ users.create = function(req, res) {
     typeof email === 'undefined'
   ) return res.send(400);
 
-  password = common.crypt(salt + password);
+  password = core.common.crypt(salt + password);
 
   models.User.create({id: username, password: password, salt: salt, name: name+' '+surname, email: email}, function(err, docs) {
     //
@@ -37,7 +37,7 @@ users.create = function(req, res) {
 users.me = function(req, res) {
   core.links.user({id: req.user.id}, function(err, docs) {
     if (err)
-      return core.common.errorHandler(err, res);
+      return common.errorHandler(err, res);
 
     res.render('links', { links: docs });
   });
@@ -48,7 +48,7 @@ users.account = function(req, res) {
 
   core.links.user({id: id}, function(err, links, user) {
     if (err)
-      return core.common.errorHandler(err, res);
+      return common.errorHandler(err, res);
 
     res.render('links', { links: links });
   });

@@ -4,6 +4,7 @@ var express  = require('express'),
     web      = require('./lib/web'),
     users    = require('./lib/users'),
     client   = require('./lib/client'),
+    common   = require('./lib/common'),
     hbs      = require('hbs'),
     fs       = require('fs'),
     login    = require('connect-ensure-login'),
@@ -22,6 +23,14 @@ app.use(function(req, res, next) {
   res.locals.user = req.user;
   res.locals.csrf = req.session._csrf;
   next();
+});
+app.use(app.router);
+app.use(function(req, res, next) {
+  if(req.accepts('html')) {
+    return common.handleError(new Error(404), res);
+  }
+
+  res.send('Not Found');
 });
 
 hbs.registerPartial('rightMenu', fs.readFileSync(__dirname + '/views/right-menu.hbs', 'utf8'));

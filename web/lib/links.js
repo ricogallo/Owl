@@ -1,4 +1,5 @@
 var links = exports,
+    common = require('./common');
     core = require('../../core');
 
 links.createForm = function(req, res) {
@@ -17,7 +18,7 @@ links.create = function(req, res) {
     tags: JSON.parse(req.body.tags)
   }, function(err, docs) {
     if (err)
-      return core.common.errorHandler(e, res);
+      return common.errorHandler(e, res);
 
     res.redirect('/');
   });
