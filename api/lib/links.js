@@ -61,7 +61,7 @@ links.create = function(req, res) {
 
   core.create({
     uri  : req.body.uri,
-    tags : req.body.tags,
+    tags : req.body.tags.split(','),
     user : req.user
   }, function(e, link) {
     if(e)

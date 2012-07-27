@@ -14,7 +14,7 @@ links.create = function(req, res) {
   core.links.create({
     user: req.user, 
     uri: req.body.uri, 
-    tags: req.body.tags
+    tags: JSON.parse(req.body.tags)
   }, function(err, docs) {
     if (err)
       return core.common.errorHandler(e, res);

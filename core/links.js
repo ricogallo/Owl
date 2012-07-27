@@ -52,7 +52,7 @@ links.all = function(callback) {
 
 links.create = function(obj, callback) {
   var uri = obj.uri,
-      tags = obj.tags.split(','),
+      tags = obj.tags,
       user = obj.user;
 
   user.createLink({uri: uri}, function(err, link) {
