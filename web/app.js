@@ -6,6 +6,7 @@ var express  = require('express'),
     client   = require('./lib/client'),
     common   = require('./lib/common'),
     user     = require('../models/').User,
+    cons     = require('consolidate'),
     hbs      = require('hbs'),
     gravatar = require('gravatar'),
     fs       = require('fs'),
@@ -14,8 +15,10 @@ var express  = require('express'),
 
 var app = module.exports = express.createServer();
 
+
+app.engine('dl', cons.dust);
 app.set('views', __dirname + '/views');
-app.set('view engine', 'hbs');
+app.set('view engine', 'dl');
 
 /* 
  * Set up locales
@@ -34,7 +37,7 @@ app.use(function(req, res, next) {
 
   res.send('Not Found');
 });
-
+/*
 hbs.registerPartial('rightMenu', fs.readFileSync(__dirname + '/views/rightMenu.hbs', 'utf8'));
 hbs.registerPartial('linkEntry', fs.readFileSync(__dirname + '/views/linkEntry.hbs', 'utf8'));
 
@@ -56,7 +59,7 @@ hbs.registerAsyncHelper('gravatar', function(name, cb) {
   user.get(name, function(e, user) {
     cb(gravatar.url(user.email), {'s': 64});
   });
-});
+});*/
 
 require('../oauth/auth');
 

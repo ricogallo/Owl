@@ -13,7 +13,6 @@ passport.use(new Local(function(usr, pwd, done) {
         done(null, false) :
         done(err) ;
     }
-
     done(null, common.crypt(user.salt + pwd) === user.password ? user : false);
   });
 }));

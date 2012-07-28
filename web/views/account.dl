@@ -1,0 +1,6 @@
+{>"web/views/layout.dl"/}
+{<body}
+  {>"web/views/linkEntry.dl"/}
+  {>"web/views/linkEntry.dl"/}
+  {>"web/views/linkEntry.dl"/}
+{/body}

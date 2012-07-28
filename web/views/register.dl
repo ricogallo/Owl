@@ -1,9 +1,11 @@
+{>"web/views/layout.dl"/}
+{<body}
 <form action="/sign_up" method="post" class="form-horizontal">
   <legend>Register</legend>
   <div class="control-group">
     <label class="control-label" for="username">Username</label>
     <div class="controls">
-      <input type="hidden" name="_csrf" value="{{csrf}}">
+      <input type="hidden" name="_csrf" value="{csrf}">
       <input type="text" class="input-medium" placeholder="cat" name="username">
     </div>
   </div>
@@ -40,4 +42,4 @@
     <button type="submit" class="btn btn-primary">Sign Up</button>
   </div>
 </form>
-
+{/body}

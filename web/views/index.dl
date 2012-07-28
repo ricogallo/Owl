@@ -1,0 +1,4 @@
+{>"web/views/layout.dl"/}
+{<body}
+<h1>YO DAWG!</h1>
+{/body}

@@ -21,7 +21,8 @@
     "handlebars": ">= 0.0.0",
     "utile": ">= 0.0.0",
     "hbs": "git://github.com/donpark/hbs.git",
-    "gravatar": "*"
+    "gravatar": "*",
+    "dustjs-linkedin": "*"
   },
   "devDependencies": {
     "mocha": ">= 0.0.0",

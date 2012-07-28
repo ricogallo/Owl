@@ -2,13 +2,13 @@
  <div class="well fromtop">
     <div class="row">
       <div class="span1">
-        <img class="numbee-thumb" src="{{gravatar user.id}}">
+        <img class="numbee-thumb" src="{user.id}">
       </div>
       <div class="offset1">
-        <span><strong>@{{ user.id }}</strong><br></span>
+        <span><strong>@{user.id}</strong><br></span>
         <div style="margin-top: 10px">
-          <i><span>{{ user.name }}</span></i><br>
-          <span><a href="mailto:{{ user.email }}"><i class="icon-envelope"></i></a></span>
+          <i><span>{user.name}</span></i><br>
+          <span><a href="mailto:{user.email}"><i class="icon-envelope"></i></a></span>
         </div>
       </div>
     </div>

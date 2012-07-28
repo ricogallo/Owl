@@ -1,5 +1,8 @@
+{>"web/views/layout.dl"/}
+{<body}
 <center>
   <h1>Uh oh, something went wrong ç_ç</h1>
-  <img style="height: 500px; margin-top: 20px; margin-bottom: 20px;" src="http://httpcats.herokuapp.com/{{status}}">
+  <img style="height: 500px; margin-top: 20px; margin-bottom: 20px;" src="http://httpcats.herokuapp.com/{status}">
   <h3>Feel free to <a href="mailto:&#104;&#101;&#108;&#112;&#064;&#117;&#114;&#108;&#115;&#104;&#105;&#112;&#046;&#099;&#111;&#109;">contact us</a></h3>
 </center>
+{/body}

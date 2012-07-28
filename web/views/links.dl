@@ -1,0 +1,35 @@
+{>"web/views/layout.dl"/}
+{<body}
+{#links userid=user.id}
+  <div class="row">
+  <div class="span1">
+    <img class="numbee-thumb" src="{user_id}">
+  </div>
+  <div class="span7">
+    <strong>@{user_id}</strong>
+    <div style="margin-top: 5px">
+      <a href="{uri}">{uri}</a>
+      <div style="margin-top: 5px">
+      {#tag_ids}
+        <a href="#">{.} <a>
+      {/tag_ids}
+      </div>
+    </div>
+  </div>
+  <div class="pull-right">
+    {user.id}
+    {@if cond="'{user_id}' === '{userid}'"}
+      <form action="/delete/{{id}}">
+        <input type="hidden" name="_method" value="delete"/>
+        <input type="hidden" name="_csrf" value="{{csrf}}" />
+        <i class="icon-remove"><input></i>
+      </form>
+    {/if}
+    <a href="#" class="numbee-icon"><i class="icon-heart"></i></a>
+    <a href="#" class="numbee-icon"><i class="icon-star"></i></a>
+    <a href="#" class="numbee-icon"><i class="icon-tag"></i></a>
+  </div>
+  </div>
+<hr>
+{/links}
+{/body}

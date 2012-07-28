@@ -1,13 +1,15 @@
-<p>Hi {{user.id}}!</p>
-<p><b>{{client.id}}</b> is requesting access to your account.</p>
+{>"web/views/layout.dl"/}
+{<body}
+<p>Hi {user.id}!</p>
+<p><b>{client.id}</b> is requesting access to your account.</p>
 <p>Do you approve?</p>
 
 <form class="form-horizontal" action="/oauth/decision" method="post">
   <fieldset>
     <div class="control-group">
       <div class="controls">
-        <input type="hidden" name="_csrf" value="{{csrf}}">
-        <input name="transaction_id" class="input-xlarge" type="hidden" value="{{transaction_id}}">
+        <input type="hidden" name="_csrf" value="{csrf}">
+        <input name="transaction_id" class="input-xlarge" type="hidden" value="{transaction_id}">
       </div>
     </div>
     <div class="form-actions">
@@ -16,4 +18,4 @@
     </div>
   </fieldset>
 </form>
-      
+{/body}

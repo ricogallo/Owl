@@ -35,12 +35,12 @@
 						</div>
 						<ul class="nav pull-right">
 							<li><a href="#">About</a></li>
-              {{#if user }}
+              {?user}
                 <li><a href="/logout">Logout</a></li>
-              {{else}}
+              {:else}
                 <li><a href="/sign_up">Sign Up</a></li>
                 <li><a href="/login">Login</a></li>
-              {{/if}}
+              {/user}
 						</ul>
 
 				</div>
@@ -49,20 +49,20 @@
 
 		<div class="container">
       <div class="row">
-        {{#if_and_not user status}}
+        {?user}
           <div class="span9">
             <div class="well fromtop">
-              {{{body}}}
+              {+body/}
             </div>
           </div>
-          {{> rightMenu}}
-        {{else}}
+          {>"web/views/rightMenu.dl"/}
+        {:else}
           <div class="span12">
             <div class="well fromtop">
-              {{{body}}}
+              {+body/}
             </div>
           </div> 
-        {{/if_and_not}}
+        {/user}
       </div>
 		</div>
   </body>

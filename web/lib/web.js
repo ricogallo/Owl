@@ -14,6 +14,7 @@ profile.signIn = function(req, res) {
 
 profile.login = passpr.authenticate('local', { successReturnToOrRedirect: '/me', failureRedirect: '/login' });
 
+
 profile.logout = function(req, res) {
   req.logout();
   res.redirect('/');
