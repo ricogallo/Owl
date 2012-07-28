@@ -19,11 +19,8 @@
   <div class="pull-right">
     {user.id}
     {@if cond="'{user_id}' === '{userid}'"}
-      <form action="/delete/{id}">
-        <input type="hidden" name="_method" value="delete"/>
-        <input type="hidden" name="_csrf" value="{csrf}" />
-        <i class="icon-remove"><input type="submit" value="" class="linkButton"></i>
-      </form>
+      <form action="/delete/{id}" id="delete" style="display: none" method="post"><input type="hidden" name="_method" value="delete"/><input type="hidden" name="_csrf" value="{csrf}" /></form>
+      <a href="#" class="numbee-icon"><i class="icon-remove" onclick="document.getElementById('delete').submit()" style="pointer: cursor"></i></a>
     {/if}
     <a href="#" class="numbee-icon"><i class="icon-heart"></i></a>
     <a href="#" class="numbee-icon"><i class="icon-star"></i></a>

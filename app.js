@@ -10,6 +10,7 @@ app.use(express.session({ secret: process.env.SESSION_SECRET || 'keyboard cat' }
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(__dirname + '/public'));
+app.use(express.methodOverride());
 app.use('/api', api);
 app.use(web);
 

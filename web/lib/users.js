@@ -50,6 +50,6 @@ users.account = function(req, res) {
     if (err)
       return common.errorHandler(err, res);
 
-    res.render('links', { links: links, user: user, avatar: gravatar.url(user.email, {s: '64'}) });
+    res.render('links', { links: links, user: user });
   });
 };

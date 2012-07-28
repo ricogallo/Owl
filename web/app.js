@@ -87,3 +87,4 @@ app.post('/clients', [login.ensureLoggedIn(), client.create]);
 
 app.get('/new', [login.ensureLoggedIn(), links.createForm]);
 app.post('/links/new', [login.ensureLoggedIn(), links.create]);
+app.del('/delete/:id', [login.ensureLoggedIn(), links.delete]);

@@ -24,7 +24,7 @@ links.create = function(req, res) {
 };
 
 links.delete = function(req, res) {
-  links.del({id: req.params.id, user: req.user}, function(e, docs) {
+  core.links.del({id: req.params.id, user: req.user}, function(e, docs) {
     if (e)
       return common.errorHandler(e, res);
 
