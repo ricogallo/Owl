@@ -7,7 +7,6 @@ var express  = require('express'),
     common   = require('./lib/common'),
     user     = require('../models/').User,
     cons     = require('consolidate'),
-    hbs      = require('hbs'),
     gravatar = require('gravatar'),
     fs       = require('fs'),
     login    = require('connect-ensure-login'),
@@ -27,6 +26,13 @@ app.use(express.csrf());
 app.use(function(req, res, next) {
   res.locals.user = req.user;
   res.locals.csrf = req.session._csrf;
+  res.locals.gravatar = function(chunk, context, bodies, params) {
+   return chunk.map(function(chunk) {
+      user.get(params.id, function(e, user) {
+        chunk.end(gravatar.url(user.email, { s: 64 }));
+      });
+    });
+  };
   next();
 });
 app.use(app.router);
@@ -37,29 +43,6 @@ app.use(function(req, res, next) {
 
   res.send('Not Found');
 });
-/*
-hbs.registerPartial('rightMenu', fs.readFileSync(__dirname + '/views/rightMenu.hbs', 'utf8'));
-hbs.registerPartial('linkEntry', fs.readFileSync(__dirname + '/views/linkEntry.hbs', 'utf8'));
-
-hbs.registerHelper('if_and_not', function(first, second, options) {
-  if(first && !second) {
-    return options.fn(this);
-  } else {
-    return options.inverse(this);
-  }
-});
-
-hbs.registerHelper('compare', function(val, val2, block) {
-  if(val === val2) {
-    return block.fn(this);
-  }
-});
-
-hbs.registerAsyncHelper('gravatar', function(name, cb) {
-  user.get(name, function(e, user) {
-    cb(gravatar.url(user.email), {'s': 64});
-  });
-});*/
 
 require('../oauth/auth');
 

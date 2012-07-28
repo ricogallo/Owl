@@ -3,7 +3,7 @@
 {#links userid=user.id}
   <div class="row">
   <div class="span1">
-    <img class="numbee-thumb" src="{user_id}">
+    <img class="numbee-thumb" src="{#gravatar id=user_id/}">
   </div>
   <div class="span7">
     <strong>@{user_id}</strong>
@@ -22,7 +22,7 @@
       <form action="/delete/{{id}}">
         <input type="hidden" name="_method" value="delete"/>
         <input type="hidden" name="_csrf" value="{{csrf}}" />
-        <i class="icon-remove"><input></i>
+        <i class="icon-remove"><input type="submit" value="" class="linkButton"></i>
       </form>
     {/if}
     <a href="#" class="numbee-icon"><i class="icon-heart"></i></a>

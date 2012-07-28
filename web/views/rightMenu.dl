@@ -2,7 +2,7 @@
  <div class="well fromtop">
     <div class="row">
       <div class="span1">
-        <img class="numbee-thumb" src="{user.id}">
+        <img class="numbee-thumb" src="{#gravatar id=user.id/}">
       </div>
       <div class="offset1">
         <span><strong>@{user.id}</strong><br></span>
