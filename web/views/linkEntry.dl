@@ -14,7 +14,7 @@
     </div>
   </div>
   <div class="pull-right">
-    {{#compare this.user_id user.id}}<form action="/delete/{{this.id}}"><input type="hidden" name="_method" value="delete"/><input type="hidden" name="_csrf" value="{{csrf}}" /><i class="icon-remove"><input></i></form>{{/compare}}
+    {{#compare this.user_id user.id}}<form action="/delete/{{this.id}}" style="float: left"><input type="hidden" name="_method" value="delete"/><input type="hidden" name="_csrf" value="{{csrf}}" /><i class="icon-remove"><input></i></form>{{/compare}}
     <a href="#" class="numbee-icon"><i class="icon-heart"></i></a>
     <a href="#" class="numbee-icon"><i class="icon-star"></i></a>
     <a href="#" class="numbee-icon"><i class="icon-tag"></i></a>

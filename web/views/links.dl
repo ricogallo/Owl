@@ -19,9 +19,9 @@
   <div class="pull-right">
     {user.id}
     {@if cond="'{user_id}' === '{userid}'"}
-      <form action="/delete/{{id}}">
+      <form action="/delete/{id}">
         <input type="hidden" name="_method" value="delete"/>
-        <input type="hidden" name="_csrf" value="{{csrf}}" />
+        <input type="hidden" name="_csrf" value="{csrf}" />
         <i class="icon-remove"><input type="submit" value="" class="linkButton"></i>
       </form>
     {/if}

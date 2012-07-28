@@ -13,6 +13,8 @@ links.get = function(obj, callback) {
         return callback(new Error(500));
     }
 
+    docs.id = docs.id.split('/').pop();
+
     callback(err, docs);
   });
 }
@@ -36,6 +38,13 @@ links.user = function(obj, callback) {
           return callback(new Error(500));
       }
 
+      docs = docs.map(function(x) {
+        console.dir(x);
+        x.id = x.id.split('/').pop();
+
+        return x;
+      });
+
       callback(err, docs, user);
     });
   });
@@ -45,6 +54,13 @@ links.all = function(callback) {
   models.Link.all(function(err, docs) {
     if (err)
       return callback(new Error(500));
+
+    docs = docs.map(function(x) {
+      console.dir(x);
+      x.id = x._id.split('/').pop();
+
+      return x;
+    });
 
     callback(err, docs);
   });

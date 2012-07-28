@@ -117,9 +117,7 @@ describe('links.js', function() {
     it('should delete a link if exists', function(done) {
       request('http://localhost:8000/api/links?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
         assert.equal(null, e);
-        body = JSON.parse(body);
-        
-        var id = body[0]._id.match(/.+?\/.+?\/.+?\/(.+)/)[1];
+        var id = JSON.parse(body)[0].id;
 
         request.del('http://localhost:8000/api/links/'+id+'?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
           res.statusCode.should.equal(204);
