@@ -28,6 +28,6 @@ links.delete = function(req, res) {
     if (e)
       return common.errorHandler(e, res);
 
-    res.redirect('/')M
+    res.redirect('/');
   });
 };
