@@ -17,7 +17,7 @@ contribute and have fun
 
 - Open an issue with your über cool proposal
 
-If the idea is accepted
+If your idea gets accepted
 
 * Fork repo
 * Add tests
