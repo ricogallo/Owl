@@ -47,7 +47,7 @@ $ npm test
 
 ## Security
 
-We take security very seriously, if you happen to find a bug please contact 
+We take security very seriously, if you happen to find a bug please contact:
 - __yawn[AT]urlship[DOT]com__
 - __stoke[AT]urlship[DOT]com__
 
