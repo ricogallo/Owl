@@ -12,8 +12,8 @@ Urlship's platform, cuz we <3 open source
 ## Contribute
 
 Our platform's code is available because we strongly believe in open source and we think that people should
-be able to learn and share code without the fear of their idea being stolen or cloned. So look around, fork,
-contribute and have fun
+be able to learn and to share code without the fear of their idea being stolen or cloned. So look around, 
+fork, contribute and have fun
 
 - Open an issue with your über cool proposal
 
