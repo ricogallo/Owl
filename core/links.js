@@ -39,7 +39,6 @@ links.user = function(obj, callback) {
       }
 
       docs = docs.map(function(x) {
-        console.dir(x);
         x.id = x.id.split('/').pop();
 
         return x;
@@ -56,7 +55,6 @@ links.all = function(callback) {
       return callback(new Error(500));
 
     docs = docs.map(function(x) {
-      console.dir(x);
       x.id = x._id.split('/').pop();
 
       return x;
