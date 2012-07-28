@@ -43,4 +43,26 @@ describe('links.js', function() {
         });
       });
   });
+
+  it('should delete a link', function(done) {
+    browser.visit('http://localhost:8000/login', function() {
+      browser
+        .fill('username', 'test')
+        .fill('password', 'test')
+        .pressButton('Sign in', function() {
+          assert.equal(browser.success, true);
+          browser.visit('http://localhost:8000/new', function() {
+            browser
+              .fill('uri', 'http://test.com')
+              .fill('tags', '["how","are","you"]')
+              .pressButton('Send', function() {
+                browser.fire('click', browser.queryAll(".icon-remove")[0], function() {
+                  assert.equal(browser.success, true);
+                  done();
+                });
+              });
+          });
+        });
+      });
+  });
 });
