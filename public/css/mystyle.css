@@ -8,6 +8,10 @@
     color: #0066ff;
 }
 
+.rname {
+  text-overflow: ellipsis;
+}
+
 #tags-input
 {
   border: 1px solid #CCC;

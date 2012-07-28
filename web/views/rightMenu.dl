@@ -7,7 +7,7 @@
       <div class="offset1">
         <span><strong>@{user.id}</strong><br></span>
         <div style="margin-top: 10px">
-          <i><span>{user.name}</span></i><br>
+          <i><span class="rname">{user.name}</span></i><br>
           <span><a href="mailto:{user.email}"><i class="icon-envelope"></i></a></span>
         </div>
       </div>
