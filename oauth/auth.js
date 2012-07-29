@@ -9,9 +9,7 @@ var passport = require('passport'),
 passport.use(new Local(function(usr, pwd, done) {
   models.User.get(usr, function(err, user) {
     if(err || !user) {
-      return !err ?
-        done(null, false) :
-        done(err) ;
+      return done(null, false);
     }
     done(null, common.crypt(user.salt + pwd) === user.password ? user : false);
   });
