@@ -33,6 +33,7 @@ If your idea gets accepted
 ```
 $ git clone git://github.com/urlship/Owl.git
 $ cd Owl
+$ curl -X PUT localhost:5984/urlship
 $ npm install
 $ npm start
 ```
