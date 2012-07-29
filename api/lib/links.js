@@ -7,7 +7,7 @@ links.all = function(req, res) {
   core.all(function(e, link) {
     if(e)
       return handleError(e, res);
-
+    
     res.json(link);
   });
 };
@@ -66,7 +66,6 @@ links.create = function(req, res) {
   }, function(e, link) {
     if(e)
       return handleError(e, res);
-
     res.json(link, 201);
   });
 };

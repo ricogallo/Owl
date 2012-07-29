@@ -41,8 +41,7 @@ describe('links.js', function() {
 
     it('should return 400 if args are missing', function(done) {
       request.post({
-        url: 'http://localhost:8000/api/links?access_token=testoken&client_id=buh&client_secret=keyboardcat',
-        json: true
+        url: 'http://localhost:8000/api/links?access_token=testoken&client_id=buh&client_secret=keyboardcat'
       }, function(e, res, body) {
         assert.equal(null, e);
         res.statusCode.should.equal(400);
@@ -132,5 +131,5 @@ describe('links.js', function() {
         done();
       });
     });
-  });
+  }); 
 });
