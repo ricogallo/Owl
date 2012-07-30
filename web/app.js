@@ -1,16 +1,17 @@
-var express  = require('express'),
-    passport = require('passport'),
-    links    = require('./lib/links'),
-    web      = require('./lib/web'),
-    users    = require('./lib/users'),
-    client   = require('./lib/client'),
-    common   = require('./lib/common'),
-    user     = require('../models/').User,
-    cons     = require('consolidate'),
-    gravatar = require('gravatar'),
-    fs       = require('fs'),
-    login    = require('connect-ensure-login'),
-    server   = require('../oauth/server');
+var express     = require('express'),
+    passport    = require('passport'),
+    links       = require('./lib/links'),
+    web         = require('./lib/web'),
+    users       = require('./lib/users'),
+    client      = require('./lib/client'),
+    common      = require('./lib/common'),
+    user        = require('../models/').User,
+    cons        = require('consolidate'),
+    gravatar    = require('gravatar'),
+    fs          = require('fs'),
+    middlewares = require('./middlewares'),
+    login       = require('connect-ensure-login'),
+    server      = require('../oauth/server');
 
 var app = module.exports = express.createServer();
 
@@ -23,26 +24,9 @@ app.set('view engine', 'dl');
  * Set up locales
 */
 app.use(express.csrf());
-app.use(function(req, res, next) {
-  res.locals.user = req.user;
-  res.locals.csrf = req.session._csrf;
-  res.locals.gravatar = function(chunk, context, bodies, params) {
-   return chunk.map(function(chunk) {
-      user.get(params.id, function(e, user) {
-        chunk.end(gravatar.url(user.email, { s: 64 }));
-      });
-    });
-  };
-  next();
-});
+app.use(middlewares.locals);
 app.use(app.router);
-app.use(function(req, res, next) {
-  if(req.accepts('html')) {
-    return common.handleError(new Error(404), res);
-  }
-
-  res.send('Not Found');
-});
+app.use(middlewares.notFound);
 
 require('../oauth/auth');
 
