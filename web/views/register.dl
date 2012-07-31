@@ -1,40 +1,41 @@
 {>"web/views/layout.dl"/}
 {<body}
-<form action="/sign_up" method="post" class="form-horizontal">
+<script>$(document).ready(function() { $("#signup").validate() }); </script>
+<form action="/sign_up" method="post" class="form-horizontal" id="signup">
   <legend>Register</legend>
   <div class="control-group">
     <label class="control-label" for="username">Username</label>
     <div class="controls">
       <input type="hidden" name="_csrf" value="{csrf}">
-      <input type="text" class="input-medium" placeholder="cat" name="username">
+      <input type="text" class="required input-medium" placeholder="cat" name="username">
     </div>
   </div>
 
   <div class="control-group">
     <label class="control-label" for="mail">E-mail</label>
     <div class="controls">
-      <input type="text" class="input-medium" placeholder="email@provider.com" name="email">
+      <input type="text" class="input-medium required email" placeholder="email@provider.com" name="email" >
     </div>
   </div>
 
   <div class="control-group">
     <label class="control-label" for="name">Name</label>
     <div class="controls">
-      <input type="text" class="input-medium" placeholder="Name" name="name">
+      <input type="text" class="required input-medium" placeholder="Name" name="name">
     </div>
   </div>
 
   <div class="control-group">
     <label class="control-label" for="surname">Surname</label>
     <div class="controls">
-      <input type="text" class="input-medium" placeholder="Surname" name="surname">
+      <input type="text" class="required input-medium" placeholder="Surname" name="surname">
     </div>
   </div>
 
   <div class="control-group">
     <label class="control-label" for="psw">Password</label>
     <div class="controls">
-      <input type="password" class="input-medium" placeholder="keyboardcat" name="password">
+      <input type="password" class="required input-medium" placeholder="keyboardcat" name="password">
     </div>
   </div>
   
