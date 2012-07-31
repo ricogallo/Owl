@@ -11,7 +11,7 @@
       <a href="{uri}">{uri}</a>
       <div style="margin-top: 5px">
       {#tag_ids}
-        <a href="#">{.} <a>
+        <a href="/tags/{.}">{.} <a>
       {/tag_ids}
       </div>
     </div>

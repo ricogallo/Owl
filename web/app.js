@@ -1,5 +1,6 @@
 var express     = require('express'),
     passport    = require('passport'),
+    libs        = require('./lib/'),
     links       = require('./lib/links'),
     web         = require('./lib/web'),
     users       = require('./lib/users'),
@@ -37,19 +38,19 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
-app.post('/sign_up', users.create);
+app.post('/sign_up', libs.users.create);
 
 /* 
  * User routes
 */
 
-app.get('/sign_up', web.signUp);
-app.get('/login', web.signIn);
-app.post('/login', web.login);
-app.get('/logout', [login.ensureLoggedIn(), web.logout]);
-app.get('/users/:id', [login.ensureLoggedIn(), users.get]);
-app.get('/me', [login.ensureLoggedIn(), users.me]);
-app.get('/account/:id', [login.ensureLoggedIn(), users.account]);
+app.get('/sign_up', libs.web.signUp);
+app.get('/login', libs.web.signIn);
+app.post('/login', libs.web.login);
+app.get('/logout', [login.ensureLoggedIn(), libs.web.logout]);
+app.get('/users/:id', [login.ensureLoggedIn(), libs.users.get]);
+app.get('/me', [login.ensureLoggedIn(), libs.users.me]);
+app.get('/account/:id', [login.ensureLoggedIn(), libs.users.account]);
 
 /*
  * Oauth routes
@@ -62,13 +63,19 @@ app.post('/oauth/token', server.token);
  * Client routes
 */
 
-app.get('/client/new', [login.ensureLoggedIn(), client.createForm]);
-app.post('/clients', [login.ensureLoggedIn(), client.create]); 
+app.get('/client/new', [login.ensureLoggedIn(), libs.client.createForm]);
+app.post('/clients', [login.ensureLoggedIn(), libs.client.create]); 
 
 /*
  * Links routes
 */
 
-app.get('/new', [login.ensureLoggedIn(), links.createForm]);
-app.post('/links/new', [login.ensureLoggedIn(), links.create]);
-app.del('/delete/:id', [login.ensureLoggedIn(), links.delete]);
+app.get('/new', [login.ensureLoggedIn(), libs.links.createForm]);
+app.post('/links/new', [login.ensureLoggedIn(), libs.links.create]);
+app.del('/delete/:id', [login.ensureLoggedIn(), libs.links.delete]);
+
+/*
+ * Tags routes
+*/
+
+app.get('/tags/:id', [login.ensureLoggedIn(), libs.tags.showForm]);
