@@ -9,10 +9,10 @@ profile.account = function(req, res) {
 };
 
 profile.signIn = function(req, res) {
-  res.render('login');
+  res.render('login', {status: req.params && req.params.status});
 };
 
-profile.login = passpr.authenticate('local', { successReturnToOrRedirect: '/me', failureRedirect: '/login' });
+profile.login = passpr.authenticate('local', { successReturnToOrRedirect: '/me', failureRedirect: '/login/failed' });
 
 
 profile.logout = function(req, res) {

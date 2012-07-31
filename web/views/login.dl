@@ -16,7 +16,9 @@
       <input type="password" class="input-medium" placeholder="Password" name="password">
     </div>
   </div>
-  
+  {#status}
+  <span style="color: #A80000">Bad username or password</span>
+  {/status}
   <div class="form-actions">
     <button type="submit" class="btn btn-primary">Sign in</button>
   </div>
