@@ -1,8 +1,13 @@
-module.exports = function() {
-  this.string('access_token');
-  this.string('client_id');
-  this.string('user_id');
+var crypto = require('crypto'),
+    hater = require('hater');
 
-  this.timestamps();
+var Model = hater.extend('token', {});
 
-};
+module.exports = Model.schema({
+  'access_token': hater.Types.String(),
+  'client_id': hater.Types.String(),
+  'user_id': hater.Types.String()
+
+  // TODO: timestamps
+
+});

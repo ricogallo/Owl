@@ -7,18 +7,17 @@ users.get = function(obj, callback) {
   var id = obj.id,
       whitelist = ['email', 'name'];
 
-  models.User.get(id, function(err, user) {
+  models.User.findOne({where: {id: id}}, function(err, user) {
     var json = {};
 
-    if (err) {
-      if (err.error && err.error === 'not_found')
-        return callback(new Error(404));
-      else
-        return callback(new Error(500));
-    }
+    if (!user)
+      return callback(new Error(404));
+
+    if (err)
+      return callback(new Error(500));
 
     whitelist.forEach(function(x) {
-      json[x] = user[x];
+      json[x] = user.get(x);
     });
 
     callback(err, json);
@@ -29,15 +28,14 @@ users.me = function(obj, callback) {
   var user = obj.user,
       whitelist = ['email', 'name', 'username'];
 
-  models.User.get(user.id, function(err, docs) {
+  models.User.findOne({where: {id: user.id}}, function(err, docs) {
     var json = {};
 
-    if (err) {
-      if (err.error && err.error === 'not_found')
-        return callback(new Error(404));
-      else
-        return callback(new Error(500));
-    }
+    if (!docs)
+      return callback(new Error(404));
+
+    if (err)
+      return callback(new Error(500));
 
     whitelist.forEach(function(x) {
       json[x] = user[x];

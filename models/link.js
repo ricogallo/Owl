@@ -1,11 +1,9 @@
-module.exports = function() {
-  this.string('uri', {
-    required: true,
-    
-    pattern: /^(http|https):\/\//
-  });
-  
-  this.timestamps();
+var hater = require('hater');
+
+var Model = hater.extend('link', {});
+
+module.exports = Model.schema({
+  'uri': hater.Types.String(),
   
   this.parent('User');
-};
+});

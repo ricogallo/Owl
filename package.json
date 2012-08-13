@@ -21,7 +21,8 @@
     "utile": ">= 0.0.0",
     "hbs": "git://github.com/donpark/hbs.git",
     "gravatar": "*",
-    "dustjs-linkedin": "*"
+    "dustjs-linkedin": "*",
+    "hater": "git://github.com/urlship/Owl.git"
   },
   "devDependencies": {
     "mocha": ">= 0.0.0",

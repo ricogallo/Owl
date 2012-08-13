@@ -1,8 +1,12 @@
-module.exports = function() {
-  this.string('client_id');
-  this.string('redirect_uri');
-  this.string('client_secret');
-  this.string('user_id');
+var hater = require('hater');
 
-  this.timestamps();
+var Model = hater.extend('client', {});
+
+module.exports = Model.schema({
+  'client_id': hater.Types.String(),
+  'redirect_uri': hater.Types.String(),
+  'client_secret': hater.Types.String(),
+  'user_id': hater.Types.String()
+
+  // timestamps
 };
