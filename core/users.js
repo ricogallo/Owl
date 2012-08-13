@@ -38,7 +38,7 @@ users.me = function(obj, callback) {
       return callback(new Error(500));
 
     whitelist.forEach(function(x) {
-      json[x] = user[x];
+      json[x] = user.get(x);
     });
 
     callback(err, json);
