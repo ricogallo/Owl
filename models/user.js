@@ -1,6 +1,9 @@
 var hater = require('hater');
 
-var Model = hater.extend('user', {});
+hater.connect('mysql', 'mysql://root:toor@localhost/urlship');
+
+var Model = hater.define('user', {});
+
 
 module.exports = Model.schema({
   'salt': hater.Types.String(),

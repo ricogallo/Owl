@@ -1,3 +1,5 @@
+// TODO: Table and relationship
+
 var hater = require('hater');
 
 module.exports = function() { 
@@ -5,3 +7,7 @@ module.exports = function() {
   
   this.parent('Link');
 };
+
+
+
+//module.exports.sync();

@@ -11,3 +11,5 @@ module.exports = Model.schema({
   // TODO: timestamps
 
 });
+
+module.exports.sync();

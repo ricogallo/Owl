@@ -5,15 +5,12 @@ var links = exports;
 links.get = function(obj, callback) {
   var id = obj.id;
 
-  models.Link.get(id, function(err, docs) {
-    if (err) {
-      if (err.error && err.error === 'not_found')
-        return callback(new Error(404));
-      else
-        return callback(new Error(500));
-    }
+  models.Link.findOne({where: {id: id}}, function(err, docs) {
+    if (!docs)
+      return callback(new Error(404));
 
-    docs.id = docs.id.split('/').pop();
+    if (err)
+      return callback(new Error(500));
 
     callback(err, docs);
   });
@@ -22,48 +19,24 @@ links.get = function(obj, callback) {
 links.user = function(obj, callback) {
   var id = obj.id;
 
-  models.User.get(id, function(err, user) {
-    if (err) {
-      if (err.error && err.error === 'not_found')
-        return callback(new Error(404));
-      else
-        return callback(new Error(500));
-    }
+  models.User.find({where: {id: id}, fetch: ["links"]}, function(e, docs) {
+    if (e)
+      return callback(new Error(500));
 
-    user.links(function(err, docs) {
-      if (err) {
-        if (err.error && err.error === 'not_found')
-          docs = [];
-        else
-          return callback(new Error(500));
-      }
-
-      docs = docs.map(function(x) {
-        x.id = x.id.split('/').pop();
-
-        return x;
-      });
-
-      callback(err, docs, user);
-    });
-  });
+    callback(e, docs);
+  })
 }
 
 links.all = function(callback) {
-  models.Link.all(function(err, docs) {
+  models.Link.find({}, function(err, docs) {
     if (err)
       return callback(new Error(500));
-
-    docs = docs.map(function(x) {
-      x.id = x._id.split('/').pop();
-
-      return x;
-    });
 
     callback(err, docs);
   });
 }
 
+// TO BE REWRITTEN
 links.create = function(obj, callback) {
   var uri = obj.uri,
       tags = obj.tags,
@@ -104,25 +77,22 @@ links.create = function(obj, callback) {
 
 links.del = function(obj, callback) {
   var id = obj.id,
+      uri = obj.uri,
       user = obj.user;
 
-  user.links(function(err, docs) { // no way to get doc by id, thx resourceful, really
-    if (err) {
-      if (err.error && err.error === 'not_found')
-        return callback(new Error(404));
-      else
-        return callback(new Error(500));
-    }
+  models.Link.findOne({where: {id: id}}, function(err, docs) {
+    if (err)
+      return callback(new Error(500));
 
-    docs = docs.map(function(x) {
-      return x.id.match(/.+?\/.+?\/(.+)/)[1];
-    });
+    if(!docs)
+      return callback(new Error(404));
 
-    if (~docs.indexOf(id)) {
-      models.Link.destroy('user/'+user.id+'/'+id, function(err, docs) {
-        if (err)
-          return callback(new Error(500));
+    update.uri = uri;
 
+    if (docs.get('userId') === id) { // TODO: change this with real column from hater
+      docs.destroy(function(err, docs) {
+        if (err) return callback(new Error(500));
+        
         callback(err, docs);
       });
     } else {
@@ -136,24 +106,19 @@ links.update = function(obj, callback) {
       uri = obj.uri,
       user = obj.user;
 
-  user.links(function(err, docs) { // no way to get doc by id, thx resourceful, really
+  models.Link.findOne({where: {id: id}}, function(err, docs) {
     var update = {};
 
-    if (err) {
-      if (err.error && err.error === 'not_found')
-        return callback(new Error(404));
-      else
-        return callback(new Error(500));
-    }
+    if (err)
+      return callback(new Error(500));
+
+    if(!docs)
+      return callback(new Error(404));
 
     update.uri = uri;
 
-    docs = docs.map(function(x) {
-      return x.id.match(/.+?\/.+?\/(.+)/)[1];
-    });
-
-    if (~docs.indexOf(id)) {
-      models.Link.update('user/'+user.id+'/'+id, update, function(err, docs) {
+    if (docs.get('userId') === id) { // TODO: change this with real column from hater
+      models.Link.update(update, {id: id}, function(err, docs) {
         if (err) return callback(new Error(500));
         
         callback(err, docs);

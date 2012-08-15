@@ -1,22 +1,19 @@
-var resourceful = require('resourceful');
+var hater = require('hater');
  
-if(process.env.COUCHDB_URL) {
-  resourceful.use('couchdb', { 
-    uri: process.env.COUCHDB_URL, 
-    auth: { 
-      username: process.env.COUCHDB_USER, 
-      password: process.env.COUCHDB_PWD
-    }
-  });
-} else {
-  resourceful.use('couchdb', { database: 'urlship' });
-}
+hater.connect('mysql', 'mysql://root:toor@localhost/urlship');
 
 var models = exports;
 
-models.User   = resourceful.define('User', require('./user'));
-models.Link   = resourceful.define('Link', require('./link'));
-models.Tag    = resourceful.define('Tag', require('./tag'));
-models.Client = resourceful.define('Client', require('./client'));
-models.Token  = resourceful.define('Token', require('./token'));
-models.Code   = resourceful.define('Code', require('./code'));
+models.User   = require('./user');
+models.Link   = require('./link');
+models.Tag    = require('./tag');
+models.Client = require('./client');
+models.Token  = require('./token');
+models.Code   = require('./code');
+
+// Relationships
+
+hater.Relationships.oneToMany(models.User, models.Link);
+hater.Relationships.manyToMany(models.Link, models.Tag);
+
+hater.sync();

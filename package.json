@@ -22,7 +22,7 @@
     "hbs": "git://github.com/donpark/hbs.git",
     "gravatar": "*",
     "dustjs-linkedin": "*",
-    "hater": "git://github.com/urlship/Owl.git"
+    "hater": "git://github.com/yawnt/hater.git"
   },
   "devDependencies": {
     "mocha": ">= 0.0.0",
