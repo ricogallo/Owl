@@ -23,7 +23,7 @@ links.user = function(obj, callback) {
     if (e)
       return callback(new Error(500));
 
-    callback(e, docs);
+    callback(e, docs.links);
   });
 };
 
@@ -42,37 +42,16 @@ links.create = function(obj, callback) {
       tags = obj.tags,
       user = obj.user;
 
-  user.createLink({uri: uri}, function(err, link) {
-    if (err) {
-      if (err.validate)
+  user.create({links: new Link({uri: uri})}, function(e) {
+    if (e) {
+      if (e.validate)
         return callback(new Error(400));
       else
         return callback(new Error(500));
     }
 
-    link.tags = [];
-    (function iterate(a_tags) {
-      var t = a_tags.shift();
-      
-      models.Tag.get(t, function(e, tag) {
-        if(tag) {
-          link.createTag(tag, function(e, tag) {
-            link.tags.push(tag);
-            return a_tags.length ?
-              iterate(a_tags) :
-              callback(null, link);
-          });
-        } else {
-          link.createTag({id: t}, function(e, tag) {
-            link.tags.push(tag);
-            return a_tags.length ?
-              iterate(a_tags) :
-              callback(null, link);
-          });
-        }
-      });
-    })([].slice.call(tags, 0));
- });
+    callback(e);
+  });
 };
 
 links.del = function(obj, callback) {

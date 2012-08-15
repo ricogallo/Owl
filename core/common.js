@@ -3,7 +3,7 @@ var crypto = require('crypto'),
     common = exports;
 
 common.crypt = function(pwd, salt) {
-  return crypto.createHash('sha512').update(salt + pwd).digest('hext');
+  return crypto.createHash('sha512').update(salt + pwd).digest('hex');
 };
 
 common.salt = function() {

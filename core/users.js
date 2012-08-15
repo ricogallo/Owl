@@ -44,3 +44,18 @@ users.me = function(obj, callback) {
     callback(err, json);
   });
 };
+
+users.create = function(obj, callback) {
+  models.User.create(obj, function(e, r) {
+    console.dir(e);
+
+    if (e) {
+      if (e.validate)
+        return callback(new Error(400));
+      else
+        return callback(new Error(500));
+    }
+
+    callback(e, r);
+  });
+};
