@@ -8,11 +8,11 @@ var oauth  = require('oauth2orize'),
     config = exports;
 
 server.serializeClient(function(client, done) {
-  done(null, client.id);
+  done(null, client.get('id'));
 });
 
 server.deserializeClient(function(id, done) {
-  models.Client.get(id, function(err, client) {
+  models.Client.findOne({ where: { id: id } }, function(err, client) {
     if(err || !client) {
       return err ?
         done(err) :
@@ -29,35 +29,36 @@ server.grant(
     models.Code.create({
       id: code,
       redirect_uri: redirect_uri,
-      client_id: client.id,
-      user_id: user.id
+      client_id: client.get('id'),
+      user_id: user.get('id')
     }, function(err, code) {
       if(err) return done(err); 
 
-      done(null, code.id);
+      done(null, code.get('id'));
     });
   })
 );
 
 server.exchange(
   oauth.exchange.code(function(client, id, redirect_uri, done) {
-    models.Code.get(id, function(err, code) {
+    models.Code.findOne({ where: { id: id } }, function(err, code) {
       if(err) return done(err);
       if(
         !code ? true
-        : code.client_id !== client.id ? true
-        : code.redirect_uri !== redirect_uri ? true
+        : code.get('client_id') !== client.id ? true
+        : code.get('redirect_uri') !== redirect_uri ? true
         : false
       ) return done(null, false); 
+
       var token = common.token();
       models.Token.create({
-        client_id: client.id,
+        client_id: client.get('id'),
         id: token,
-        user_id: code.user_id 
+        user_id: code.get('user_id')
       }, function(err, tok) {
         if(err) return done(err);
 
-        done(null, tok.id);
+        done(null, tok.get('id'));
       });
 
     });
@@ -65,10 +66,10 @@ server.exchange(
 );
 
 var authorizeClient = function(client_id, redirect_uri, done) {
-  models.Client.get(client_id, function(err, client) {
+  models.Client.findOne({ where: { id: client_id } }, function(err, client) {
     if(err) return done(err);
 
-    return redirect_uri === client.redirect_uri ?
+    return redirect_uri === client.get('redirect_uri') ?
       done(null, client, redirect_uri) :
       done(null, false) ;
   });
@@ -95,4 +96,4 @@ config.token = [
   passpr.authenticate(['basic', 'oauth2-client-password'], { session: false }),
   server.token(),
   server.errorHandler()
-]
+];

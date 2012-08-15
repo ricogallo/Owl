@@ -7,33 +7,31 @@ var passport = require('passport'),
     common   = require('../core/common');
 
 passport.use(new Local(function(usr, pwd, done) {
-  models.User.get(usr, function(err, user) {
+  models.User.findOne({ where: { username: usr } }, function(err, user) {
     if(err || !user) {
       return done(null, false);
     }
-    done(null, common.crypt(user.salt + pwd) === user.password ? user : false);
+    done(null, common.crypt(user.get('salt') + pwd) === user.get('password') ? user : false);
   });
 }));
 
 passport.serializeUser(function(user, done) {
-  done(null, user.id);
+  done(null, user.get('id'));
 });
 
 passport.deserializeUser(function(id, done) {
-  models.User.get(id, function(err, u) {
-    done(err, u);
-  });
+  models.User.findOne({ where: { id: id } }, done);
 });
 
 var findClient = function(id, secret, done) {
-  models.Client.get(id, function(err, client) {
+  models.Client.findOne({ where: { id: id } }, function(err, client) {
     if(err || !client) {
       return !err ?
         done(null, false) :
         done(err) ;
     }
 
-    done(null, client.client_secret === secret ? client : false);
+    done(null, client.get('client_secret') === secret ? client : false);
   });
 };
 
@@ -41,14 +39,14 @@ passport.use(new Basic(findClient));
 passport.use(new Client(findClient));
 
 passport.use(new Bearer(function(tkn, done) { 
-  models.Token.get(tkn, function(err, token) {
+  models.Token.findOne({ where: { access_token: tkn } }, function(err, token) {
     if(err || !token) {
       return !err ?
         done(null, false) :
         done(err);
     }
 
-    models.User.get(token.user_id, function(e, usr) {
+    models.User.findOne({ where: { id: token.user_id } }, function(e, usr) {
       if(e || !usr) {
         return !e ?
           done(null, false) :
