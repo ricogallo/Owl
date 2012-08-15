@@ -23,7 +23,7 @@ users.create = function(req, res) {
 
   password = core.common.crypt(salt + password);
 
-  models.User.create({id: username, password: password, salt: salt, name: name+' '+surname, email: email}, function(err, docs) {
+  models.User.create({username: username, password: password, salt: salt, name: name+' '+surname, email: email}, function(err, docs) {
     //
     // If there's an error return a 500
     //

@@ -14,7 +14,7 @@ var express     = require('express'),
     login       = require('connect-ensure-login'),
     server      = require('../oauth/server');
 
-var app = module.exports = express.createServer();
+var app = module.exports = express();
 
 
 app.engine('dl', cons.dust);
