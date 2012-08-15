@@ -7,7 +7,3 @@ module.exports = function() {
   
   this.parent('Link');
 };
-
-
-
-//module.exports.sync();

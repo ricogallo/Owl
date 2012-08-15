@@ -10,5 +10,3 @@ module.exports = Model.schema({
   
   // Timestamps
 });
-
-module.exports.sync();

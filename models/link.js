@@ -7,5 +7,3 @@ module.exports = Model.schema({
   
   this.parent('User');
 });
-
-module.exports.sync();
