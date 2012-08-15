@@ -1,9 +1,6 @@
 var hater = require('hater');
 
-var Model = hater.extend('link', {});
+module.exports = {
+  'uri': hater.Types.String()
+}
 
-module.exports = Model.schema({
-  'uri': hater.Types.String(),
-  
-  this.parent('User');
-});

@@ -22,7 +22,7 @@ users.get = function(obj, callback) {
 
     callback(err, json);
   });
-}
+};
 
 users.me = function(obj, callback) {
   var user = obj.user,
@@ -43,4 +43,4 @@ users.me = function(obj, callback) {
 
     callback(err, json);
   });
-}
+};

@@ -14,7 +14,7 @@ links.get = function(obj, callback) {
 
     callback(err, docs);
   });
-}
+};
 
 links.user = function(obj, callback) {
   var id = obj.id;
@@ -24,8 +24,8 @@ links.user = function(obj, callback) {
       return callback(new Error(500));
 
     callback(e, docs);
-  })
-}
+  });
+};
 
 links.all = function(callback) {
   models.Link.find({}, function(err, docs) {
@@ -34,7 +34,7 @@ links.all = function(callback) {
 
     callback(err, docs);
   });
-}
+};
 
 // TO BE REWRITTEN
 links.create = function(obj, callback) {
@@ -99,7 +99,7 @@ links.del = function(obj, callback) {
       callback(new Error(401));
     }
   });
-}
+};
 
 links.update = function(obj, callback) {
   var id = obj.id,
@@ -127,4 +127,4 @@ links.update = function(obj, callback) {
       callback(new Error(401));
     }
   });
-}
+};
