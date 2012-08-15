@@ -11,7 +11,7 @@ middlewares.locals = function(req, res, next) {
   res.locals.csrf = req.session._csrf;
   res.locals.gravatar = function(chunk, context, bodies, params) {
    return chunk.map(function(chunk) {
-      user.get(params.id, function(e, user) {
+      user.findOne({where: {id: params.id}}, function(e, user) {
         chunk.end(gravatar.url(user.email, { s: 64 }));
       });
     });
