@@ -18,7 +18,7 @@ links.get = function(obj, callback) {
 
 links.user = function(obj, callback) {
   var id = obj.id;
-  console.log(obj);
+  
   models.User.find({where: {id: id}, fetch: ["links"]}, function(e, docs) {
     if (e)
       return callback(new Error(500));

@@ -28,7 +28,6 @@ users.me = function(obj, callback) {
   var user = obj.user,
       whitelist = ['email', 'name', 'username'];
   models.User.findOne({where: {id: user.id}}, function(err, docs) {
-    console.log('burp');
     var json = {};
 
     if (!docs)
@@ -47,8 +46,6 @@ users.me = function(obj, callback) {
 
 users.create = function(obj, callback) {
   models.User.create(obj, function(e, r) {
-    console.dir(e);
-
     if (e) {
       if (e.validate)
         return callback(new Error(400));

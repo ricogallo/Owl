@@ -5,14 +5,14 @@ div.span3.pull-right
         img.numbee-thumb(src="#{gravatar(user.get('email'))}")
       div.offset1
         span
-          strong= user.get('name');
+          strong= user.get('username');
           br
         div(style="margin-top: 10px")
           i
-            span.rname Nome Cognome
+            span.rname= user.get('name')
           br
           span
-            a(href="mailto:yawn.localhost@gmail.com")
+            a(href="mailto:#{user.get('email')}")
               i.icon-envelope
   div.well
     ul.nav.nav-list
