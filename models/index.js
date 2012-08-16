@@ -2,7 +2,7 @@ var hater = require('hater');
 
 hater.connect(
   process.env.OPENSHIFT_DB_TYPE || 'mysql', 
-  process.env.OPENSHIFT_DB_URL  || 'mysql://root@localhost/urlship'
+  process.env.OPENSHIFT_DB_URL  || 'mysql://root:toor@localhost/urlship'
 );
 
 var models = exports;

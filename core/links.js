@@ -42,7 +42,8 @@ links.create = function(obj, callback) {
       tags = obj.tags,
       user = obj.user;
 
-  user.create({links: new Link({uri: uri})}, function(e) {
+  user.set('links', [new models.Link({uri: uri})]);
+  user.save(function(e) {
     if (e) {
       if (e.validate)
         return callback(new Error(400));
