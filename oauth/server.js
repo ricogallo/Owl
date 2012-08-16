@@ -12,7 +12,7 @@ server.serializeClient(function(client, done) {
 });
 
 server.deserializeClient(function(id, done) {
-  models.Client.findOne({ where: { id: id } }, function(err, client) {
+  models.Client.findOne({ where: { client: id } }, function(err, client) {
     if(err || !client) {
       return err ?
         done(err) :
@@ -27,21 +27,21 @@ server.grant(
   oauth.grant.code(function(client, redirect_uri, user, ares, done) {
     var code = common.code();
     models.Code.create({
-      id: code,
+      code: code,
       redirect_uri: redirect_uri,
       client_id: client.get('id'),
       user_id: user.get('id')
     }, function(err, code) {
       if(err) return done(err); 
 
-      done(null, code.get('id'));
+      done(null, code.get('code'));
     });
   })
 );
 
 server.exchange(
   oauth.exchange.code(function(client, id, redirect_uri, done) {
-    models.Code.findOne({ where: { id: id } }, function(err, code) {
+    models.Code.findOne({ where: { code: id } }, function(err, code) {
       if(err) return done(err);
       if(
         !code ? true
@@ -53,12 +53,12 @@ server.exchange(
       var token = common.token();
       models.Token.create({
         client_id: client.get('id'),
-        id: token,
+        token: token,
         user_id: code.get('user_id')
       }, function(err, tok) {
         if(err) return done(err);
 
-        done(null, tok.get('id'));
+        done(null, tok.get('token'));
       });
 
     });
@@ -66,7 +66,7 @@ server.exchange(
 );
 
 var authorizeClient = function(client_id, redirect_uri, done) {
-  models.Client.findOne({ where: { id: client_id } }, function(err, client) {
+  models.Client.findOne({ where: { client: client_id } }, function(err, client) {
     if(err) return done(err);
 
     return redirect_uri === client.get('redirect_uri') ?

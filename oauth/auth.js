@@ -25,7 +25,7 @@ passport.deserializeUser(function(id, done) {
 });
 
 var findClient = function(id, secret, done) {
-  models.Client.findOne({ where: { id: id } }, function(err, client) {
+  models.Client.findOne({ where: { client: id } }, function(err, client) {
     if(err || !client) {
       return !err ?
         done(null, false) :

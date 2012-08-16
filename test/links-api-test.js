@@ -7,21 +7,22 @@ var assert      = require('assert'),
 
 before(function(done) {
   var db = new(cradle.Connection)().database('urlship');
-  var user = {id: 'testusername', password: common.crypt('ohaiu' + 'test'), salt: 'ohaiu', email: 'test@testest.te', name: 'lol lol'};
-  var client = {id: 'buh', redirect_uri: 'http://localhost:8080/callback', client_secret: 'keyboardcat', user_id: 'testusername'};
-  var code = {id: 'code', client_id: 'buh', redirect_uri: 'http://localhost:8080/callback', client_secret: 'keyboardcat', user_id: 'testusername'};
-  var token = {id: 'testoken', client_id: 'buh', user_id: 'testusername'};
+  var user = {username: 'testusername', password: common.crypt('ohaiu' + 'test'), salt: 'ohaiu', email: 'test@testest.te', name: 'lol lol'};
+  var client = {client: 'buh', redirect_uri: 'http://localhost:8080/callback', client_secret: 'keyboardcat', user_id: 'testusername'};
+  var code = {code: 'code', client_id: 'buh', redirect_uri: 'http://localhost:8080/callback', client_secret: 'keyboardcat', user_id: 'testusername'};
+  var token = {token: 'testoken', client_id: 'buh', user_id: 'testusername'};
 
-  db.destroy(function() {
-  db.create(function() {
-    models.User.create(user, function() {
-      models.Client.create(client, function() {
-        models.Code.create(code, function() {
-          models.Token.create(token, done);
-        });
+  models.User.create(user, function(e, u) {
+    client.user_id = u.get('id');
+    models.Client.create(client, function(e, cl) {
+      code.client_id = cl.get('id');
+      code.user_id = u.get('id');
+      models.Code.create(code, function(e, c) {
+        token.client_id = cl.get('id');
+        token.user_id = u.get('id');
+        models.Token.create(token, done);
       });
     });
-  });
   });
 });
 
