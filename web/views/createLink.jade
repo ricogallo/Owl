@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  div.row
+    div.span1
+      img.numbee-thumb(src="http://www.gravatar.com/avatar/1d27f02822d73e2c64e87e14c45bffcc?s=64")
+    div.span7
+      strong @yawno
+      div(style="margin-top: 5px")
+        form(action="/links/new",method="post")
+          input(type="hidden",value=csrf,name="_csrf")
+          input.input-medium#url-input(placeholder="URL...",type="text",style="width: 98%; margin-left: 1px",name="uri")
+          div
+            div.text-core(style="height: 22px; ")
+              div.text-wrap(style="width: 150px; height: 22px; ")
+                textarea.input-medium#tags-input(rows="1",style="width: 150px; ")
+                div.text-tags
+                div.text-dropdown.text-position-below(style="max-height: 100px; top: 22px; ")
+                  div.text-list
+                input(type="hidden",name="tags",value="[]")
+            button.btn.pull-right(type="submit") Send
+            div(style="clear: both")
