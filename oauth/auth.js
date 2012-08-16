@@ -40,14 +40,14 @@ passport.use(new Basic(findClient));
 passport.use(new Client(findClient));
 
 passport.use(new Bearer(function(tkn, done) { 
-  models.Token.findOne({ where: { access_token: tkn } }, function(err, token) {
+  models.Token.findOne({ where: { token: tkn } }, function(err, token) {
     if(err || !token) {
       return !err ?
         done(null, false) :
         done(err);
     }
 
-    models.User.findOne({ where: { id: token.user_id } }, function(e, usr) {
+    models.User.findOne({ where: { id: token.get('user_id') } }, function(e, usr) {
       if(e || !usr) {
         return !e ?
           done(null, false) :

@@ -36,7 +36,6 @@ links.all = function(callback) {
   });
 };
 
-// TO BE REWRITTEN
 links.create = function(obj, callback) {
   var uri = obj.uri,
       tags = obj.tags,
@@ -45,7 +44,7 @@ links.create = function(obj, callback) {
   user.set('links', [new models.Link({uri: uri})]);
   user.save(function(e) {
     if (e) {
-      if (e.validate)
+      if (e[0] && e[0].message === 'invalid input')
         return callback(new Error(400));
       else
         return callback(new Error(500));
@@ -67,9 +66,7 @@ links.del = function(obj, callback) {
     if(!docs)
       return callback(new Error(404));
 
-    update.uri = uri;
-
-    if (docs.get('userId') === id) { // TODO: change this with real column from hater
+    if (docs.get('user_id') === user.get('id')) {
       docs.destroy(function(err, docs) {
         if (err) return callback(new Error(500));
         
