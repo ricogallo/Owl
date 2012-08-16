@@ -7,7 +7,6 @@ var express     = require('express'),
     client      = require('./lib/client'),
     common      = require('./lib/common'),
     user        = require('../models/').User,
-    cons        = require('consolidate'),
     gravatar    = require('gravatar'),
     fs          = require('fs'),
     middlewares = require('./middlewares'),
@@ -17,9 +16,8 @@ var express     = require('express'),
 var app = module.exports = express();
 
 
-app.engine('dl', cons.dust);
+app.set('view engine', 'jade');
 app.set('views', __dirname + '/views');
-app.set('view engine', 'dl');
 
 /* 
  * Set up locales

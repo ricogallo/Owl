@@ -27,8 +27,8 @@ users.get = function(obj, callback) {
 users.me = function(obj, callback) {
   var user = obj.user,
       whitelist = ['email', 'name', 'username'];
-
   models.User.findOne({where: {id: user.id}}, function(err, docs) {
+    console.log('burp');
     var json = {};
 
     if (!docs)

@@ -36,7 +36,7 @@ users.create = function(req, res) {
 };
 
 users.me = function(req, res) {
-  core.links.user({where: {id: req.user.get('id')}}, function(err, docs) {
+  core.links.user({ id: req.user.get('id') }, function(err, docs) {
     console.log(err);
 
     if (err)

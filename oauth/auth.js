@@ -11,7 +11,7 @@ passport.use(new Local(function(usr, pwd, done) {
     if(err || !user) {
       return done(null, false);
     }
-
+    console.log(common.crypt(user.get('salt') + pwd) === user.get('password'));
     done(null, common.crypt(user.get('salt') + pwd) === user.get('password') ? user : false);
   });
 }));

@@ -1,0 +1,30 @@
+div.span3.pull-right
+  div.well.fromtop
+    div.row
+      div.span1
+        img.numbee-thumb(src="#{gravatar(user.get('email'))}")
+      div.offset1
+        span
+          strong= user.get('name');
+          br
+        div(style="margin-top: 10px")
+          i
+            span.rname Nome Cognome
+          br
+          span
+            a(href="mailto:yawn.localhost@gmail.com")
+              i.icon-envelope
+  div.well
+    ul.nav.nav-list
+      li.nav-header
+        i.icon-tags
+        | Links
+      li
+        a(href="/new") Create Link
+      li.nav-header
+        i.icon-th-large
+        | Clients
+      li
+        a(href="/client/new") Create Client
+      li
+        a(href="/clients") Manage Clients

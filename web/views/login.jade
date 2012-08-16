@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  form.form-horizontal(action="/login",method="post")
+    legend Sign in
+    div.control-group
+      label.control-label(for="username") Username
+      div.controls
+        input(type="hidden",value=csrf,name="_csrf")
+        input.input-medium(type="text",placeholder="Username",name="username")
+    div.control-group
+      label.control-label(for="psw") Password
+      div.controls
+        input.input-medium(type="password",placeholder="Password",name="password")
+    div.form-actions
+      button.btn.btn-primary(type="submit") Sign in

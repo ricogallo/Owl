@@ -9,12 +9,8 @@ var middlewares = exports;
 middlewares.locals = function(req, res, next) {
   res.locals.user = req.user;
   res.locals.csrf = req.session._csrf;
-  res.locals.gravatar = function(chunk, context, bodies, params) {
-   return chunk.map(function(chunk) {
-      user.findOne({where: {id: params.id}}, function(e, user) {
-        chunk.end(gravatar.url(user.email, { s: 64 }));
-      });
-    });
+  res.locals.gravatar = function(id) {
+    return gravatar.url(id, { s: 64 });
   };
   next();
 };
