@@ -39,8 +39,8 @@ users.me = function(req, res) {
   core.links.user({ id: req.user.get('id') }, function(err, docs) {
     if (err)
       return common.errorHandler(err, res);
-
-    res.render('links', { links: docs });
+    
+    res.render('links', { user: docs });
   });
 };
 

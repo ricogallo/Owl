@@ -2,8 +2,8 @@ extends layout
 
 block content
   div.row
-    if links && links.get('links')
-      for link in links.get('links')
+    if user && user.get('links')
+      for link in user.get('links')
         div.span1
           img.numbee-thumb(src="#{gravatar(user.get('email'))}")
         div.span7
