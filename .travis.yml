@@ -3,6 +3,7 @@ node_js:
   - 0.6
   - 0.8
 before_script:
+  - mysql -e 'create database urlship;'
   - npm start &
   - sleep 5
 notifications:

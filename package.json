@@ -31,7 +31,7 @@
     "cradle": ">= 0.0.0"
   },
   "scripts": {
-    "test": "mocha -t 20000 -R spec -r should test/*-test.js --globals uid",
+    "test": "mocha -t 20000 -R spec -r should test/*-test.js",
     "start": "node app.js"
   },
   "domains": [

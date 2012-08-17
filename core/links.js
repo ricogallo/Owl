@@ -18,12 +18,12 @@ links.get = function(obj, callback) {
 
 links.user = function(obj, callback) {
   var id = obj.id;
-  
-  models.User.find({where: {id: id}, fetch: ["links"]}, function(e, docs) {
+   
+  models.Link.find({where: { user: { id: id } }, fetch: ["tags", "user"]}, function(e, docs) {
     if (e)
       return callback(new Error(500));
-
-    callback(e, docs.links);
+     
+    callback(e, docs);
   });
 };
 
@@ -38,20 +38,40 @@ links.all = function(callback) {
 
 links.create = function(obj, callback) {
   var uri = obj.uri,
-      tags = obj.tags,
-      user = obj.user;
+      user = obj.user,
+      tags = [];
+   
+  function done() {
+    user.set('links', [new models.Link({ uri: uri, tags: tags })]);
+    
+    user.save(function(e) {
+      if (e) {
+        if (e[0] && e[0].message === 'invalid input')
+          return callback(new Error(400));
+        else
+          return callback(new Error(500));
+      }
 
-  user.set('links', [new models.Link({uri: uri})]);
-  user.save(function(e) {
-    if (e) {
-      if (e[0] && e[0].message === 'invalid input')
-        return callback(new Error(400));
-      else
-        return callback(new Error(500));
-    }
+      callback(null);
+    });
+  }
 
-    callback(e);
-  });
+
+  (function iterate(names) {
+    var tag = names.shift();
+
+    if(!tag) { return done(); }
+
+    models.Tag.findOrCreate({ where: { name: tag } }, function(e, instance) {
+      if(e) return callback(new Error(500));
+      
+      tags.push(instance);
+      
+      iterate(names);
+    });
+
+  })(obj.tags);
+
 };
 
 links.del = function(obj, callback) {

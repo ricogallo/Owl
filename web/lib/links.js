@@ -18,7 +18,7 @@ links.create = function(req, res) {
     tags: JSON.parse(req.body.tags)
   }, function(err, docs) {
     if (err)
-      return common.errorHandler(e, res);
+      return common.errorHandler(err, res);
     res.redirect('/');
   });
 };
