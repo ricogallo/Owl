@@ -2,12 +2,12 @@ extends layout
 
 block content
   div.row
-    if links
-      for link in links
+    if links && links.get('links')
+      for link in links.get('links')
         div.span1
-          img.numbee-thumb(src="#{gravatar(link.get('user').get('email'))}")
+          img.numbee-thumb(src="#{gravatar(user.get('email'))}")
         div.span7
-          strong= link.get('user').get('email')
+          strong= user.get('email')
           div(style="margin-top: 5px")
             a(href="#{link.get('uri')}")= link.get('uri')
             div(style="margin-top: 5px")
