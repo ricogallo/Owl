@@ -1,6 +1,5 @@
 var models = require('../../models/'),
-    passpr = require('passport'),
-    views  = require('consolidate');
+    passpr = require('passport');
 
 var profile = exports;
 

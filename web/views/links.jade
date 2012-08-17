@@ -14,12 +14,12 @@ block content
               for tag in link.get('tags')
                 a(href="#")= tag.get('name')
         div.pull-right
-          form#73f1fe6e-bccf-4c8f-b021-0b719159af74.formdel(action="/delete/73f1fe6e-bccf-4c8f-b021-0b719159af74",style="display: none",method="post")
+          form(id=link.get('id'),style="display: none",method="post",action="/delete/#{link.get('id')}")
             a
               input(type="hidden",name="_method",value="delete")
-              input(type="hidden",name="_csrf",value="2TDqM1fIBDq9pFYsedOil96K")
+              input(type="hidden",name="_csrf",value=csrf)
           a.numbee-icon(href="#")
-            i.icon-remove(onclick="document.getElementById('73f1fe6e-bccf-4c8f-b021-0b719159af74').submit()",style="pointer: cursor")
+            i.icon-remove(onclick="document.getElementById('#{link.get('id')}').submit()",style="pointer: cursor")
           a.numbee-icon(href="#")
             i.icon-heart
           a.numbee-icon(href="#")
