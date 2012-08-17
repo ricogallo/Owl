@@ -7,7 +7,9 @@ users.get = function(obj, callback) {
   var id = obj.id,
       whitelist = ['email', 'name'];
 
-  models.User.findOne({where: {id: id}}, function(err, user) {
+  console.log('#get');
+
+  models.User.findOne({where: {username: id}}, function(err, user) {
     var json = {};
 
     if (!user)
@@ -27,7 +29,8 @@ users.get = function(obj, callback) {
 users.me = function(obj, callback) {
   var user = obj.user,
       whitelist = ['email', 'name', 'username'];
-  models.User.findOne({where: {id: user.id}}, function(err, docs) {
+
+  models.User.findOne({where: {id: user.get('id')}}, function(err, docs) {
     var json = {};
 
     if (!docs)
