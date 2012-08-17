@@ -2,27 +2,28 @@ extends layout
 
 block content
   div.row
-    for link in links
-      div.span1
-        img.numbee-thumb(src="#{gravatar(link.get('user').get('email'))}")
-      div.span7
-        strong= link.get('user').get('email')
-        div(style="margin-top: 5px")
-          a(href="#{link.get('uri')}")= link.get('uri')
+    if links
+      for link in links
+        div.span1
+          img.numbee-thumb(src="#{gravatar(link.get('user').get('email'))}")
+        div.span7
+          strong= link.get('user').get('email')
           div(style="margin-top: 5px")
-            for tag in link.get('tags')
-              a(href="#")= tag.get('name')
-      div.pull-right
-        form#73f1fe6e-bccf-4c8f-b021-0b719159af74.formdel(action="/delete/73f1fe6e-bccf-4c8f-b021-0b719159af74",style="display: none",method="post")
-          a
-            input(type="hidden",name="_method",value="delete")
-            input(type="hidden",name="_csrf",value="2TDqM1fIBDq9pFYsedOil96K")
-        a.numbee-icon(href="#")
-          i.icon-remove(onclick="document.getElementById('73f1fe6e-bccf-4c8f-b021-0b719159af74').submit()",style="pointer: cursor")
-        a.numbee-icon(href="#")
-          i.icon-heart
-        a.numbee-icon(href="#")
-          i.icon-star
-        a.numbee-icon(href="#")
-          i.icon-tag
-  hr
+            a(href="#{link.get('uri')}")= link.get('uri')
+            div(style="margin-top: 5px")
+              for tag in link.get('tags')
+                a(href="#")= tag.get('name')
+        div.pull-right
+          form#73f1fe6e-bccf-4c8f-b021-0b719159af74.formdel(action="/delete/73f1fe6e-bccf-4c8f-b021-0b719159af74",style="display: none",method="post")
+            a
+              input(type="hidden",name="_method",value="delete")
+              input(type="hidden",name="_csrf",value="2TDqM1fIBDq9pFYsedOil96K")
+          a.numbee-icon(href="#")
+            i.icon-remove(onclick="document.getElementById('73f1fe6e-bccf-4c8f-b021-0b719159af74').submit()",style="pointer: cursor")
+          a.numbee-icon(href="#")
+            i.icon-heart
+          a.numbee-icon(href="#")
+            i.icon-star
+          a.numbee-icon(href="#")
+            i.icon-tag
+    hr
