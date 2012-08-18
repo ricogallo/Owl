@@ -12,7 +12,7 @@ div.span3.pull-right
             span.rname= user.get('name')
           br
           span
-            a(href="mailto:#{user.get('email')}")
+            a(class="m-btn mini icn-only", href="mailto:#{user.get('email')}")
               i.icon-envelope
   div.well
     ul.nav.nav-list
@@ -29,7 +29,7 @@ div.span3.pull-right
       li
         a(href="/clients") Manage Clients
       li.nav-header
-        i.icon-wrench 
+        i.icon-user 
         | Settings
       li
         a(href="/profile") Profile
