@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  form.form-horizontal(action="/profile",method="post")
+    legend Profile
+      div.control-group
+        label.control-label(for="username") Name
+        div.controls
+          input(type="hidden",value=csrf,name="_csrf")
+          input.input-medium(type="text", name="name")
+      div.control-group
+        label.control-label(for="psw") Surname
+        div.controls
+          input.input-medium(type="password", name="surname")
+      div.form-actions
+        button.btn.btn-primary(type="submit") Save

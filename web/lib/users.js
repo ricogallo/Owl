@@ -44,7 +44,7 @@ users.me = function(req, res) {
   });
 };
 
-users.settings = function(req, res) {
+users.userProfile = function(req, res) {
   var body = req.body,
       id   = req.user.get('id');
 

@@ -23,6 +23,6 @@ profile.signUp = function(req, res) {
   res.render('register');
 };
 
-profile.settings = function(req, res) {
-  res.render('update');
+profile.userProfile = function(req, res) {
+  res.render('userProfile');
 };
