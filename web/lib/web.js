@@ -22,3 +22,7 @@ profile.logout = function(req, res) {
 profile.signUp = function(req, res) {
   res.render('register');
 };
+
+profile.settings = function(req, res) {
+  res.render('update');
+};

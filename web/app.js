@@ -50,6 +50,8 @@ app.get('/logout', [login.ensureLoggedIn(), libs.web.logout]);
 app.get('/users/:id', [login.ensureLoggedIn(), libs.users.get]);
 app.get('/me', [login.ensureLoggedIn(), libs.users.me]);
 app.get('/account/:id', [login.ensureLoggedIn(), libs.users.account]);
+app.get('/settings', [login.ensureLoggedIn(), libs.web.settings]);
+app.post('/settings', [login.ensureLoggedIn(), libs.users.settings]);
 
 /*
  * Oauth routes

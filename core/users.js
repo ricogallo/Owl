@@ -1,4 +1,5 @@
 var models = require('../models/'),
+    utile  = require('utile'),
     common = require('./common');
 
 var users = exports;
@@ -57,3 +58,23 @@ users.create = function(obj, callback) {
     callback(e, r);
   });
 };
+
+users.settings = function(obj, callback) {
+  var body = obj.body,
+      id = obj.id,
+      whitelist = ['name'];
+
+  if (body.name && body.surname)
+    body.name += " "+body.surname;
+  
+  body = utile.filter(body, function(v, k) {
+    return ~whitelist.indexOf(k);
+  });
+
+  models.User.update(body, {where: {id: id}}, function(err) {
+    if (err)
+      return callback(new Error(500));
+
+    callback(err);
+  });
+}

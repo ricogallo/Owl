@@ -44,6 +44,18 @@ users.me = function(req, res) {
   });
 };
 
+users.settings = function(req, res) {
+  var body = req.body,
+      id   = req.user.get('id');
+
+  core.users.settings({body: body, id: id}, function(err) {
+    if (err)
+      return common.errorHandler(err, res);
+
+    res.redirect('/me');    
+  });
+};
+
 users.account = function(req, res) {
   var id = req.params.id;
 
