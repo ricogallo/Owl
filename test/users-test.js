@@ -33,6 +33,30 @@ describe('user.js', function() {
     });
   });
 
+  it('should change settings', function(done) {
+    browser.visit('http://localhost:8000/login', function() {
+      browser.
+        fill('username', 'test').
+        fill('password', 'test').
+
+        pressButton('Sign in', function() {
+          browser.visit('http://localhost:8000/profile', function() {
+            expect(browser.success).to.be.ok();
+            browser
+              .fill('name', 'testa')
+              .fill('surname', 'testa')
+
+              .pressButton('Save', function() {
+                browser.visit('http://localhost:8000/me', function() {
+                  expect(browser.document.getElementsByClassName('rname')[0].innerHTML).to.be.eql('testa testa');
+                  done();
+                });
+              });
+          });
+        });
+    });
+  });
+
   describe('/api/users/:id', function() {
     it('should get an user if exists', function(done) {
       request('http://localhost:8000/api/users/testusername?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
