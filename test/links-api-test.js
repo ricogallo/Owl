@@ -16,6 +16,7 @@ before(function(done) {
   var link = {uri: 'http://unauth.un', user_id: 0xc0ffee};
 
   models.User.create(user1, function(e, us) {
+
     us.set('links', [new models.Link(link)]);
     us.save(function(e, l) {
       models.User.create(user, function(e, u) {
