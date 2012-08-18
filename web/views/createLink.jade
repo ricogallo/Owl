@@ -3,7 +3,7 @@ extends layout
 block content
   div.row
     div.span1
-      img.numbee-thumb(src="http://www.gravatar.com/avatar/1d27f02822d73e2c64e87e14c45bffcc?s=64")
+      img.numbee-thumb(src="#{gravatar(user.get('email'))}")
     div.span7
       strong @#{user.get('username')}
       div(style="margin-top: 5px")
