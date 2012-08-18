@@ -1,9 +1,9 @@
 extends layout
 
 block content
-  div.row
-    if user && user.get('links')
-      for link in user.get('links')
+  if user && user.get('links')
+    for link in user.get('links')
+      div.row
         div.span1
           img.numbee-thumb(src="#{gravatar(user.get('email'))}")
         div.span7
@@ -26,5 +26,4 @@ block content
             i.icon-star
           a.numbee-icon(href="#")
             i.icon-tag
-        br(clear="both")
-        hr
+      hr
