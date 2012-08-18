@@ -33,12 +33,36 @@ describe('user.js', function() {
     });
   });
 
+  it('should change settings', function(done) {
+    browser.visit('http://localhost:8000/login', function() {
+      browser.
+        fill('username', 'test').
+        fill('password', 'test').
+
+        pressButton('Sign in', function() {
+          browser.visit('http://localhost:8000/profile', function() {
+            expect(browser.success).to.be.ok();
+            browser
+              .fill('name', 'testa')
+              .fill('surname', 'testa')
+
+              .pressButton('Save', function() {
+                browser.visit('http://localhost:8000/me', function() {
+                  expect(browser.document.getElementsByClassName('rname')[0].innerHTML).to.be.eql('testa testa');
+                  done();
+                });
+              });
+          });
+        });
+    });
+  });
+
   describe('/api/users/:id', function() {
     it('should get an user if exists', function(done) {
       request('http://localhost:8000/api/users/testusername?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
         assert.equal(null, e);
-        res.statusCode.should.equal(200);
-        JSON.parse(body).should.be.a('object');
+        expect(res.statusCode).to.be.equal(200);
+        expect(JSON.parse(body)).to.be.a('object');
         done();
       });
     });
@@ -46,7 +70,7 @@ describe('user.js', function() {
     it('should return 404 if an user does not exist', function(done) {
       request('http://localhost:8000/api/users/inexistent?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
         assert.equal(null, e);
-        res.statusCode.should.equal(404);
+        expect(res.statusCode).to.be.equal(404);
         done();
       });
     });
@@ -56,8 +80,8 @@ describe('user.js', function() {
     it('should get current user', function(done) {
       request('http://localhost:8000/api/me?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
         assert.equal(null, e);
-        res.statusCode.should.equal(200);
-        JSON.parse(body).should.be.a('object');
+        expect(res.statusCode).to.be.equal(200);
+        expect(JSON.parse(body)).to.be.a('object');
         done();
       });
     });

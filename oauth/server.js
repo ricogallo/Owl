@@ -3,16 +3,15 @@ var oauth  = require('oauth2orize'),
     models = require('../models/'),
     common = require('../core/common'),
     login  = require('connect-ensure-login'),
-    views  = require('consolidate'),
     server = oauth.createServer(),
     config = exports;
 
 server.serializeClient(function(client, done) {
-  done(null, client.id);
+  done(null, client.get('id'));
 });
 
 server.deserializeClient(function(id, done) {
-  models.Client.get(id, function(err, client) {
+  models.Client.findOne({ where: { client: id } }, function(err, client) {
     if(err || !client) {
       return err ?
         done(err) :
@@ -27,37 +26,38 @@ server.grant(
   oauth.grant.code(function(client, redirect_uri, user, ares, done) {
     var code = common.code();
     models.Code.create({
-      id: code,
+      code: code,
       redirect_uri: redirect_uri,
-      client_id: client.id,
-      user_id: user.id
+      client_id: client.get('id'),
+      user_id: user.get('id')
     }, function(err, code) {
       if(err) return done(err); 
 
-      done(null, code.id);
+      done(null, code.get('code'));
     });
   })
 );
 
 server.exchange(
   oauth.exchange.code(function(client, id, redirect_uri, done) {
-    models.Code.get(id, function(err, code) {
+    models.Code.findOne({ where: { code: id } }, function(err, code) {
       if(err) return done(err);
       if(
         !code ? true
-        : code.client_id !== client.id ? true
-        : code.redirect_uri !== redirect_uri ? true
+        : code.get('client_id') !== client.id ? true
+        : code.get('redirect_uri') !== redirect_uri ? true
         : false
       ) return done(null, false); 
+
       var token = common.token();
       models.Token.create({
-        client_id: client.id,
-        id: token,
-        user_id: code.user_id 
+        client_id: client.get('id'),
+        token: token,
+        user_id: code.get('user_id')
       }, function(err, tok) {
         if(err) return done(err);
 
-        done(null, tok.id);
+        done(null, tok.get('token'));
       });
 
     });
@@ -65,10 +65,10 @@ server.exchange(
 );
 
 var authorizeClient = function(client_id, redirect_uri, done) {
-  models.Client.get(client_id, function(err, client) {
+  models.Client.findOne({ where: { client: client_id } }, function(err, client) {
     if(err) return done(err);
 
-    return redirect_uri === client.redirect_uri ?
+    return redirect_uri === client.get('redirect_uri') ?
       done(null, client, redirect_uri) :
       done(null, false) ;
   });
@@ -95,4 +95,4 @@ config.token = [
   passpr.authenticate(['basic', 'oauth2-client-password'], { session: false }),
   server.token(),
   server.errorHandler()
-]
+];

@@ -1,6 +1,5 @@
 var models = require('../../models/'),
-    passpr = require('passport'),
-    views  = require('consolidate');
+    passpr = require('passport');
 
 var profile = exports;
 
@@ -22,4 +21,8 @@ profile.logout = function(req, res) {
 
 profile.signUp = function(req, res) {
   res.render('register');
+};
+
+profile.userProfile = function(req, res) {
+  res.render('userProfile');
 };

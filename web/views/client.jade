@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  form.form-horizontal(method='post', action='/clients')
+    fieldset
+      .control-group
+        label.control-label App name: 
+        .controls
+          input(type='hidden', name='_csrf', value='#{csrf}')
+          input.input-xlarge(type='text', name='client_id')
+          br
+      .control-group
+        label.control-label URI: 
+        .controls
+          input.input-xlarge(type='text', name='redirect_uri')
+          br
+      .form-actions
+        button(class='m-btn blue', type='submit') Create

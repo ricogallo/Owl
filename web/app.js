@@ -7,19 +7,17 @@ var express     = require('express'),
     client      = require('./lib/client'),
     common      = require('./lib/common'),
     user        = require('../models/').User,
-    cons        = require('consolidate'),
     gravatar    = require('gravatar'),
     fs          = require('fs'),
     middlewares = require('./middlewares'),
     login       = require('connect-ensure-login'),
     server      = require('../oauth/server');
 
-var app = module.exports = express.createServer();
+var app = module.exports = express();
 
 
-app.engine('dl', cons.dust);
+app.set('view engine', 'jade');
 app.set('views', __dirname + '/views');
-app.set('view engine', 'dl');
 
 /* 
  * Set up locales
@@ -52,6 +50,8 @@ app.get('/logout', [login.ensureLoggedIn(), libs.web.logout]);
 app.get('/users/:id', [login.ensureLoggedIn(), libs.users.get]);
 app.get('/me', [login.ensureLoggedIn(), libs.users.me]);
 app.get('/account/:id', [login.ensureLoggedIn(), libs.users.account]);
+app.get('/profile', [login.ensureLoggedIn(), libs.web.userProfile]);
+app.post('/profile', [login.ensureLoggedIn(), libs.users.userProfile]);
 
 /*
  * Oauth routes

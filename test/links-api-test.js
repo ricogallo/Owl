@@ -2,26 +2,35 @@ var assert      = require('assert'),
     common      = require('../core/common'),
     models      = require('../models/'),
     request     = require('request'),
+    expect      = require('expect.js'),
     cradle      = require('cradle');
 
+var uid;
 
 before(function(done) {
-  var db = new(cradle.Connection)().database('urlship');
-  var user = {id: 'testusername', password: common.crypt('ohaiu' + 'test'), salt: 'ohaiu', email: 'test@testest.te', name: 'lol lol'};
-  var client = {id: 'buh', redirect_uri: 'http://localhost:8080/callback', client_secret: 'keyboardcat', user_id: 'testusername'};
-  var code = {id: 'code', client_id: 'buh', redirect_uri: 'http://localhost:8080/callback', client_secret: 'keyboardcat', user_id: 'testusername'};
-  var token = {id: 'testoken', client_id: 'buh', user_id: 'testusername'};
+  var user = {username: 'testusername', password: common.crypt('ohaiu' + 'test'), salt: 'ohaiu', email: 'test@testest.te', name: 'lol lol'};
+  var user1 = {username: '1testusername', password: common.crypt('ohaiu' + 'test'), salt: 'ohaiu', email: 'test@testest.1te', name: 'lol lol'};
+  var client = {client: 'buh', redirect_uri: 'http://localhost:8080/callback', client_secret: 'keyboardcat', user_id: 'testusername'};
+  var code = {code: 'code', client_id: 'buh', redirect_uri: 'http://localhost:8080/callback', client_secret: 'keyboardcat', user_id: 'testusername'};
+  var token = {token: 'testoken', client_id: 'buh', user_id: 'testusername'};
+  var link = {uri: 'http://unauth.un', user_id: 0xc0ffee};
 
-  db.destroy(function() {
-  db.create(function() {
-    models.User.create(user, function() {
-      models.Client.create(client, function() {
-        models.Code.create(code, function() {
-          models.Token.create(token, done);
+  models.User.create(user1, function(e, us) {
+    us.set('links', [new models.Link(link)]);
+    us.save(function(e, l) {
+      models.User.create(user, function(e, u) {
+        uid = client.user_id = u.get('id');
+        models.Client.create(client, function(e, cl) {
+          code.client_id = cl.get('id');
+          code.user_id = u.get('id');
+          models.Code.create(code, function(e, c) {
+            token.client_id = cl.get('id');
+            token.user_id = u.get('id');
+            models.Token.create(token, done);
+          });
         });
       });
     });
-  });
   });
 });
 
@@ -33,7 +42,7 @@ describe('links.js', function() {
         body: JSON.stringify({ uri: 'http://valid.url', tags: 'how,are,you' }),
         json: true
       }, function(e, res, body) {
-        res.statusCode.should.equal(201);
+        expect(res.statusCode).to.be.equal(201);
         assert.equal(null, e);
         done();
       });  
@@ -44,7 +53,7 @@ describe('links.js', function() {
         url: 'http://localhost:8000/api/links?access_token=testoken&client_id=buh&client_secret=keyboardcat'
       }, function(e, res, body) {
         assert.equal(null, e);
-        res.statusCode.should.equal(400);
+        expect(res.statusCode).to.be.equal(400);
         done();
       });
     });
@@ -56,7 +65,7 @@ describe('links.js', function() {
         body: JSON.stringify({uri: 'invalidurl', tags: 'how,are,you'})
       }, function(e, res, body) {
         assert.equal(null, e);
-        res.statusCode.should.equal(400);
+        expect(res.statusCode).to.be.equal(400);
         done();
       });
     });
@@ -66,8 +75,8 @@ describe('links.js', function() {
     it('should return an array', function(done) {
       request('http://localhost:8000/api/links?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
         assert.equal(null, e);
-        res.statusCode.should.equal(200);
-        JSON.parse(body).should.be.a('object');
+        expect(res.statusCode).to.be.equal(200);
+        expect(JSON.parse(body)).to.be.a('object');
         done();
       });      
     });
@@ -76,7 +85,7 @@ describe('links.js', function() {
     it('should return a 404 when an invalid/inexistent id is requested', function(done) {
       request('http://localhost:8000/api/links/lol?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
         assert.equal(null, e);
-        res.statusCode.should.equal(404);
+        expect(res.statusCode).to.be.equal(404);
         done();
       });
     });
@@ -84,31 +93,9 @@ describe('links.js', function() {
     it('should fail without auth', function(done) {
       request('http://localhost:8000/api/links/lol', function(e, res, body) {
         assert.equal(null, e);
-        res.statusCode.should.equal(401);
+        expect(res.statusCode).to.be.equal(401);
         done();
       });
-    });
-  });
-
-  describe('a PUT to /api/links', function() {
-    it('should update a link if exists', function(done) {
-      request('http://localhost:8000/api/links?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
-        assert.equal(null, e);
-        body = JSON.parse(body);
-
-        
-        // ink/user/testusername/9bb5834b-c523-4f28-b33d-ee634809b6ab
-        var id = body[0]._id.match(/.+?\/.+?\/.+?\/(.+)/)[1];
-
-        request.put({
-          url: 'http://localhost:8000/api/links/'+id+'?access_token=testoken&client_id=buh&client_secret=keyboardcat',
-          body: JSON.stringify({ uri: 'http://another.url' }),
-          json: true
-        }, function(e, res, body) {
-          res.statusCode.should.equal(200);
-          done();
-        });
-      });      
     });
   });
 
@@ -116,20 +103,25 @@ describe('links.js', function() {
     it('should delete a link if exists', function(done) {
       request('http://localhost:8000/api/links?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
         assert.equal(null, e);
-        var id = JSON.parse(body)[0].id;
+        var ids = JSON.parse(body).filter(function(x) { return x.user_id === uid; });
 
-        request.del('http://localhost:8000/api/links/'+id+'?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
-          res.statusCode.should.equal(204);
+        request.del('http://localhost:8000/api/links/'+ids[0].id+'?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
+          expect(res.statusCode).to.be.equal(204);
           done();
         });
       });      
     });
 
     it('should return 401 if not authorized', function(done) {
-      request.del('http://localhost:8000/api/links/inexistent?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
-        res.statusCode.should.equal(401);
-        done();
-      });
+      request('http://localhost:8000/api/links?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
+        assert.equal(null, e);
+        var ids = JSON.parse(body).filter(function(x) { return x.user_id !== uid });
+
+        request.del('http://localhost:8000/api/links/'+ids[0].id+'?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
+          expect(res.statusCode).to.be.equal(401);
+          done();
+        });
+      });  
     });
   }); 
 });

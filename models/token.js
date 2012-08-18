@@ -1,8 +1,10 @@
-module.exports = function() {
-  this.string('access_token');
-  this.string('client_id');
-  this.string('user_id');
+var hater = require('hater');
 
-  this.timestamps();
+module.exports = {
+  'token': hater.Types.String(),
+  'access_token': hater.Types.String(),
+  'client_id': hater.Types.String(),
+  'user_id': hater.Types.String()
 
+  // TODO: timestamps
 };

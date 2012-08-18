@@ -3,7 +3,7 @@ var express  = require('express'),
     users    = require('./lib/users'),
     links    = require('./lib/links');
 
-var app = module.exports = express.createServer();
+var app = module.exports = express();
 
 var oauth_login = function(fn) {
   return [

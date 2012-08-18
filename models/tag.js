@@ -1,5 +1,5 @@
-module.exports = function() { 
-  this.timestamps();
-  
-  this.parent('Link');
+var hater = require('hater');
+
+module.exports = {
+  name: hater.Types.String()
 };

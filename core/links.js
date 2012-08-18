@@ -5,155 +5,88 @@ var links = exports;
 links.get = function(obj, callback) {
   var id = obj.id;
 
-  models.Link.get(id, function(err, docs) {
-    if (err) {
-      if (err.error && err.error === 'not_found')
-        return callback(new Error(404));
-      else
-        return callback(new Error(500));
-    }
+  models.Link.findOne({where: {id: id}}, function(err, docs) {
+    if (!docs)
+      return callback(new Error(404));
 
-    docs.id = docs.id.split('/').pop();
+    if (err)
+      return callback(new Error(500));
 
     callback(err, docs);
   });
-}
+};
 
 links.user = function(obj, callback) {
   var id = obj.id;
 
-  models.User.get(id, function(err, user) {
-    if (err) {
-      if (err.error && err.error === 'not_found')
-        return callback(new Error(404));
-      else
-        return callback(new Error(500));
-    }
+  models.User.findOne({where: { id: id }, fetch: ["links.tags"]}, function(e, doc) {
+    if (e)
+      return callback(new Error(500));
+    callback(e, doc);
+  });
+};
 
-    user.links(function(err, docs) {
-      if (err) {
-        if (err.error && err.error === 'not_found')
-          docs = [];
+links.all = function(callback) {
+  models.Link.find({}, function(err, docs) {
+    if (err)
+      return callback(new Error(500));
+
+    callback(err, docs);
+  });
+};
+
+links.create = function(obj, callback) {
+  var uri = obj.uri,
+      user = obj.user,
+      tags = [];
+   
+  function done() {
+    user.set('links', [new models.Link({ uri: uri, tags: tags })]);
+    
+    user.save(function(e) {
+      if (e) {
+        if (e[0] && e[0].message === 'invalid input')
+          return callback(new Error(400));
         else
           return callback(new Error(500));
       }
 
-      docs = docs.map(function(x) {
-        x.id = x.id.split('/').pop();
-
-        return x;
-      });
-
-      callback(err, docs, user);
+      callback(null);
     });
-  });
-}
+  }
 
-links.all = function(callback) {
-  models.Link.all(function(err, docs) {
-    if (err)
-      return callback(new Error(500));
 
-    docs = docs.map(function(x) {
-      x.id = x._id.split('/').pop();
+  (function iterate(names) {
+    var tag = names.shift();
 
-      return x;
-    });
+    if(!tag) { return done(); }
 
-    callback(err, docs);
-  });
-}
-
-links.create = function(obj, callback) {
-  var uri = obj.uri,
-      tags = obj.tags,
-      user = obj.user;
-
-  user.createLink({uri: uri}, function(err, link) {
-    if (err) {
-      if (err.validate)
-        return callback(new Error(400));
-      else
-        return callback(new Error(500));
-    }
-
-    link.tags = [];
-    (function iterate(a_tags) {
-      var t = a_tags.shift();
+    models.Tag.findOrCreate({ where: { name: tag } }, function(e, instance) {
+      if(e) return callback(new Error(500));
       
-      models.Tag.get(t, function(e, tag) {
-        if(tag) {
-          link.createTag(tag, function(e, tag) {
-            link.tags.push(tag);
-            return a_tags.length ?
-              iterate(a_tags) :
-              callback(null, link);
-          });
-        } else {
-          link.createTag({id: t}, function(e, tag) {
-            link.tags.push(tag);
-            return a_tags.length ?
-              iterate(a_tags) :
-              callback(null, link);
-          });
-        }
-      });
-    })([].slice.call(tags, 0));
- });
+      tags.push(instance);
+      
+      iterate(names);
+    });
+
+  })(obj.tags);
+
 };
 
 links.del = function(obj, callback) {
   var id = obj.id,
-      user = obj.user;
-
-  user.links(function(err, docs) { // no way to get doc by id, thx resourceful, really
-    if (err) {
-      if (err.error && err.error === 'not_found')
-        return callback(new Error(404));
-      else
-        return callback(new Error(500));
-    }
-
-    docs = docs.map(function(x) {
-      return x.id.match(/.+?\/.+?\/(.+)/)[1];
-    });
-
-    if (~docs.indexOf(id)) {
-      models.Link.destroy('user/'+user.id+'/'+id, function(err, docs) {
-        if (err)
-          return callback(new Error(500));
-
-        callback(err, docs);
-      });
-    } else {
-      callback(new Error(401));
-    }
-  });
-}
-
-links.update = function(obj, callback) {
-  var id = obj.id,
       uri = obj.uri,
       user = obj.user;
 
-  user.links(function(err, docs) { // no way to get doc by id, thx resourceful, really
-    var update = {};
+  models.Link.findOne({where: {id: id}}, function(err, docs) {
+    if (err)
+      return callback(new Error(500));
 
-    if (err) {
-      if (err.error && err.error === 'not_found')
-        return callback(new Error(404));
-      else
-        return callback(new Error(500));
-    }
+    if(!docs)
+      return callback(new Error(404));
 
-    update.uri = uri;
-
-    docs = docs.map(function(x) {
-      return x.id.match(/.+?\/.+?\/(.+)/)[1];
-    });
-
-    if (~docs.indexOf(id)) {
-      models.Link.update('user/'+user.id+'/'+id, update, function(err, docs) {
+    if (docs.get('user_id') === user.get('id')) {
+      docs.destroy(function(err, docs) {
         if (err) return callback(new Error(500));
         
         callback(err, docs);
@@ -162,4 +95,32 @@ links.update = function(obj, callback) {
       callback(new Error(401));
     }
   });
-}
+};
+
+links.update = function(obj, callback) {
+  var id = obj.id,
+      uri = obj.uri,
+      user = obj.user;
+
+  models.Link.findOne({where: {id: id}}, function(err, docs) {
+    var update = {};
+
+    if (err)
+      return callback(new Error(500));
+
+    if(!docs)
+      return callback(new Error(404));
+
+    update.uri = uri;
+
+    if (docs.get('userId') === id) { // TODO: change this with real column from hater
+      models.Link.update(update, {id: id}, function(err, docs) {
+        if (err) return callback(new Error(500));
+        
+        callback(err, docs);
+      });
+    } else {
+      callback(new Error(401));
+    }
+  });
+};

@@ -1,0 +1,37 @@
+div.span3.pull-right
+  div.well.fromtop
+    div.row
+      div.span1
+        img.numbee-thumb(src="#{gravatar(user.get('email'))}")
+      div.offset1
+        span
+          strong= user.get('username');
+          br
+        div(style="margin-top: 10px")
+          i
+            span.rname= user.get('name')
+          br
+          span
+            a(class="m-btn mini icn-only", href="mailto:#{user.get('email')}")
+              i.icon-envelope
+  div.well
+    ul.nav.nav-list
+      li.nav-header
+        i.icon-tags
+        | Links
+      li
+        a(href="/new") Create Link
+      li.nav-header
+        i.icon-th-large 
+        | Clients
+      li
+        a(href="/client/new") Create Client
+      li
+        a(href="/clients") Manage Clients
+      li.nav-header
+        i.icon-user 
+        | Settings
+      li
+        a(href="/profile") Profile
+          
+

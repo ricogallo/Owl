@@ -2,7 +2,7 @@ var express  = require('express'),
     passport = require('passport'),
     api      = require('./api/app'),
     web      = require('./web/app'),
-    app      = express.createServer();
+    app      = express();
 
 app.use(express.cookieParser());
 app.use(express.bodyParser());

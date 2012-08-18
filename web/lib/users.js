@@ -1,11 +1,12 @@
-var common = require('./common'),
-    models = require('../../models'),
+var common   = require('./common'),
+    models   = require('../../models'),
     gravatar = require('gravatar'),
-    core = require('../../core');
+    passport = require('passport'),
+    core     = require('../../core');
 
 var users = exports;
 
-users.create = function(req, res) {
+users.create = function(req, res, next) {
   var username = req.body.username,
       password = req.body.password,
       name = req.body.name,
@@ -23,7 +24,7 @@ users.create = function(req, res) {
 
   password = core.common.crypt(salt + password);
 
-  models.User.create({id: username, password: password, salt: salt, name: name+' '+surname, email: email}, function(err, docs) {
+  models.User.create({username: username, password: password, salt: salt, name: name+' '+surname, email: email}, function(err, docs) {
     //
     // If there's an error return a 500
     //
@@ -31,15 +32,28 @@ users.create = function(req, res) {
       res.send(500);
     }
 
-    return res.redirect('/');
+    return passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' })(req, res, next);
   });
 };
 
 users.me = function(req, res) {
-  core.links.user({id: req.user.id}, function(err, docs) {
+  core.links.user({ id: req.user.get('id') }, function(err, docs) {
     if (err)
       return common.errorHandler(err, res);
-    res.render('links', { links: docs });
+    
+    res.render('links', { user: docs });
+  });
+};
+
+users.userProfile = function(req, res) {
+  var body = req.body,
+      id   = req.user.get('id');
+
+  core.users.settings({body: body, id: id}, function(err) {
+    if (err)
+      return common.errorHandler(err, res);
+
+    res.redirect('/me');    
   });
 };
 

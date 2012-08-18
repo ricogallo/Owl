@@ -17,11 +17,10 @@
     "passport-local": ">= 0.0.0",
     "oauth2orize": ">= 0.0.0",
     "connect-ensure-login": ">= 0.0.0",
-    "consolidate": ">= 0.0.0",
     "utile": ">= 0.0.0",
-    "hbs": "git://github.com/donpark/hbs.git",
     "gravatar": "*",
-    "dustjs-linkedin": "*"
+    "jade": "*",
+    "hater": "git://github.com/yawnt/hater.git"
   },
   "devDependencies": {
     "mocha": ">= 0.0.0",

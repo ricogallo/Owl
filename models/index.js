@@ -1,22 +1,39 @@
-var resourceful = require('resourceful');
- 
-if(process.env.COUCHDB_URL) {
-  resourceful.use('couchdb', { 
-    uri: process.env.COUCHDB_URL, 
-    auth: { 
-      username: process.env.COUCHDB_USER, 
-      password: process.env.COUCHDB_PWD
-    }
-  });
-} else {
-  resourceful.use('couchdb', { database: 'urlship' });
-}
+var hater = require('hater');
+
+hater.connect(
+  process.env.OPENSHIFT_DB_TYPE || 'mysql', 
+  process.env.OPENSHIFT_DB_URL  || 'mysql://root@localhost/urlship'
+);
 
 var models = exports;
 
-models.User   = resourceful.define('User', require('./user'));
-models.Link   = resourceful.define('Link', require('./link'));
-models.Tag    = resourceful.define('Tag', require('./tag'));
-models.Client = resourceful.define('Client', require('./client'));
-models.Token  = resourceful.define('Token', require('./token'));
-models.Code   = resourceful.define('Code', require('./code'));
+// User Model
+models.User   = hater.define('user');
+models.User.schema(require('./user'));
+
+// Link Model
+models.Link   = hater.define('link');
+models.Link.schema(require('./link'));
+
+// Tag Model
+models.Tag    = hater.define('tag');
+models.Tag.schema(require('./tag'));
+
+// Client Model
+models.Client = hater.define('client');
+models.Client.schema(require('./client'));
+
+// Token Model
+models.Token  = hater.define('token');
+models.Token.schema(require('./token'));
+
+// Code Model
+models.Code   = hater.define('code');
+models.Code.schema(require('./code'));
+
+// Relationships
+
+hater.Relationships.oneToMany(models.User, models.Link);
+hater.Relationships.manyToMany(models.Link, models.Tag);
+
+hater.sync();

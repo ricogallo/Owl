@@ -1,4 +1,0 @@
-{>"web/views/layout.dl"/}
-{<body}
-  {tag.id}
-{/body}

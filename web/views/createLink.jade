@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  div.row
+    div.span1
+      img.numbee-thumb(src="#{gravatar(user.get('email'))}")
+    div.span7
+      strong @#{user.get('username')}
+      div(style="margin-top: 5px")
+        form(action="/links/new",method="post")
+          input(type="hidden",value=csrf,name="_csrf")
+          input.input-medium#url-input(placeholder="URL...",type="text",style="width: 98%; margin-left: 1px",name="uri")
+          div
+            textarea(name="tags", class="input-medium", id="tags-input", rows="1")
+          button(class='m-btn blue pull-right', type="submit") Send
+          div(style="clear: both")
