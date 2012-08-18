@@ -1,9 +1,23 @@
 var hater = require('hater');
 
-hater.connect(
-  process.env.OPENSHIFT_DB_TYPE || 'mysql', 
-  process.env.OPENSHIFT_DB_URL  || 'mysql://root@localhost/urlship'
-);
+function buildString() {
+  if(process.env.VCAP_SERVICES) {
+    var res = JSON.parse(process.env.VCAP_SERVICES),
+        db  = res[Object.keys(res).shift()];
+
+    return {
+      type: 'postgresql',
+      url : 'tcp://' + db.user + ':' + db.password + '@' + db.host + ':' + db.port + '/' + db.name
+    };
+  }
+  else { 
+    return { type: 'mysql', url: 'mysql://root@localhost/urlship' };
+  }
+}
+
+var conn = buildString();
+
+hater.connect(conn.type, conn.url);
 
 var models = exports;
 
