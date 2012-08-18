@@ -1,11 +1,12 @@
-var common = require('./common'),
-    models = require('../../models'),
+var common   = require('./common'),
+    models   = require('../../models'),
     gravatar = require('gravatar'),
-    core = require('../../core');
+    passport = require('passport'),
+    core     = require('../../core');
 
 var users = exports;
 
-users.create = function(req, res) {
+users.create = function(req, res, next) {
   var username = req.body.username,
       password = req.body.password,
       name = req.body.name,
@@ -31,7 +32,7 @@ users.create = function(req, res) {
       res.send(500);
     }
 
-    return res.redirect('/');
+    return passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' })(req, res, next);
   });
 };
 
