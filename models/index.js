@@ -45,6 +45,10 @@ models.Token.schema(require('./token'));
 models.Code   = hater.define('code');
 models.Code.schema(require('./code'));
 
+// Bucket Model
+models.Bucket = hater.define('bucket');
+models.Bucket.schema(require('./bucket'));
+
 // Relationships
 
 hater.Relationships.oneToMany(models.User, models.Link);
