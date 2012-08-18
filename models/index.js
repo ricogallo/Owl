@@ -54,5 +54,6 @@ models.Bucket.schema(require('./bucket'));
 hater.Relationships.oneToMany(models.User, models.Link);
 hater.Relationships.manyToMany(models.Link, models.Tag);
 hater.Relationships.oneToMany(models.User, models.Bucket);
+hater.Relationships.manyToMany(models.Bucket, models.Link);
 
 hater.sync();
