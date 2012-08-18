@@ -3,7 +3,6 @@ var oauth  = require('oauth2orize'),
     models = require('../models/'),
     common = require('../core/common'),
     login  = require('connect-ensure-login'),
-    views  = require('consolidate'),
     server = oauth.createServer(),
     config = exports;
 
