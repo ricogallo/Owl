@@ -28,12 +28,12 @@ If your idea gets accepted
 ## Dependencies and installation
 
 * NodeJS
-* CouchDB
+* MySQL (PostgreSQL for production) -> username: root password:(empty) or change in ```models/index.js```
 
 ```
 $ git clone git://github.com/urlship/Owl.git
 $ cd Owl
-$ curl -X PUT localhost:5984/urlship
+$ mysql -e "create database urlship;"
 $ npm install
 $ npm start
 ```
