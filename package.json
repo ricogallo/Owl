@@ -2,6 +2,12 @@
   "name": "owl",
   "version": "0.0.11-3",
   "author": "yawn <yawn.localhost@gmail.com>",
+  "contributors": [ 
+    {
+      "name": "Giovanni Cappellotto",
+      "email": "potomak84@gmail.com"
+    } 
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/urlship/Owl.git"
@@ -20,7 +26,8 @@
     "utile": ">= 0.0.0",
     "gravatar": "*",
     "jade": "*",
-    "hater": "git://github.com/yawnt/hater.git"
+    "hater": "git://github.com/yawnt/hater.git",
+    "pkginfo": "*"
   },
   "devDependencies": {
     "mocha": ">= 0.0.0",
