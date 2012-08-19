@@ -1,6 +1,7 @@
 var gravatar = require('gravatar'),
     common   = require('./lib/common'),
-    user     = require('../models/').User;
+    user     = require('../models/').User,
+    pkginfo  = require('pkginfo')(module, 'version');
 
 
 
@@ -12,6 +13,7 @@ middlewares.locals = function(req, res, next) {
   res.locals.gravatar = function(id) {
     return gravatar.url(id, { s: 64 });
   };
+  res.locals.VERSION = module.exports.version;
   next();
 };
 
