@@ -1,7 +1,5 @@
 var models = require('../models/');
 
-var async  = require('async');
-
 var links = exports;
 
 links.get = function(obj, callback) {

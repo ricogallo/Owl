@@ -11,7 +11,7 @@ function buildString() {
     };
   }
   else { 
-    return { type: 'mysql', url: 'mysql://root@localhost/urlship' };
+    return { type: 'mysql', url: 'mysql://root:toor@localhost/urlship' };
   }
 }
 
