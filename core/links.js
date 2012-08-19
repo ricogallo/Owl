@@ -1,5 +1,7 @@
 var models = require('../models/');
 
+var async  = require('async');
+
 var links = exports;
 
 links.get = function(obj, callback) {
@@ -19,7 +21,7 @@ links.get = function(obj, callback) {
 links.user = function(obj, callback) {
   var id = obj.id;
 
-  models.User.findOne({where: { id: id }, fetch: ["links.tags"]}, function(e, doc) {
+  models.User.findOne({where: { id: id }, fetch: ["links.{tags,user}"]}, function(e, doc) {
     if (e)
       return callback(new Error(500));
     callback(e, doc);
@@ -113,7 +115,7 @@ links.update = function(obj, callback) {
 
     update.uri = uri;
 
-    if (docs.get('userId') === id) { // TODO: change this with real column from hater
+    if (docs.get('user_id') === id) { // TODO: change this with real column from hater
       models.Link.update(update, {id: id}, function(err, docs) {
         if (err) return callback(new Error(500));
         
@@ -129,10 +131,15 @@ links.byTag = function(obj, callback) {
   var limit = obj.limit || [0, 10],
       tag   = obj.tag;    
 
-  models.Tag.find({where: {name: tag}, fetch: ["links"]}, function(err, rows) {
+  models.Tag.findOne({where: {name: tag}, fetch: ["links.{tags,user}"]}, function(err, rows) {
+    var links;
+
     if (err)
       return callback(new Error(500));
 
-    callback(err, rows);
+    if (!rows)
+      return callback(new Error(404));
+
+    callback(err, rows.get('links'));
   });
 };
