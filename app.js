@@ -14,4 +14,4 @@ app.use(express.methodOverride());
 app.use('/api', api);
 app.use(web);
 
-app.listen(8000);
+app.listen(process.env.VCAP_APP_PORT || 8000);
