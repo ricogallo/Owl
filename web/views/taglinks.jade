@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  for link in links
+    div.row
+      div.span1
+        img.numbee-thumb(src="#{gravatar(link.get('user').get('email'))}")
+      div.span7
+        strong= link.get('user').get('email')
+        div(style="margin-top: 5px")
+          a.link(href="#{link.get('uri')}")= link.get('uri')
+          div(style="margin-top: 5px")
+            for tag in link.get('tags')
+              a(href="/tags/#{tag.get('name')}")= tag.get('name')+" "
+      div.pull-right
+        if (link.get('user').get('id') === user.get('id'))
+          form(id=link.get('id'),style="display: none",method="post",action="/delete/#{link.get('id')}")
+            a
+              input(type="hidden",name="_method",value="delete")
+              input(type="hidden",name="_csrf",value=csrf)
+          a.numbee-icon(href="#")
+            i.icon-remove(onclick="document.getElementById('#{link.get('id')}').submit()",style="pointer: cursor")
+        a.numbee-icon(href="#")
+          i.icon-heart
+        a.numbee-icon(href="#")
+          i.icon-star
+        a.numbee-icon(href="#")
+          i.icon-tag
+    hr

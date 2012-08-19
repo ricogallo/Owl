@@ -11,3 +11,10 @@ tags.showForm = function(req, res) {
   });
 };
 
+tags.byTag = function(req, res) {
+  var tag = req.params.tag;
+
+  core.links.byTag({tag: tag}, function(err, rows) {
+    res.render('taglinks', {links: rows});
+  });
+};

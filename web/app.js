@@ -79,4 +79,4 @@ app.del('/delete/:id', [login.ensureLoggedIn(), libs.links.delete]);
  * Tags routes
 */
 
-app.get('/tags/:id', [login.ensureLoggedIn(), libs.tags.showForm]);
+app.get('/tags/:tag', [login.ensureLoggedIn(), libs.tags.byTag]);
