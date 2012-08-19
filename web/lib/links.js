@@ -12,6 +12,8 @@ links.create = function(req, res) {
     !req.body.tags
   ) return res.send(res.writeHead(400));
 
+  console.dir(req.body.tags);
+
   core.links.create({
     user: req.user, 
     uri: req.body.uri, 
@@ -19,6 +21,7 @@ links.create = function(req, res) {
   }, function(err, docs) {
     if (err)
       return common.errorHandler(err, res);
+
     res.redirect('/');
   });
 };

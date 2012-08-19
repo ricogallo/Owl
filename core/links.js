@@ -124,3 +124,15 @@ links.update = function(obj, callback) {
     }
   });
 };
+
+links.byTag = function(obj, callback) {
+  var limit = obj.limit || [0, 10],
+      tag   = obj.tag;    
+
+  models.Tag.find({where: {name: tag}, fetch: ["links"]}, function(err, rows) {
+    if (err)
+      return callback(new Error(500));
+
+    callback(err, rows);
+  });
+};
