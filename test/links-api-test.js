@@ -2,8 +2,7 @@ var assert      = require('assert'),
     common      = require('../core/common'),
     models      = require('../models/'),
     request     = require('request'),
-    expect      = require('expect.js'),
-    cradle      = require('cradle');
+    expect      = require('expect.js');
 
 var uid;
 
