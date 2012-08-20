@@ -79,3 +79,4 @@ app.del('/delete/:id', [login.ensureLoggedIn(), libs.links.delete]);
 */
 
 app.get('/tags/:tag', [login.ensureLoggedIn(), libs.tags.byTag]);
+app.get('/search/:tag', [login.ensureLoggedIn(), libs.tags.byTag]);

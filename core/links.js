@@ -126,8 +126,8 @@ links.update = function(obj, callback) {
 };
 
 links.byTag = function(obj, callback) {
-  var limit = obj.limit || [0, 10],
-      tag   = obj.tag;    
+  var limit = obj.limit || 10,
+      tag   = (obj.search) ? new RegExp('%'+obj.tag+'%') : obj.tag;
 
   models.Tag.findOne({where: {name: tag}, fetch: ["links.{tags,user}"]}, function(err, rows) {
     var links;
