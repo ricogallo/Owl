@@ -47,4 +47,5 @@ models.Code.schema(require('./code'));
 hater.Relationships.oneToMany(models.User, models.Link);
 hater.Relationships.manyToMany(models.Link, models.Tag);
 
+
 hater.sync();
