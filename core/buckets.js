@@ -4,7 +4,7 @@ var buckets = exports;
 
 buckets.create  = function(obj, callback) {
   obj.user.set('buckets', [new models.Bucket({ name: obj.name })]);
-
+  
   obj.user.save(function(e) {
     callback(e ? new Error(500) : null);
   });
