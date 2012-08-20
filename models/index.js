@@ -1,13 +1,10 @@
 var hater = require('hater');
 
 function buildString() {
-  if(process.env.VCAP_SERVICES) {
-    var res = JSON.parse(process.env.VCAP_SERVICES),
-        db  = res[Object.keys(res).shift()];
-
-    return {
+  if(process.env.POSTGRESQL_DB) {
+   return {
       type: 'postgresql',
-      url : 'tcp://' + db.user + ':' + db.password + '@' + db.host + ':' + db.port + '/' + db.name
+      url : process.env.POSTGRESQL_DB
     };
   }
   else { 
