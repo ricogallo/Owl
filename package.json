@@ -1,6 +1,6 @@
 {
   "name": "owl",
-  "version": "0.0.11-14",
+  "version": "0.0.11-16",
   "author": "yawn <yawn.localhost@gmail.com>",
   "contributors": [
     {
@@ -13,7 +13,6 @@
     "url": "git://github.com/urlship/Owl.git"
   },
   "dependencies": {
-    "resourceful": "git://github.com/flatiron/resourceful.git",
     "express": ">= 0.0.0",
     "connect": ">= 0.0.0",
     "passport": ">= 0.0.0",
