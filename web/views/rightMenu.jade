@@ -26,6 +26,8 @@ div.span3.pull-right
         | Buckets
       li
         a(href='/buckets/new') Create Bucket
+      li
+        a(href='/#{user.get("username")}/buckets') My Buckets
       li.nav-header
         i.icon-th-large 
         | Clients

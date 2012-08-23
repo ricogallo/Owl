@@ -1,0 +1,14 @@
+extends layout
+
+
+block content
+  form.form-horizontal(action="/buckets",method="post")
+    legend Create bucket
+    div.control-group
+      label.control-label(for="bucket") Name
+      div.controls
+        input(type="hidden",value=csrf,name="_csrf")
+        input.input-medium(type="text", placeholder="Bucket", name="bucket")
+      div.form-actions
+      button(class='m-btn blue', type="submit") Create
+
