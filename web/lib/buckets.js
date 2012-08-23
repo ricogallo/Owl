@@ -13,7 +13,7 @@ buckets.create = function(req, res) {
   }, function(e) {
     if(e) return common.handleError(e, res);
 
-    res.redirect('/');
+    res.redirect('/' + req.user.get('username') + '/buckets/' + req.body.bucket);
   });
 };
 

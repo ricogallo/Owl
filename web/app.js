@@ -89,4 +89,3 @@ app.get('/buckets/new', [login.ensureLoggedIn(), libs.buckets.createForm]);
 app.post('/buckets', [login.ensureLoggedIn(), libs.buckets.create]);
 app.get('/:user/buckets/:name', [login.ensureLoggedIn(), libs.buckets.showOne]);
 app.get('/:user/buckets', [login.ensureLoggedIn(), libs.buckets.show]);
-app.get('/:user/buckets', [login.ensureLoggedIn(), libs.buckets.show]);

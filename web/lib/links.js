@@ -18,7 +18,7 @@ links.create = function(req, res) {
     tags: JSON.parse(req.body.tags)
   }, function(err, docs) {
     if (err)
-      return common.errorHandler(err, res);
+      return common.handleError(err, res);
     res.redirect('/');
   });
 };
@@ -26,7 +26,7 @@ links.create = function(req, res) {
 links.delete = function(req, res) {
   core.links.del({id: req.params.id, user: req.user}, function(e, docs) {
     if (e)
-      return common.errorHandler(e, res);
+      return common.handleError(e, res);
 
     res.redirect('/');
   });
