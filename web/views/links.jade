@@ -9,22 +9,20 @@ block content
         div.span7
           strong= user.get('email')
           div(style="margin-top: 5px")
-            a.link(href="#{link.get('uri')}")= link.get('uri')
+            a(href="#{link.get('uri')}")= link.get('uri')
             div(style="margin-top: 5px")
               for tag in link.get('tags')
-                a(href="/tags/#{tag.get('name')}")= tag.get('name')+" "
+                a(href="#")= tag.get('name')
         div.pull-right
-          if (link.get('user').get('id') === user.get('id'))
+          .m-btn-group
             form(id=link.get('id'),style="display: none",method="post",action="/delete/#{link.get('id')}")
-              a
-                input(type="hidden",name="_method",value="delete")
-                input(type="hidden",name="_csrf",value=csrf)
-            a.numbee-icon(href="#")
+              input(type="hidden",name="_method",value="delete")
+              input(type="hidden",name="_csrf",value=csrf)
+            a(class='m-btn icn-only green')
+              i.icon-tag
+            a(class='m-btn icn-only red')
+              i.icon-heart.icon-white
+          .m-btn-group
+            a(class='m-btn icn-only')
               i.icon-remove(onclick="document.getElementById('#{link.get('id')}').submit()",style="pointer: cursor")
-          a.numbee-icon(href="#")
-            i.icon-heart
-          a.numbee-icon(href="#")
-            i.icon-star
-          a.numbee-icon(href="#")
-            i.icon-tag
       hr
