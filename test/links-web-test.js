@@ -23,7 +23,6 @@ describe('links.js', function() {
   });
 
   it('should login and create link', function(done) {
-
     browser.visit('http://localhost:8000/login', function() {
       browser
         .fill('username', 'test')
@@ -40,6 +39,36 @@ describe('links.js', function() {
                 done();
               });
             });
+        });
+      });
+  });
+
+  it('should get links by tag', function(done) {
+     browser.visit('http://localhost:8000/login', function() {
+      browser
+        .fill('username', 'test')
+        .fill('password', 'test')
+        .pressButton('Sign in', function() {
+          assert.equal(browser.success, true);
+          browser.visit('http://localhost:8000/tags/test', function() {
+            expect(browser.document.getElementsByClassName('link')[0].href).to.be.eql('http://testalicious.com');
+            done();
+          });
+        });
+      });
+  });
+
+  it('should search links by tag', function(done) {
+     browser.visit('http://localhost:8000/login', function() {
+      browser
+        .fill('username', 'test')
+        .fill('password', 'test')
+        .pressButton('Sign in', function() {
+          assert.equal(browser.success, true);
+          browser.visit('http://localhost:8000/search/tes', function() {
+            expect(browser.document.getElementsByClassName('link')[0].href).to.be.eql('http://testalicious.com');
+            done();
+          });
         });
       });
   });

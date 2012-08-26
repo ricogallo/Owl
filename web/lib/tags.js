@@ -11,3 +11,16 @@ tags.showForm = function(req, res) {
   });
 };
 
+tags.byTag = function(req, res) {
+  var tag = req.params.tag;
+
+  core.links.byTag({tag: tag, search: req.route.path.split('/')[1] === 'search'}, function(err, rows) {
+    if (err)
+      return common.handleError(err, res);
+
+    if (!rows)
+      return common.handleError(new Error(404), res);
+
+    res.render('taglinks', {links: rows});
+  });
+};
