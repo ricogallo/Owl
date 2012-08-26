@@ -89,3 +89,5 @@ app.get('/buckets/new', [login.ensureLoggedIn(), libs.buckets.createForm]);
 app.post('/buckets', [login.ensureLoggedIn(), libs.buckets.create]);
 app.get('/:user/buckets/:name', [login.ensureLoggedIn(), libs.buckets.showOne]);
 app.get('/:user/buckets', [login.ensureLoggedIn(), libs.buckets.show]);
+app.get('/buckets/add_link/:id', [login.ensureLoggedIn(), libs.buckets.addForm]);
+app.post('/buckets/add_link', [login.ensureLoggedIn(), libs.buckets.addLink]);

@@ -38,15 +38,22 @@ buckets.showOne = function(obj, callback) {
   models.User.findOne({ where: { username: obj.user, buckets: { name: obj.name } }, fetch: ["buckets"] }, function(e, user) {
     if(e) return callback(new Error(500));
     var bucket = user.get('buckets') && user.get('buckets').shift();
-    
-    callback(null, bucket);
+
+    if(bucket) {
+      bucket.load({ fetch: ["links.{user,tags}"] }, function(e) {
+        callback(null, bucket);
+      });
+    }
+    else {
+      callback(new Error(404));
+    }
   });
 };
 
 buckets.addLink = function(obj, callback) {
   models.Bucket.findOne({ where: { id: obj.bucket } }, function(e, bucket) {
     if(e) return callback(new Error(500)); 
-
+    
     models.Link.findOne({ where: { id: obj.link } }, function(e, link) {
       if(e) return callback(new Error(500));
 

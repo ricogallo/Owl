@@ -18,10 +18,10 @@ block content
             form(id=link.get('id'),style="display: none",method="post",action="/delete/#{link.get('id')}")
               input(type="hidden",name="_method",value="delete")
               input(type="hidden",name="_csrf",value=csrf)
-            a(class='m-btn icn-only green')
+            a(href='/buckets/add_link/#{link.get("id")}', class='m-btn icn-only')
               i.icon-tag
+            a(class='m-btn icn-only')
+              i.icon-heart.
             a(class='m-btn icn-only red')
-              i.icon-heart.icon-white
-            a(class='m-btn icn-only blue')
               i.icon-remove(onclick="document.getElementById('#{link.get('id')}').submit()",style="pointer: cursor")
       hr

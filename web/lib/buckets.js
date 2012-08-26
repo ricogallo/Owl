@@ -32,3 +32,19 @@ buckets.show = function(req, res) {
     res.render('showBuckets', { buckets: buckets });
   });
 };
+
+buckets.addForm = function(req, res) {
+  req.user.load({ fetch: ['buckets']}, function(e) {
+    if(e) return common.handleError(new Error(500), res);
+
+    res.render('addLink', { link: req.params.id, buckets: req.user.get('buckets') });
+  });
+};
+
+buckets.addLink = function(req, res) {
+  core.buckets.addLink(req.body,  function(e) {
+    if(e) return common.handleError(e, res);
+
+    res.redirect('/');
+  });
+};

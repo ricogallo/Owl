@@ -1,5 +1,27 @@
 extends layout
 
 block content
-  .row
-    span= bucket.get('name')
+  if bucket && bucket.get('links')
+    for link in bucket.get('links')
+      div.row
+        div.span1
+          img.numbee-thumb(src="#{gravatar(link.get('user').get('email'))}")
+        div.span7
+          strong= link.get('user').get('email')
+          div(style="margin-top: 5px")
+            a(href="#{link.get('uri')}")= link.get('uri')
+            div(style="margin-top: 5px")
+              for tag in link.get('tags')
+                a(href="#")= tag.get('name')
+        div.pull-right
+          .m-btn-group
+            form(id=link.get('id'),style="display: none",method="post",action="/delete/#{link.get('id')}")
+              input(type="hidden",name="_method",value="delete")
+              input(type="hidden",name="_csrf",value=csrf)
+            a(href='/buckets/add_link/#{link.get("id")}', class='m-btn icn-only')
+              i.icon-tag
+            a(class='m-btn icn-only')
+              i.icon-heart.
+            a(class='m-btn icn-only red')
+              i.icon-remove(onclick="document.getElementById('#{link.get('id')}').submit()",style="pointer: cursor")
+      hr 
