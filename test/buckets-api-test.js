@@ -1,6 +1,7 @@
 var assert  = require('assert'),
     common  = require('../core/common'),
     models  = require('../models/'),
+    expect  = require('expect.js'),
     request = require('request');
 
 var uid, lid;
@@ -48,6 +49,63 @@ describe('bucket.js', function() {
         res.statusCode.should.equal(201);
         done();
       });        
+    });
+
+  });
+
+  describe('a GET to /:user/buckets', function() {
+    
+    it('should list buckets', function(done) {
+      request.get({
+          uri: 'http://localhost:8000/api/testusername/buckets?access_token=testoken&client_id=buh&client_secret=keyboardcat'
+        }, function(e, res, body) {
+          assert.equal(null, e);
+          res.statusCode.should.equal(200);
+          expect(JSON.parse(body)).to.be.an('array'); 
+          done();
+      });
+      
+    });
+
+  });
+
+  describe('a POST to /buckets/add_link', function() {
+
+    it('should add link to bucket', function(done) {
+      
+      request.get({
+        uri: 'http://localhost:8000/api/links?access_token=testoken&client_id=buh&client_secret=keyboardcat'
+      }, function(e, res, body) {
+        var links = JSON.parse(body);
+        request.get({ uri: 'http://localhost:8000/api/testusername/buckets?access_token=testoken&client_id=buh&client_secret=keyboardcat' }, function(e, res, body) {
+          var id  = JSON.parse(body)[0].id,
+              lid = links[0].id;
+          request.post({
+            uri: 'http://localhost:8000/api/buckets/add_link?access_token=testoken&client_id=buh&client_secret=keyboardcat',
+            body: JSON.stringify({ bucket: id, link: lid }),
+            json: true
+          }, function(e, res, body) {
+            expect(e).to.be(null); 
+            expect(res.statusCode).to.be.ok();
+            done();
+          });
+        });
+      });
+
+    });
+
+  });
+
+  describe('a GET to /:user/buckets/:name', function() {
+
+    it('should list links', function(done) {
+      request.get({
+        uri: 'http://localhost:8000/api/testusername/buckets/herpderp?access_token=testoken&client_id=buh&client_secret=keyboardcat'
+      }, function(e, res, body) {
+        expect(JSON.parse(body).links).to.be.an('array');
+        expect(e).to.be(null);
+        done();
+      });
     });
 
   });

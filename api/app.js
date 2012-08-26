@@ -65,4 +65,8 @@ app.get('/me', oauth_login(users.me));
  * @path POST /buckets;
  * @descr Creates new bucket;
 */
+
 app.post('/buckets', oauth_login(buckets.create));
+app.get('/:user/buckets/:name', oauth_login(buckets.showOne));
+app.get('/:user/buckets', oauth_login(buckets.show));
+app.post('/buckets/add_link', oauth_login(buckets.addLink));

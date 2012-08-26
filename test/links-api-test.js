@@ -105,7 +105,6 @@ describe('links.js', function() {
       request('http://localhost:8000/api/links?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
         assert.equal(null, e);
         var ids = JSON.parse(body).filter(function(x) { return x.user_id === uid; });
-
         request.del('http://localhost:8000/api/links/'+ids[0].id+'?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
           expect(res.statusCode).to.be.equal(204);
           done();
@@ -117,7 +116,7 @@ describe('links.js', function() {
       request('http://localhost:8000/api/links?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
         assert.equal(null, e);
         var ids = JSON.parse(body).filter(function(x) { return x.user_id !== uid });
-
+        
         request.del('http://localhost:8000/api/links/'+ids[0].id+'?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
           expect(res.statusCode).to.be.equal(401);
           done();

@@ -2,6 +2,7 @@ extends layout
 
 block content
   if bucket && bucket.get('links')
+    h3= bucket.get('name')
     for link in bucket.get('links')
       div.row
         div.span1
