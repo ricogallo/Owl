@@ -1,56 +1,48 @@
 {
-  "name"           : "owl",
-  "version"        : "0.0.11-16",
-
-  "author"         : "yawn <yawn.localhost@gmail.com>",
-  "contributors"   : [
+  "name": "owl",
+  "version": "0.0.12",
+  "author": "yawn <yawn.localhost@gmail.com>",
+  "contributors": [
     {
-      "name" : "Giovanni Cappellotto",
+      "name": "Giovanni Cappellotto",
       "email": "potomak84@gmail.com"
     }
   ],
-  
-  "repository"     : {
+  "repository": {
     "type": "git",
-    "url" : "git://github.com/urlship/Owl.git"
+    "url": "git://github.com/urlship/Owl.git"
   },
-
-  "dependencies"   : {
-    "express"                        : ">= 0.0.0",
-    "connect"                        : ">= 0.0.0",
-    "passport"                       :  ">= 0.0.0",
-    "passport-http"                  : ">= 0.0.0",
-    "passport-http-bearer"           : ">= 0.0.0",
+  "dependencies": {
+    "express": ">= 0.0.0",
+    "connect": ">= 0.0.0",
+    "passport": ">= 0.0.0",
+    "passport-http": ">= 0.0.0",
+    "passport-http-bearer": ">= 0.0.0",
     "passport-oauth2-client-password": ">= 0.0.0",
-    "passport-local"                 : ">= 0.0.0",
-    "oauth2orize"                    : ">= 0.0.0",
-    "connect-ensure-login"           : ">= 0.0.0",
-    "utile"                          : ">= 0.0.0",
-    "gravatar"                       : "*",
-    "jade"                           : "*",
-    "hater"                          : "git://github.com/yawnt/hater.git",
-    "pkginfo"                        : "*"
+    "passport-local": ">= 0.0.0",
+    "oauth2orize": ">= 0.0.0",
+    "connect-ensure-login": ">= 0.0.0",
+    "utile": ">= 0.0.0",
+    "gravatar": "*",
+    "jade": "*",
+    "hater": "git://github.com/yawnt/hater.git",
+    "pkginfo": "*"
   },
   "devDependencies": {
-    "mocha"    : ">= 0.0.0",
+    "mocha": ">= 0.0.0",
     "expect.js": ">= 0.0.0",
-    "should"   : ">= 0.0.0",
-    "zombie"   : ">= 0.0.0",
-    "request"  : ">= 0.0.0"
+    "should": ">= 0.0.0",
+    "request": ">= 0.0.0"
   },
-
-  "scripts"       : {
-    "test"     : "mocha -t 20000 -R spec -r should test/*-test.js",
-    "start"    : "node app.js"
+  "scripts": {
+    "test": "mocha -t 20000 -R spec -r should test/*-test.js",
+    "start": "node app.js"
   },
-
-
-  "domains"  : [
+  "domains": [
     "alpha.urlship.com"
   ],
-
   "subdomain": "owl",
-  "engines"  : {
+  "engines": {
     "node": "0.8.x"
   }
 }
