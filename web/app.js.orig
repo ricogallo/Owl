@@ -15,7 +15,6 @@ var express     = require('express'),
 
 var app = module.exports = express();
 
-
 app.set('view engine', 'jade');
 app.set('views', __dirname + '/views');
 
@@ -79,11 +78,20 @@ app.del('/delete/:id', [login.ensureLoggedIn(), libs.links.delete]);
  * Tags routes
 */
 
-app.get('/tags/:tag', [login.ensureLoggedIn(), libs.tags.byTag]);
-app.get('/search/:tag', [login.ensureLoggedIn(), libs.tags.byTag]);
+<<<<<<< HEAD
+app.get('/tags/:id', [login.ensureLoggedIn(), libs.tags.showForm]);
+
+/*
+ * Bucket routes
+ */
+
 app.get('/buckets/new', [login.ensureLoggedIn(), libs.buckets.createForm]);
 app.post('/buckets', [login.ensureLoggedIn(), libs.buckets.create]);
 app.get('/:user/buckets/:name', [login.ensureLoggedIn(), libs.buckets.showOne]);
 app.get('/:user/buckets', [login.ensureLoggedIn(), libs.buckets.show]);
 app.get('/buckets/add_link/:id', [login.ensureLoggedIn(), libs.buckets.addForm]);
 app.post('/buckets/add_link', [login.ensureLoggedIn(), libs.buckets.addLink]);
+=======
+app.get('/tags/:tag', [login.ensureLoggedIn(), libs.tags.byTag]);
+app.get('/search/:tag', [login.ensureLoggedIn(), libs.tags.byTag]);
+>>>>>>> 06cabb966e6a7db74d8e271b9afcf2fc2cf94673

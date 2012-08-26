@@ -22,6 +22,13 @@ div.span3.pull-right
       li
         a(href="/new") Create Link
       li.nav-header
+        i.icon-folder-close
+        | Buckets
+      li
+        a(href='/buckets/new') Create Bucket
+      li
+        a(href='/#{user.get("username")}/buckets') My Buckets
+      li.nav-header
         i.icon-th-large 
         | Clients
       li
@@ -29,7 +36,7 @@ div.span3.pull-right
       li
         a(href="/clients") Manage Clients
       li.nav-header
-        i.icon-user 
+        i.icon-user
         | Settings
       li
         a(href="/profile") Profile

@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  form.form-horizontal(action="/buckets/add_link",method="post")
+    legend Add Bucket
+    div.control-group
+      label.control-label(for="bucket") Name
+      div.controls
+        input(type="hidden", value=csrf, name="_csrf")
+        input(type='hidden', value='#{link}', name='link')
+        select(name='bucket')
+          if(buckets)
+            for bucket in buckets
+              option(value='#{bucket.get("id")}')= bucket.get('name')
+      div.form-actions
+      button(class='m-btn blue', type="submit") Create
+

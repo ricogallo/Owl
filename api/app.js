@@ -1,6 +1,7 @@
 var express  = require('express'),
     passport = require('passport'),
     users    = require('./lib/users'),
+    buckets  = require('./lib/buckets'),
     links    = require('./lib/links');
 
 var app = module.exports = express();
@@ -59,3 +60,13 @@ app.get('/users/:id', oauth_login(users.get));
  * @descr Gets logged user profile;
 */
 app.get('/me', oauth_login(users.me));
+
+/* @api
+ * @path POST /buckets;
+ * @descr Creates new bucket;
+*/
+
+app.post('/buckets', oauth_login(buckets.create));
+app.get('/:user/buckets/:name', oauth_login(buckets.showOne));
+app.get('/:user/buckets', oauth_login(buckets.show));
+app.post('/buckets/add_link', oauth_login(buckets.addLink));

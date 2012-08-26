@@ -18,7 +18,12 @@ links.create = function(req, res) {
     tags: JSON.parse(req.body.tags)
   }, function(err, docs) {
     if (err)
+<<<<<<< HEAD
       return common.handleError(err, res);
+=======
+      return common.errorHandler(err, res);
+
+>>>>>>> 06cabb966e6a7db74d8e271b9afcf2fc2cf94673
     res.redirect('/');
   });
 };

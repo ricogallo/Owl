@@ -19,5 +19,5 @@ $(function() {
   });
   
   $("#signup").validate();
-
+  $('.dropdown-toggle').dropdown();
 });

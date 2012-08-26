@@ -42,10 +42,16 @@ models.Token.schema(require('./token'));
 models.Code   = hater.define('code');
 models.Code.schema(require('./code'));
 
+// Bucket Model
+models.Bucket = hater.define('bucket');
+models.Bucket.schema(require('./bucket'));
+
 // Relationships
 
 hater.Relationships.oneToMany(models.User, models.Link);
 hater.Relationships.manyToMany(models.Link, models.Tag);
+hater.Relationships.oneToMany(models.User, models.Bucket);
+hater.Relationships.manyToMany(models.Bucket, models.Link);
 
 
 hater.sync();
