@@ -56,4 +56,31 @@ describe('buckets.js', function() {
         });
       });
   });
+
+  it('should add link to bucket', function(done) {
+    browser.visit('http://localhost:8000/new', function() {
+      browser
+        .fill('uri', 'http://test.com')
+        .fill('tags', '["how","are","you"]')
+        .pressButton('Send', function() {
+ 
+          browser.visit('http://localhost:8000/me', function() {
+            browser.clickLink('a[href^="/buckets/add_link"]', function() {
+              browser.pressButton('Create', function() { 
+                expect(browser.success).to.be(true);
+                done();
+              }); 
+            });
+          });
+        });
+    });
+  
+  });
+
+  it('should list one bucket', function(done) {
+    browser.visit('http://localhost:8000/test/buckets/aBucket', function() {
+      expect(browser.success).to.be(true);
+      done();
+    });
+  });
 });
