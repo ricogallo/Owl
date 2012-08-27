@@ -1,22 +1,14 @@
 extends layout
 
 block content
-  form(id='sub', method='post', action=!~usertags.indexOf(tag) ? '/subscribe/'+tag : '/unsubscribe/'+tag, style="display: none")
-    input(type='hidden', name='_csrf', value=csrf)
-
-  if !~usertags.indexOf(tag)
-    button(class='m-btn blue', style="margin-bottom: 20px", onclick="document.getElementById('sub').submit()") Subscribe
-  else
-    button(class='m-btn red', style="margin-bottom: 20px", onclick="document.getElementById('sub').submit()") Unsubscribe
-
   for link in links
     div.row
       div.span1
-        img.numbee-thumb(src="#{gravatar(link.get('user').get('email'))}")
+        img.numbee-thumb(src="#{gravatar(user.get('email'))}")
       div.span7
-        strong= link.get('user').get('email')
+        strong= user.get('email')
         div(style="margin-top: 5px")
-          a.link(href="#{link.get('uri')}")= link.get('uri')
+          a(href="#{link.get('uri')}")= link.get('uri')
           div(style="margin-top: 5px")
             for tag in link.get('tags')
               a(href="/tags/#{tag.get('name')}")= tag.get('name')+" "

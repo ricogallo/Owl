@@ -21,6 +21,50 @@ tags.byTag = function(req, res) {
     if (!rows)
       return common.handleError(new Error(404), res);
 
-    res.render('taglinks', {links: rows});
+    req.user.load({fetch: ['tags']}, function(err) {
+      if (err)
+        return common.handleError(new Error(500), res);
+
+      var usertags = (req.user.get('tags') || []).map(function(x) {
+        return x.get('name');
+      });
+
+      res.render('taglinks', {links: rows, tag: tag, usertags: usertags});
+    });
+  });
+};
+
+tags.subscribe = function(req, res) {
+  var tag  = req.params.tag,
+      user = req.user;
+
+  core.tags.subscribe({tag: tag, user: user}, function(err, rows) {
+    if (err)
+      return common.handleError(err, res);
+
+    res.redirect('/tags/'+tag);
+  });
+};
+
+tags.unsubscribe = function(req, res) {
+  var tag  = req.params.tag,
+      user = req.user;
+
+  core.tags.unsubscribe({tag: tag, user: user}, function(err, rows) {
+    if (err)
+      return common.handleError(err, res);
+
+    res.redirect('/tags/'+tag);
+  });
+};
+
+tags.timeline = function(req, res) {
+  var user = req.user;
+
+  core.tags.getBySubscription({user: user}, function(err, rows) {
+    if (err)
+      return common.handleError(err, res);
+
+    res.render('linksc', {links: rows});
   });
 };

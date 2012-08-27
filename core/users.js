@@ -77,4 +77,4 @@ users.settings = function(obj, callback) {
 
     callback(err);
   });
-}
+};

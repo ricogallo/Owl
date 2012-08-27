@@ -81,6 +81,9 @@ app.del('/delete/:id', [login.ensureLoggedIn(), libs.links.delete]);
 
 app.get('/tags/:tag', [login.ensureLoggedIn(), libs.tags.byTag]);
 app.get('/search/:tag', [login.ensureLoggedIn(), libs.tags.byTag]);
+app.post('/subscribe/:tag', [login.ensureLoggedIn(), libs.tags.subscribe]);
+app.post('/unsubscribe/:tag', [login.ensureLoggedIn(), libs.tags.unsubscribe]);
+app.get('/timeline', [login.ensureLoggedIn(), libs.tags.timeline])
 app.get('/buckets/new', [login.ensureLoggedIn(), libs.buckets.createForm]);
 app.post('/buckets', [login.ensureLoggedIn(), libs.buckets.create]);
 app.get('/:user/buckets/:name', [login.ensureLoggedIn(), libs.buckets.showOne]);
