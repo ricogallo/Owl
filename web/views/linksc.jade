@@ -8,7 +8,7 @@ block content
       div.span7
         strong= user.get('email')
         div(style="margin-top: 5px")
-          a(href="#{link.get('uri')}")= link.get('uri')
+          a.link(href="#{link.get('uri')}")= link.get('uri')
           div(style="margin-top: 5px")
             for tag in link.get('tags')
               a(href="/tags/#{tag.get('name')}")= tag.get('name')+" "
@@ -23,7 +23,7 @@ block content
           a(class='m-btn icn-only red')
             i.icon-heart.icon-white
         .m-btn-group
-          if link.get('user_id') == user.get('id')        
+          if link.get('user_id') == user.get('id')
             a(class='m-btn icn-only')
               i.icon-remove(onclick="document.getElementById('#{link.get('id')}').submit()",style="pointer: cursor")
     hr
