@@ -43,10 +43,10 @@ html
     div.container
       div.row
         if user
+          include rightMenu
           .span9
             .well.fromtop
               block content
-          include rightMenu
         else
           if landing
             div.span12
