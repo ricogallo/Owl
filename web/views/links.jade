@@ -14,16 +14,17 @@ block content
               for tag in link.get('tags')
                 a(href="/tags/#{tag.get('name')}")= tag.get('name')+" "
         div.pull-right
-          .m-btn-group
+          .btn-toolbar
             if link.get('user_id') === user.get('id')
               form(id=link.get('id'),style="display: none",method="post",action="/delete/#{link.get('id')}")
                 input(type="hidden",name="_method",value="delete")
                 input(type="hidden",name="_csrf",value=csrf)
-            a(href='/buckets/add_link/#{link.get("id")}', class='m-btn icn-only')
-              i.icon-tag
-            a(class='m-btn icn-only')
-              i.icon-heart.
-            if link.get('user_id') === user.get('id')
-              a(class='m-btn icn-only red')
-                i.icon-remove(onclick="document.getElementById('#{link.get('id')}').submit()",style="pointer: cursor")
+              .btn-group
+                a.btn
+                  i.icon-remove(onclick="document.getElementById('#{link.get('id')}').submit()",style="pointer: cursor")
+            .btn-group
+              a.btn(href='/buckets/add_link/#{link.get("id")}')
+                i.icon-tag
+              a.btn(style='color: #D84A38')
+                i.icon-heart
       hr

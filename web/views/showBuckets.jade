@@ -4,12 +4,13 @@ block content
   .row(style='margin-left: 2.5%')
     h2 Buckets
     ul.thumbnails
-      for bucket in buckets
-        li.span2
-          .thumbnail
-            a(href='/#{user.get("username")}/buckets/#{bucket.get("name")}') 
-              img(src='http://#{bucket.get("name") || "unknown"}.jpg.to', style="width: 260px; height: 120px;")
-              br
-              br
-              span(class='label label-success')= bucket.get('name') || 'unknown'
+      if buckets
+        for bucket in buckets
+          li.span2
+            .thumbnail
+              a(href='/#{user.get("username")}/buckets/#{bucket.get("name")}') 
+                img(src='http://#{bucket.get("name") || "unknown"}.jpg.to', style="width: 260px; height: 120px;")
+                br
+                br
+                span(class='label label-success')= bucket.get('name') || 'unknown'
 
