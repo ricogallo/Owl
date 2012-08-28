@@ -32,7 +32,7 @@ describe('links.js', function() {
           browser.visit('http://localhost:8000/new', function() {
             browser
               .fill('uri', 'http://testalicious.com')
-              .fill('hiddenTagList', '["test","asd","cool"]')
+              .fill('hiddenTagList', 'test,asd,cool')
               .pressButton('Send', function() {
                 assert.ok(browser.query('a[href="http://testalicious.com"]'));
                 assert.equal(browser.success, true);
@@ -83,7 +83,7 @@ describe('links.js', function() {
           browser.visit('http://localhost:8000/new', function() {
             browser
               .fill('uri', 'http://test.com')
-              .fill('hiddenTagList', '["how","are","you"]')
+              .fill('hiddenTagList', 'how,are,you')
               .pressButton('Send', function() {
                 browser.fire('click', browser.queryAll(".icon-remove")[0], function() {
                   assert.equal(browser.success, true);
