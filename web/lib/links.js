@@ -9,13 +9,13 @@ links.createForm = function(req, res) {
 links.create = function(req, res) {
   if (
     !req.body.uri ||
-    !req.body.tags
+    !req.body.hiddenTagList
   ) return res.send(res.writeHead(400));
-
+  
   core.links.create({
     user: req.user, 
     uri: req.body.uri, 
-    tags: JSON.parse(req.body.tags)
+    tags: req.body.hiddenTagList.split(',')
   }, function(err, docs) {
     if (err)
       return common.handleError(err, res);

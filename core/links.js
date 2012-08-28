@@ -39,7 +39,7 @@ links.create = function(obj, callback) {
   var uri = obj.uri,
       user = obj.user,
       tags = [];
-   
+  
   function done() {
     user.set('links', [new models.Link({ uri: uri, tags: tags })]);
     

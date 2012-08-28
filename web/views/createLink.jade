@@ -11,6 +11,6 @@ block content
           input(type="hidden",value=csrf,name="_csrf")
           input.input-medium#url-input(placeholder="URL...",type="text",style="width: 98%; margin-left: 1px",name="uri")
           div
-            textarea(name="tags", class="input-medium", id="tags-input", rows="1")
+            input.tagManager(placeholder='tags', type='text', name='tags')
           button(class='m-btn blue pull-right', type="submit") Send
           div(style="clear: both")
