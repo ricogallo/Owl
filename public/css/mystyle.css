@@ -30,11 +30,14 @@ body
 {
   /*color: #fff !important;*/
   background-image: url('http://subtlepatterns.com/patterns/fabric_plaid.png');
+  font-family: 'PT Sans', sans-serif;
+  font-size: 12px;
 }
 
 .navbar-fixed-top a
 {
   color: #fff !important;
+  text-shadow: none !important;
 }
 
 .nav-list > .active > a
@@ -52,7 +55,7 @@ a
 {
   color: #fff !important;
 	font-size: 30px !important; 
-	font-family: 'Oleo Script', cursive;
+	font-family: 'Oleo Script';
   margin-top: 12px !important;
   margin-left: 0 !important;
   padding-left: 0 !important;
