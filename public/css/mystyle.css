@@ -182,3 +182,13 @@ padding-bottom: 40px;
   line-height: 14px;
   vertical-align: text-top;
 }
+
+.btn-flat {
+  filter:progid:DXImageTransform.Microsoft.Gradient(enabled='false');
+  background-image:none;
+  border:0;
+}
+
+.btn-inverse:active, .btn-inverse.active {
+  background-color: #080808 \9;
+}
