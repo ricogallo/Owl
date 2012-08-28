@@ -63,12 +63,14 @@ tags.getBySubscription = function(obj, callback) {
 
     if (err)
       return callback(new Error(500));
-
-    links = links.concat.apply(links, 
-      docs.get('tags').map(function(x) {
-        return x.get('links');
-      })
-    );
+    
+    if(docs.get('tags') && docs.get('tags').length) {
+      links = links.concat.apply(links, 
+        docs.get('tags').map(function(x) {
+          return x.get('links');
+        })
+      );
+    }
 
     callback(err, links);
   });
