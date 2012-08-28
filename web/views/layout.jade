@@ -26,7 +26,9 @@ html
     div.navbar.navbar-fixed-top
       div.navbar-inner
         div.container
-          a.brand(href="/") urlship
+          a.brand(href="/")
+            span(style='color: #5BB75B') α
+            | &nbsp;urlship
           ul.nav.pull-right
             li
               a(href="#") About
@@ -46,9 +48,24 @@ html
               block content
           include rightMenu
         else
-          div.span4.offset4
-            div.well.fromtop
-              block content
-        div.span12
-          .well
-            span Version: #{VERSION}
+          if landing
+            div.span12
+              div.fromtop
+                block content
+          else
+            div.span4.offset4
+              div.well.fromtop
+                block content
+    div.navbar.navbar-fixed-bottom
+      .navbar-inner
+        .container
+          ul.nav
+            li
+              a(style='color: white !important; text-shadow: none') Version: #{VERSION}
+          ul.nav.pull-right
+            li
+              a.footer-button(href='https://twitter.com/urlship') 
+                i.icon-twitter-sign
+            li
+              a.footer-button(href='https://github.com/urlship')
+                i.icon-github

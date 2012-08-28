@@ -1,4 +1,29 @@
 extends layout
 
 block content
-  h1 YO DAWG
+  .container
+    .row.well
+      .span4
+          h1
+            | Bookmarking has never been so easy
+      .span7
+        a(class='btn btn-large btn-success', href='/sign_up', style='margin-top: 8%; float: right') Sign Up For The Alpha
+    .row(style='font-size: 20px')
+      .span4
+        .well
+          h3 
+            i.icon-link
+            | &nbsp;Links
+          p Save, search and share your links.
+      .span4
+        .well
+          h3
+            i.icon-group
+            | &nbsp;People
+          p Discover new resources
+      .span4
+        .well
+          h3 
+            i.icon-tags
+            | &nbsp;Tags and Buckets
+          p Organize your contents through tags

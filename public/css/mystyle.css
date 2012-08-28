@@ -1,3 +1,19 @@
+.footer-button {
+  font-size: 25px;
+  color: #FFF !important;
+  text-shadow: none !important;
+}
+
+.footer-button:hover {
+  color: #999 !important;
+  text-decoration: none;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+}
+
 .linkButton{
     border:none;
     padding:0;

@@ -33,7 +33,7 @@ app.get('/', function(req, res) {
   if (req.user)
     return res.redirect('/me');
 
-  res.render('index');
+  res.render('index', { landing: true});
 });
 
 app.post('/sign_up', libs.users.create);

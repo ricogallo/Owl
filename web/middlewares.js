@@ -10,6 +10,7 @@ var middlewares = exports;
 middlewares.locals = function(req, res, next) {
   res.locals.user = req.user;
   res.locals.csrf = req.session._csrf;
+  res.locals.landing = false;
   res.locals.gravatar = function(id) {
     return gravatar.url(id, { s: 64 });
   };
