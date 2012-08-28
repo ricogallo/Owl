@@ -64,7 +64,7 @@ tags.timeline = function(req, res) {
   core.tags.getBySubscription({user: user}, function(err, rows) {
     if (err)
       return common.handleError(err, res);
-    
+
     res.render('linksc', {links: rows});
   });
 };

@@ -5,9 +5,9 @@ block content
     input(type='hidden', name='_csrf', value=csrf)
 
   if !~usertags.indexOf(tag)
-    button(class='btn btn-primary', style="margin-bottom: 20px", onclick="document.getElementById('sub').submit()") Subscribe
+    button(class='m-btn blue', style="margin-bottom: 20px", onclick="document.getElementById('sub').submit()") Subscribe
   else
-    button(class='btn btn-danger', style="margin-bottom: 20px", onclick="document.getElementById('sub').submit()") Unsubscribe
+    button(class='m-btn red', style="margin-bottom: 20px", onclick="document.getElementById('sub').submit()") Unsubscribe
 
   for link in links
     div.row
@@ -21,17 +21,17 @@ block content
             for tag in link.get('tags')
               a(href="/tags/#{tag.get('name')}")= tag.get('name')+" "
       div.pull-right
-        .btn-toolbar
-          if link.get('user_id') === user.get('id')
+        .m-btn-group
+          if link.get('userId') === user.get('id')
             form(id=link.get('id'),style="display: none",method="post",action="/delete/#{link.get('id')}")
               input(type="hidden",name="_method",value="delete")
               input(type="hidden",name="_csrf",value=csrf)
-            .btn-group
-              a.btn
-                i.icon-remove(onclick="document.getElementById('#{link.get('id')}').submit()",style="pointer: cursor")
-          .btn-group
-            a.btn(href='/buckets/add_link/#{link.get("id")}')
-              i.icon-tag
-            a.btn(style='color: #D84A38')
-              i.icon-heart
+          a(class='m-btn icn-only green')
+            i.icon-tag
+          a(class='m-btn icn-only red')
+            i.icon-heart.icon-white
+        .m-btn-group
+          if link.get('user_id') == user.get('id')        
+            a(class='m-btn icn-only')
+              i.icon-remove(onclick="document.getElementById('#{link.get('id')}').submit()",style="pointer: cursor")
     hr
