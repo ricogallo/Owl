@@ -5,9 +5,9 @@ block content
     input(type='hidden', name='_csrf', value=csrf)
 
   if !~usertags.indexOf(tag)
-    button(class='m-btn blue', style="margin-bottom: 20px", onclick="document.getElementById('sub').submit()") Subscribe
+    button(class='btn btn-primary', style="margin-bottom: 20px", onclick="document.getElementById('sub').submit()") Subscribe
   else
-    button(class='m-btn red', style="margin-bottom: 20px", onclick="document.getElementById('sub').submit()") Unsubscribe
+    button(class='btn btn-danger', style="margin-bottom: 20px", onclick="document.getElementById('sub').submit()") Unsubscribe
 
   for link in links
     div.row
