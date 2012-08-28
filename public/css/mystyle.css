@@ -19,16 +19,11 @@
 
 .navbar-inner
 {
-  /*background-color: #467F9A !important;*/
   background-image: url('http://subtlepatterns.com/patterns/concrete_wall.png');
-  -webkit-box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.05) !important;
-  -moz-box-shadow:    0px 8px 15px rgba(0, 0, 0, 0.05) !important;
-  box-shadow:         0px 8px 15px rgba(0, 0, 0, 0.05) !important;
 }
 
 body
 {
-  /*color: #fff !important;*/
   background-image: url('http://subtlepatterns.com/patterns/fabric_plaid.png');
   font-family: 'PT Sans', sans-serif;
   font-size: 12px;
@@ -38,34 +33,6 @@ body
 {
   color: #fff !important;
   text-shadow: none !important;
-}
-
-.nav-list > .active > a
-{
-  /*background-color: #467F9A !important;*/
-  color: #fff !important;
-}
-
-a 
-{
-  color: #467F9A !important;
-}
-
-.brand
-{
-  color: #fff !important;
-	font-size: 30px !important; 
-	font-family: 'Oleo Script';
-  margin-top: 12px !important;
-  margin-left: 0 !important;
-  padding-left: 0 !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-}
-
-.brand img
-{
-  margin-top: -2px !important;
 }
 
 .divider-vertical

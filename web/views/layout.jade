@@ -27,14 +27,8 @@ html
       div.navbar-inner
         div.container
           ul.nav
-            li#mylogo
+            li
               a.brand(href="/") urlship
-          div(style="text-align: center")
-            form.navbar-search.offset3
-              div.input-prepend
-                input.search-query(type="text",placeholder="Search...")
-                span.add-on
-                  i.icon-search
           ul.nav.pull-right
             li
               a(href="#") About
@@ -54,7 +48,7 @@ html
               block content
           include rightMenu
         else
-          div.span12
+          div.span4.offset4
             div.well.fromtop
               block content
         div.span12

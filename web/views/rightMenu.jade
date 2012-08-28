@@ -1,5 +1,11 @@
 div.span3.pull-right
   div.well.fromtop
+    form.form-search
+      .input-append
+        input.span2.search-query(type='text', placeholder='Search..')
+        button.btn(type='submit')
+          i.icon-search
+  div.well
     div.row
       div.span1
         img.numbee-thumb(src="#{gravatar(user.get('email'))}")
