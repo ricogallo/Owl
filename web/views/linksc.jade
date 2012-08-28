@@ -6,24 +6,24 @@ block content
       div.span1
         img.numbee-thumb(src="#{gravatar(user.get('email'))}")
       div.span7
-        strong= user.get('email')
-        div(style="margin-top: 5px")
+        strong= user.get('username')
+        div(style='margin-top: 5px')
           a.link(href="#{link.get('uri')}")= link.get('uri')
           div(style="margin-top: 5px")
             for tag in link.get('tags')
               a(href="/tags/#{tag.get('name')}")= tag.get('name')+" "
       div.pull-right
-        .m-btn-group
-          if link.get('userId') === user.get('id')
+        .btn-toolbar
+          if link.get('user_id') === user.get('id')
             form(id=link.get('id'),style="display: none",method="post",action="/delete/#{link.get('id')}")
               input(type="hidden",name="_method",value="delete")
               input(type="hidden",name="_csrf",value=csrf)
-          a(class='m-btn icn-only green')
-            i.icon-tag
-          a(class='m-btn icn-only red')
-            i.icon-heart.icon-white
-        .m-btn-group
-          if link.get('user_id') == user.get('id')
-            a(class='m-btn icn-only')
-              i.icon-remove(onclick="document.getElementById('#{link.get('id')}').submit()",style="pointer: cursor")
+            .btn-group
+              a.btn
+                i.icon-remove(onclick="document.getElementById('#{link.get('id')}').submit()",style="pointer: cursor")
+          .btn-group
+            a.btn(href='/buckets/add_link/#{link.get("id")}')
+              i.icon-tag
+            a.btn(style='color: #D84A38')
+              i.icon-heart
     hr
