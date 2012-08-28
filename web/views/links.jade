@@ -23,8 +23,12 @@ block content
                 a.btn
                   i.icon-remove(onclick="document.getElementById('#{link.get('id')}').submit()",style="pointer: cursor")
             .btn-group
+              a.btn.tweet(href='https://twitter.com/intent/tweet?text=Check%20this%20out!%20-%20&url=#{encodeURIComponent(link.get("uri"))}&via=urlship')
+                i.icon-twitter
+              a.btn.facebook(href='http://www.facebook.com/sharer.php?u=#{encodeURIComponent(link.get("uri"))}')
+                i.icon-facebook
               a.btn(href='/buckets/add_link/#{link.get("id")}')
                 i.icon-tag
-              a.btn(style='color: #D84A38')
+              a.btn.love
                 i.icon-heart
       hr

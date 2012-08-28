@@ -192,3 +192,15 @@ padding-bottom: 40px;
 .btn-inverse:active, .btn-inverse.active {
   background-color: #080808 \9;
 }
+
+.tweet:hover {
+  color: #00aceb;
+}
+
+.love:hover {
+  color: #D84A38;
+}
+
+.facebook:hover {
+  color: #3B5998;
+}
