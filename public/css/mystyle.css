@@ -82,10 +82,6 @@ body
   margin-top: 7px !important;
 }
 
-body {
-padding-bottom: 40px;
-}
-
 .intoc
 {
 	width: 800px;
@@ -101,9 +97,10 @@ padding-bottom: 40px;
   margin-right: auto;
 }
 
-.fromtop
-{
-  margin-top: 70px;
+@media (min-width: 767px) { 
+  .fromtop {
+    margin-top: 70px;
+  }
 }
 
 .well 
