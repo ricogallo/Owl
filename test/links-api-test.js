@@ -15,7 +15,6 @@ before(function(done) {
   var link = {uri: 'http://unauth.un', user_id: 0xc0ffee};
 
   models.User.create(user1, function(e, us) {
-
     us.set('links', [new models.Link(link)]);
     us.save(function(e, l) {
       models.User.create(user, function(e, u) {
@@ -80,8 +79,9 @@ describe('links.js', function() {
         done();
       });      
     });
+  });
 
-
+  describe('a GET to /api/links', function() {
     it('should return a 404 when an invalid/inexistent id is requested', function(done) {
       request('http://localhost:8000/api/links/lol?access_token=testoken&client_id=buh&client_secret=keyboardcat', function(e, res, body) {
         assert.equal(null, e);
