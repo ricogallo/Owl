@@ -29,12 +29,13 @@ html
           a.brand(href="/")
             span(style='color: #5BB75B') α
             | &nbsp;urlship
-          button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          .nav-collapse.collapse.visible-phone.visible-table
-            include mobileMenu
+          if user
+            button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            .nav-collapse.collapse.visible-phone.visible-table
+              include mobileMenu
           ul.nav.pull-right.visible-desktop
             li
               a(href="#") About
