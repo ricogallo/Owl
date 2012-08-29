@@ -1,8 +1,7 @@
 extends layout
 
 block content
-  if links && links.length
-    for link in links
+  for link in links
     div.row
       div.span1
         img.numbee-thumb(src="#{gravatar(user.get('email'))}")
