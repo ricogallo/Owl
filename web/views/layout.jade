@@ -29,13 +29,22 @@ html
           a.brand(href="/")
             span(style='color: #5BB75B') α
             | &nbsp;urlship
-          if user
-            button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
+          button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
               span.icon-bar
               span.icon-bar
               span.icon-bar
-            .nav-collapse.collapse.visible-phone.visible-table
+          .nav-collapse.collapse.visible-phone.visible-table
+            if user
               include mobileMenu
+            else
+              ul.nav
+                li
+                  a(href='/sign_up') Sign Up
+                li
+                  a(href='/login') Login
+                li
+                  a(href='/about') About
+                  
           ul.nav.pull-right.visible-desktop
             li
               a(href="#") About
