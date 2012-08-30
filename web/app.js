@@ -15,7 +15,6 @@ var express     = require('express'),
 
 var app = module.exports = express();
 
-
 app.set('view engine', 'jade');
 app.set('views', __dirname + '/views');
 
@@ -65,7 +64,8 @@ app.post('/oauth/token', server.token);
 */
 
 app.get('/client/new', [login.ensureLoggedIn(), libs.client.createForm]);
-app.post('/clients', [login.ensureLoggedIn(), libs.client.create]); 
+app.post('/clients', [login.ensureLoggedIn(), libs.client.create]);
+app.get('/clients', [login.ensureLoggedIn(), libs.client.show]);
 
 /*
  * Links routes

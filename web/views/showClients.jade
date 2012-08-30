@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  if clients && clients.length
+    .container
+      .row
+        for client in clients
+          .span8
+            table.table.table-striped
+              thead
+                tr
+                  th Name
+                  th Secret
+              tbody
+                tr
+                  td= client.get('client_id')
+                  td= client.get('client_secret')
+
