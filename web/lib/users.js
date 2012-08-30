@@ -29,7 +29,7 @@ users.create = function(req, res, next) {
     // If there's an error return a 500
     //
     if (err) {
-      res.send(500);
+      return res.send(500);
     }
 
     return passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' })(req, res, next);

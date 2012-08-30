@@ -7,4 +7,3 @@ module.exports = {
   'user_id': hater.Types.Integer()
   // timestamps
 };
-
