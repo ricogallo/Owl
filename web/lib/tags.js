@@ -61,7 +61,7 @@ tags.unsubscribe = function(req, res) {
 tags.timeline = function(req, res) {
   var user = req.user;
 
-  core.tags.getBySubscription({user: user}, function(err, rows) {
+  core.links.timeline({user: user}, function(err, rows) {
     if (err)
       return common.handleError(err, res);
 

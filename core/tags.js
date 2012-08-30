@@ -24,6 +24,9 @@ tags.subscribe = function(obj, callback) {
     if (err)
       return callback(new Error(500));
 
+    if (!rows)
+      return callback(new Error(404));
+
     user.set('tags', [rows]);
     
     user.save(function(err, rows) {
@@ -52,26 +55,5 @@ tags.unsubscribe = function(obj, callback) {
 
       callback(err);
     });
-  });
-};
-
-tags.getBySubscription = function(obj, callback) {
-  var user = obj.user;
-
-  models.User.findOne({where: {id: user.get('id')}, fetch: ["tags.links.{tags,user}"], orderby: {id: "desc"}}, function(err, docs) {
-    var links = [];
-
-    if (err)
-      return callback(new Error(500));
-    
-    if(docs.get('tags') && docs.get('tags').length) {
-      links = links.concat.apply(links, 
-        docs.get('tags').map(function(x) {
-          return x.get('links');
-        })
-      );
-    }
-
-    callback(err, links);
   });
 };

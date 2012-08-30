@@ -4,11 +4,22 @@ var core        = require('../../core/links'),
 var links = exports;
 
 links.all = function(req, res) {
-  core.all(function(e, link) {
-    if(e)
+  core.all(function(e, links) {
+    if (e)
       return handleError(e, res);
-    
-    res.json(link);
+
+    res.json(links);
+  });
+}
+
+links.timeline = function(req, res) {
+  core.timeline({
+    user: req.user
+  }, function(e, links) {
+    if (e)
+      return handleError(e, res);
+
+    res.json(links);
   });
 };
 
@@ -67,5 +78,16 @@ links.create = function(req, res) {
     if(e)
       return handleError(e, res);
     res.json(link, 201);
+  });
+};
+
+links.user = function(req, res) {
+  core.user({
+    user: req.user
+  }, function(e, links) {
+    if (e)
+      return handleError(e, res);
+
+    res.json(links);
   });
 };

@@ -2,7 +2,8 @@ var express  = require('express'),
     passport = require('passport'),
     users    = require('./lib/users'),
     buckets  = require('./lib/buckets'),
-    links    = require('./lib/links');
+    links    = require('./lib/links'),
+    tags     = require('./lib/tags');
 
 var app = module.exports = express();
 
@@ -54,6 +55,36 @@ app.put('/links/:id', oauth_login(links.update));
  * @param id String Id of the user to get;
 */
 app.get('/users/:id', oauth_login(users.get));
+
+
+/* @api
+ * @path GET /users/:id/links;
+ * @descr Gets user links;
+ * @param id String Id of the user;
+*/
+app.get('/users/:id/links', oauth_login(links.user));
+
+/* @api
+ * @path GET /timeline;
+ * @descr Timeline;
+*/
+app.get('/timeline', oauth_login(links.timeline));
+
+
+/* @api
+ * @path GET /subscribe/:tag;
+ * @descr Subscribe;
+ * @param tag
+*/
+app.post('/subscribe', oauth_login(tags.subscribe));
+
+
+/* @api
+ * @path GET /unsubscribe/:tag;
+ * @descr Unsubscribe;
+ * @param tag
+*/
+app.post('/unsubscribe', oauth_login(tags.unsubscribe));
 
 /* @api
  * @path GET /me;

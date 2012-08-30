@@ -141,3 +141,24 @@ links.byTag = function(obj, callback) {
     callback(err, rows.get('links'));
   });
 };
+
+links.timeline = function(obj, callback) {
+  var user = obj.user;
+
+  models.User.findOne({where: {id: user.get('id')}, fetch: ["tags.links", "tags.links.tags"], orderby: {id: "desc"}}, function(err, docs) {
+    var links = [];
+
+    if (err)
+      return callback(new Error(500));
+    
+    if(docs.get('tags') && docs.get('tags').length) {
+      links = links.concat.apply(links, 
+        docs.get('tags').map(function(x) {
+          return x.get('links');
+        })
+      );
+    }
+
+    callback(err, links);
+  });
+};
