@@ -18,6 +18,7 @@ before(function(done) {
     us.set('links', [new models.Link(link)]);
     us.save(function(e, l) {
       models.User.create(user, function(e, u) {
+        console.dir(e);
         uid = client.user_id = u.get('id');
         models.Client.create(client, function(e, cl) {
           code.client_id = cl.get('id');
