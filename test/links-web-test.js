@@ -85,7 +85,7 @@ describe('links.js', function() {
               .fill('uri', 'http://test.com')
               .fill('hiddenTagList', 'how,are,you')
               .pressButton('Send', function() {
-                browser.fire('click', browser.queryAll(".icon-remove")[0], function() {
+                browser.fire('click', browser.queryAll('.icon-remove')[0].parentNode, function() {
                   assert.equal(browser.success, true);
                   done();
                 });

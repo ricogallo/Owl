@@ -5,7 +5,7 @@ mixin linkEntry(link, usr)
     div.span7
       strong= usr.get('username')
       div(style="margin-top: 5px")
-        a(href="#{link.get('uri')}")= link.get('uri')
+        a.link(href="#{link.get('uri')}")= link.get('uri')
         div(style="margin-top: 5px")
           for tag in link.get('tags')
             a(href="/tags/#{tag.get('name')}")= tag.get('name')+" "
