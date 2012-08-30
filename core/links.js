@@ -145,7 +145,7 @@ links.byTag = function(obj, callback) {
 links.timeline = function(obj, callback) {
   var user = obj.user;
 
-  models.User.findOne({where: {id: user.get('id')}, fetch: ["tags.links", "tags.links.tags"], orderby: {id: "desc"}}, function(err, docs) {
+  models.User.findOne({where: {id: user.get('id')}, fetch: ["tags.links.{user,tags}"], orderby: {id: "desc"}}, function(err, docs) {
     var links = [];
 
     if (err)

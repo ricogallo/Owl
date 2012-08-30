@@ -64,7 +64,7 @@ tags.timeline = function(req, res) {
   core.links.timeline({user: user}, function(err, rows) {
     if (err)
       return common.handleError(err, res);
-
-    res.render('linksc', {links: rows});
+    
+    res.render('linksc', { links: rows.filter(function(v) { return v !== null; }) });
   });
 };

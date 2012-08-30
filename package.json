@@ -1,6 +1,6 @@
 {
   "name": "owl",
-  "version": "0.0.12-32",
+  "version": "0.0.12-43",
   "author": "yawn <yawn.localhost@gmail.com>",
   "contributors": [
     {
@@ -24,7 +24,7 @@
     "connect-ensure-login": ">= 0.0.0",
     "utile": ">= 0.0.0",
     "gravatar": "*",
-    "jade": "*",
+    "jade": "git://github.com/visionmedia/jade.git",
     "hater": "git://github.com/yawnt/hater.git",
     "pkginfo": "*"
   },

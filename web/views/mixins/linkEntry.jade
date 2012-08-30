@@ -1,9 +1,9 @@
-mixin linkEntry(user, link)
+mixin linkEntry(link, usr)
   div.row
     div.span1
-      img.numbee-thumb(src="#{gravatar(user.get('email'))}")
+      img.numbee-thumb(src="#{gravatar(usr.get('email'))}")
     div.span7
-      strong= user.get('email')
+      strong= usr.get('username')
       div(style="margin-top: 5px")
         a(href="#{link.get('uri')}")= link.get('uri')
         div(style="margin-top: 5px")
@@ -11,13 +11,13 @@ mixin linkEntry(user, link)
             a(href="/tags/#{tag.get('name')}")= tag.get('name')+" "
     div.pull-right
       .btn-toolbar
-        if link.get('user_id') === user.get('id')
-          form(id=link.get('id'),style="display: none",method="post",action="/delete/#{link.get('id')}")
-            input(type="hidden",name="_method",value="delete")
-            input(type="hidden",name="_csrf",value=csrf)
+        if usr.get('id') === user.get('id')
           .btn-group
-            a.btn
-              i.icon-remove(onclick="document.getElementById('#{link.get('id')}').submit()",style="pointer: cursor")
+            form(id=link.get('id'), method="post", action="/delete/#{link.get('id')}")
+              input(type="hidden",name="_method",value="delete")
+              input(type="hidden",name="_csrf",value=csrf)
+              button.btn(type='submit')
+                i.icon-remove
         .btn-group
           a.btn.tweet(href='https://twitter.com/intent/tweet?text=Check%20this%20out!%20-%20&url=#{encodeURIComponent(link.get("uri"))}&via=urlship')
             i.icon-twitter
