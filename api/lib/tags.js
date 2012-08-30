@@ -4,7 +4,6 @@ var core        = require('../../core/tags'),
 var tags = exports;
 
 tags.subscribe = function(req, res) {
-  console.log(req.params.tag);
   core.subscribe({
     user: req.user,
     tag : req.body.tag
