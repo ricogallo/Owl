@@ -2,7 +2,7 @@ mixin linkEntry(link, usr)
   div.row
     div.span1
       img.numbee-thumb(src="#{gravatar(usr.get('email'))}")
-    div.span7
+    div.span3
       strong= usr.get('username')
       div(style="margin-top: 5px")
         a.link(href="#{link.get('uri')}")= link.get('uri')

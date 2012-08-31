@@ -4,8 +4,8 @@ block content
   div.row
     div.span1
       img.numbee-thumb(src="#{gravatar(user.get('email'))}")
+    div.span3
       strong @#{user.get('username')}
-    div.span7
       div(style="margin-top: 5px")
         form(action="/links/new",method="post")
           input(type="hidden",value=csrf,name="_csrf")

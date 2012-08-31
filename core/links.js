@@ -19,7 +19,7 @@ links.get = function(obj, callback) {
 links.user = function(obj, callback) {
   var id = obj.id;
 
-  models.User.findOne({where: { id: id }, fetch: ["links.{tags,user}"]}, function(e, doc) {
+  models.User.findOne({where: { id: id }, fetch: ["links.{tags,user}", 'buckets']}, function(e, doc) {
     if (e)
       return callback(new Error(500));
     callback(e, doc);
