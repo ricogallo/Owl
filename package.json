@@ -1,6 +1,6 @@
 {
   "name": "owl",
-  "version": "0.0.13-8",
+  "version": "0.0.13-11",
   "author": "yawn <yawn.localhost@gmail.com>",
   "contributors": [
     {
@@ -12,6 +12,9 @@
     "type": "git",
     "url": "git://github.com/urlship/Owl.git"
   },
+  "bundledDependencies": [
+    "connect-redis"
+  ],
   "dependencies": {
     "express": ">= 0.0.0",
     "connect": ">= 0.0.0",
@@ -32,8 +35,7 @@
     "mocha": ">= 0.0.0",
     "expect.js": ">= 0.0.0",
     "should": ">= 0.0.0",
-    "request": ">= 0.0.0",
-    "zombie": "*"
+    "request": ">= 0.0.0"
   },
   "scripts": {
     "test": "mocha -t 20000 -R spec -r should test/*-test.js",
