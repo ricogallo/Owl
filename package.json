@@ -35,7 +35,8 @@
     "mocha": ">= 0.0.0",
     "expect.js": ">= 0.0.0",
     "should": ">= 0.0.0",
-    "request": ">= 0.0.0"
+    "request": ">= 0.0.0",
+    "zombie": "*"
   },
   "scripts": {
     "test": "mocha -t 20000 -R spec -r should test/*-test.js",
