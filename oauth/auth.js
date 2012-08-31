@@ -7,10 +7,11 @@ var passport = require('passport'),
     common   = require('../core/common');
 
 passport.use(new Local(function(usr, pwd, done) {
-  models.User.findOne({ where: { username: usr } }, function(err, user) {
+  models.User.findOne({ where: { username: usr }, fetch: ['buckets'] }, function(err, user) {
     if(err || !user) {
       return done(null, false);
     }
+    
     done(null, common.crypt(user.get('salt') + pwd) === user.get('password') ? user : false);
   });
 }));
@@ -20,7 +21,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  models.User.findOne({ where: { id: id } }, done);
+  models.User.findOne({ where: { id: id }, fetch: ['buckets'] }, done);
 });
 
 var findClient = function(id, secret, done) {

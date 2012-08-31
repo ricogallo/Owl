@@ -4,12 +4,12 @@ block content
   div.row
     div.span1
       img.numbee-thumb(src="#{gravatar(user.get('email'))}")
-    div.span7
       strong @#{user.get('username')}
+    div.span7
       div(style="margin-top: 5px")
         form(action="/links/new",method="post")
           input(type="hidden",value=csrf,name="_csrf")
-          input.input-medium#url-input(placeholder="URL...",type="text",style="width: 98%; margin-left: 1px",name="uri")
+          input.input-small#url-input(placeholder="URL...",type="text",style="width: 98%; margin-left: 1px",name="uri")
           div
             input.tagManager(placeholder='tags', type='text', name='tags')
           button(class='btn btn-success blue pull-right', type="submit") Send

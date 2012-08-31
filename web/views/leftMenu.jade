@@ -1,0 +1,16 @@
+.span3.visible-desktop
+  .well.fromtop
+    if user.get('buckets')
+      ul.nav.nav-list
+        li.nav-header
+          i.icon-folder-close
+          | Buckets
+        for bucket in user.get('buckets')
+          li
+            a(href='/#{user.get("username")}/buckets/#{bucket.get("name")}')= bucket.get('name')[0].toUpperCase() + bucket.get('name').slice(1)
+    else
+      p 
+        | Uh oh, it looks like you don't have any buckets, why don't you&nbsp;
+        a(href='/buckets/new') create one
+        | &nbsp;?
+      

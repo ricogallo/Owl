@@ -60,9 +60,10 @@ html
       div.row
         if user
           include rightMenu
-          .span9
+          .span6
             .well.fromtop
               block content
+          include leftMenu
         else
           if landing
             div.span12

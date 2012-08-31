@@ -6,7 +6,7 @@ var express  = require('express'),
 
 app.use(express.cookieParser());
 app.use(express.bodyParser());
-app.use(express.session({ secret: process.env.SESSION_SECRET || 'keyboard cat' }));
+app.use(express.session({ secret: require('utile').randomString(64) }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(__dirname + '/public'));
