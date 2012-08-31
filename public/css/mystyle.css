@@ -132,12 +132,6 @@ body
   margin-top: 0px;
 }
 
-.numbee-thumb
-{
-  height: 64px;
-  width: 64px;
-}
-
 .numbee-icon
 {
   margin-left: 3px;
@@ -216,4 +210,19 @@ body
 
 .facebook:hover {
   color: #3B5998;
+}
+
+.desktop {
+  height: 64px;
+  width: 64px;
+}
+
+.mobile {
+  display: inline;
+  height: 48px;
+  width: 48px;
+}
+
+hr {
+  margin-top: -10px;
 }
