@@ -45,6 +45,14 @@ users.me = function(req, res) {
   });
 };
 
+users.get = function(req, res) {
+  models.User.findOne({ where: { username: req.params.id } }, function(e, user) {
+    core.links.user({ id: user && user.get('id') }, function(e, docs) {
+      res.render('links', { user: docs });
+    });
+  });
+};
+
 users.userProfile = function(req, res) {
   var body = req.body,
       id   = req.user.get('id');
