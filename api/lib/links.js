@@ -4,7 +4,7 @@ var core        = require('../../core/links'),
 var links = exports;
 
 links.all = function(req, res) {
-  core.all(handleError(function(_, links) {
+  core.all(handleError(res, function(_, links) {
     res.json(links);
   }));
 };
@@ -12,7 +12,7 @@ links.all = function(req, res) {
 links.timeline = function(req, res) {
   core.timeline({
     user: req.user
-  }, handleError(function(_, links) {
+  }, handleError(res, function(_, links) {
     res.json(links);
   }));
 };
@@ -21,7 +21,7 @@ links.get = function(req, res) {
   core.get({
     id   : req.params.id,
     user : req.user
-  }, handleError(function(_, link) {
+  }, handleError(res, function(_, link) {
     res.json(link);
   }));
 };
@@ -30,7 +30,7 @@ links.del = function(req, res) {
   core.del({
     id   : req.params.id,
     user : req.user
-  }, handleError(function() {
+  }, handleError(res, function() {
     res.send(204); 
   }));
 };
@@ -43,7 +43,7 @@ links.update = function(req, res) {
     id   : req.params.id, 
     uri  : req.body.uri,
     user : req.user
-  }, handleError(function(_, link) {
+  }, handleError(res, function(_, link) {
     res.json(link);
   }));
 };
@@ -59,7 +59,7 @@ links.create = function(req, res) {
     uri  : req.body.uri,
     tags : req.body.tags.split(','),
     user : req.user
-  }, handleError(function(e, link) {
+  }, handleError(res, function(e, link) {
     res.json(link, 201);
   }));
 };
@@ -67,7 +67,7 @@ links.create = function(req, res) {
 links.user = function(req, res) {
   core.user({
     user: req.user
-  }, handleError(function(_, links) {
+  }, handleError(res, function(_, links) {
     res.json(links);
   }));
 };

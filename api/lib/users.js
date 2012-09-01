@@ -6,7 +6,7 @@ var users = exports;
 users.get = function(req, res) {
   core.get({
     id: req.params.id
-  }, handleError(function(e, user) {
+  }, handleError(res, function(e, user) {
     res.json(user);
   }));
 };
@@ -14,7 +14,7 @@ users.get = function(req, res) {
 users.me = function(req, res) {
   core.me({
     user: req.user
-  }, handleError(function(e, me) {
+  }, handleError(res, function(e, me) {
     res.json(me);
   }));
 };

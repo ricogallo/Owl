@@ -24,13 +24,13 @@ users.create = function(req, res, next) {
 
   password = core.common.crypt(salt + password);
 
-  models.User.create({username: username, password: password, salt: salt, name: name + ' ' + surname, email: email}, common.handleError(function(_, docs) {
+  models.User.create({username: username, password: password, salt: salt, name: name + ' ' + surname, email: email}, common.handleError(res, function(_, docs) {
     passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' })(req, res, next);
   }));
 };
 
 users.me = function(req, res) {
-  core.links.user({ id: req.user.get('id') }, common.handleError(function(_, docs) {
+  core.links.user({ id: req.user.get('id') }, common.handleError(res, function(_, docs) {
     res.render('links', { user: docs });
   }));
 };
@@ -47,7 +47,7 @@ users.userProfile = function(req, res) {
   var body = req.body,
       id   = req.user.get('id');
 
-  core.users.settings({body: body, id: id}, handleError(function() {
+  core.users.settings({body: body, id: id}, handleError(res, function() {
     res.redirect('/me');    
   }));
 };
@@ -55,7 +55,7 @@ users.userProfile = function(req, res) {
 users.account = function(req, res) {
   var id = req.params.id;
 
-  core.links.user({id: id}, handleError(function(_, links, user) {
+  core.links.user({id: id}, handleError(res, function(_, links, user) {
     res.render('links', { links: links, user: user });
   }));
 };

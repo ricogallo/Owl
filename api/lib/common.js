@@ -1,6 +1,6 @@
 var codes = require('http').STATUS_CODES;
 
-exports.handleError = function handleError (fn) {
+exports.handleError = function handleError (res, fn) {
   return function () {
     var args = [].slice.call(arguments, 0),
         e    = args.shift();

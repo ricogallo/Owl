@@ -2,7 +2,7 @@ var codes = require('http').STATUS_CODES;
 
 var common = exports;
 
-common.handleError = function handleError (fn) {
+common.handleError = function handleError (res, fn) {
   return function () {
     var args = [].slice.call(arguments, 0),
         e    = args.shift();
