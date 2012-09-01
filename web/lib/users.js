@@ -47,7 +47,7 @@ users.userProfile = function(req, res) {
   var body = req.body,
       id   = req.user.get('id');
 
-  core.users.settings({body: body, id: id}, handleError(res, function() {
+  core.users.settings({body: body, id: id}, common.handleError(res, function() {
     res.redirect('/me');    
   }));
 };
@@ -55,7 +55,7 @@ users.userProfile = function(req, res) {
 users.account = function(req, res) {
   var id = req.params.id;
 
-  core.links.user({id: id}, handleError(res, function(_, links, user) {
+  core.links.user({id: id}, common.handleError(res, function(_, links, user) {
     res.render('links', { links: links, user: user });
   }));
 };
