@@ -29,12 +29,10 @@ app.get('/', function(req, res) {
   res.render('index', { landing: true });
 });
 
-app.post('/sign_up', libs.users.create);
-
 /* 
  * User routes
 */
-
+app.post('/sign_up'     , libs.users.create);
 app.get('/sign_up'      , libs.web.signUp);
 app.get('/login'        , libs.web.signIn);
 app.get('/login/:status', libs.web.signIn);

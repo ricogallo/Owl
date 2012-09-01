@@ -16,18 +16,13 @@ links.create = function(req, res) {
     user: req.user, 
     uri: req.body.uri, 
     tags: req.body.hiddenTagList.split(',')
-  }, function(err, docs) {
-    if (err)
-      return common.handleError(err, res);
+  }, common.handleError(function(_, docs) {
     res.redirect('/');
-  });
+  }));
 };
 
 links.delete = function(req, res) {
-  core.links.del({id: req.params.id, user: req.user}, function(e, docs) {
-    if (e)
-      return common.handleError(e, res);
-
+  core.links.del({id: req.params.id, user: req.user}, handleError(function(_, docs) {
     res.redirect('/');
-  });
+  }));
 };

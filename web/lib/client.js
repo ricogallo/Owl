@@ -18,11 +18,9 @@ client.create = function(req, res) {
     user_id: req.user.get('id'),
     redirect_uri: redirect_uri,
     client_secret: common.client_secret()
-  }, function(err, client) {
-    if(err) return handleError(new Error(500), res);
-
+  }, handleError(function(_, client) {
     res.redirect('/');
-  });
+  }));
 };
 
 client.createForm = function(req, res) {
@@ -32,9 +30,7 @@ client.createForm = function(req, res) {
 client.show = function(req, res) {
   models.Client.find({ where: {
     user_id: req.user.get('id')
-  }}, function(e, clients) {
-    if(e) return handleError(new Error(500), res);
-    
+  }}, handleError(function(_, clients) {
     res.render('showClients', { clients: clients });
-  });
+  }));
 };

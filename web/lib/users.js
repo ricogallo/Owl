@@ -17,32 +17,22 @@ users.create = function(req, res, next) {
   if (
     typeof username === 'undefined' ||
     typeof password === 'undefined' ||
-    typeof name === 'undefined'     ||
-    typeof surname === 'undefined'  ||
-    typeof email === 'undefined'
+    typeof name     === 'undefined' ||
+    typeof surname  === 'undefined' ||
+    typeof email    === 'undefined'
   ) return res.send(400);
 
   password = core.common.crypt(salt + password);
 
-  models.User.create({username: username, password: password, salt: salt, name: name+' '+surname, email: email}, function(err, docs) {
-    //
-    // If there's an error return a 500
-    //
-    if (err) {
-      return res.send(500);
-    }
-
-    return passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' })(req, res, next);
-  });
+  models.User.create({username: username, password: password, salt: salt, name: name + ' ' + surname, email: email}, common.handleError(function(_, docs) {
+    passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' })(req, res, next);
+  }));
 };
 
 users.me = function(req, res) {
-  core.links.user({ id: req.user.get('id') }, function(err, docs) {
-    if (err)
-      return common.errorHandler(err, res);
-    
+  core.links.user({ id: req.user.get('id') }, common.handleError(function(_, docs) {
     res.render('links', { user: docs });
-  });
+  }));
 };
 
 users.get = function(req, res) {
@@ -57,21 +47,15 @@ users.userProfile = function(req, res) {
   var body = req.body,
       id   = req.user.get('id');
 
-  core.users.settings({body: body, id: id}, function(err) {
-    if (err)
-      return common.errorHandler(err, res);
-
+  core.users.settings({body: body, id: id}, handleError(function() {
     res.redirect('/me');    
-  });
+  }));
 };
 
 users.account = function(req, res) {
   var id = req.params.id;
 
-  core.links.user({id: id}, function(err, links, user) {
-    if (err)
-      return common.errorHandler(err, res);
-
+  core.links.user({id: id}, handleError(function(_, links, user) {
     res.render('links', { links: links, user: user });
-  });
+  }));
 };

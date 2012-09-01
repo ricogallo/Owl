@@ -7,24 +7,18 @@ tags.subscribe = function(req, res) {
   core.subscribe({
     user: req.user,
     tag : req.body.tag
-  }, function(e) {
-    if (e)
-      return handleError(e, res);
-
+  }, handleError(function () {
     res.writeHead(204, {'Content-Type': 'application/json'});
     res.end();
-  });
+  }));
 };
 
 tags.unsubscribe = function(req, res) {
   core.unsubscribe({
     user: req.user,
     tag : req.body.tag
-  }, function(e) {
-    if (e)
-      return handleError(e, res);
-
+  }, handleError(function(e) {
     res.writeHead(204, {'Content-Type': 'application/json'});
     res.end();
-  });
+  }));
 };

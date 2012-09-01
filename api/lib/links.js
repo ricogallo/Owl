@@ -4,47 +4,35 @@ var core        = require('../../core/links'),
 var links = exports;
 
 links.all = function(req, res) {
-  core.all(function(e, links) {
-    if (e)
-      return handleError(e, res);
-
+  core.all(handleError(function(_, links) {
     res.json(links);
-  });
-}
+  }));
+};
 
 links.timeline = function(req, res) {
   core.timeline({
     user: req.user
-  }, function(e, links) {
-    if (e)
-      return handleError(e, res);
-
+  }, handleError(function(_, links) {
     res.json(links);
-  });
+  }));
 };
 
 links.get = function(req, res) {
   core.get({
     id   : req.params.id,
     user : req.user
-  }, function(e, link) {
-    if(e)
-      return handleError(e, res);
-
+  }, handleError(function(_, link) {
     res.json(link);
-  });
+  }));
 };
 
 links.del = function(req, res) {
   core.del({
     id   : req.params.id,
     user : req.user
-  }, function(e) {
-    if(e)
-      return handleError(e, res);
-
+  }, handleError(function() {
     res.send(204); 
-  });
+  }));
 };
 
 links.update = function(req, res) {
@@ -55,12 +43,9 @@ links.update = function(req, res) {
     id   : req.params.id, 
     uri  : req.body.uri,
     user : req.user
-  }, function(e, link) {
-    if(e)
-      return handleError(e, res);
-    
+  }, handleError(function(_, link) {
     res.json(link);
-  });
+  }));
 };
 
 links.create = function(req, res) {
@@ -74,20 +59,15 @@ links.create = function(req, res) {
     uri  : req.body.uri,
     tags : req.body.tags.split(','),
     user : req.user
-  }, function(e, link) {
-    if(e)
-      return handleError(e, res);
+  }, handleError(function(e, link) {
     res.json(link, 201);
-  });
+  }));
 };
 
 links.user = function(req, res) {
   core.user({
     user: req.user
-  }, function(e, links) {
-    if (e)
-      return handleError(e, res);
-
+  }, handleError(function(_, links) {
     res.json(links);
-  });
+  }));
 };
