@@ -12,7 +12,7 @@ tags.byTag = function(req, res) {
   var tag = req.params.tag;
 
   core.links.byTag({tag: tag, search: req.route.path.split('/')[1] === 'search'}, common.handleError(res, function(_, rows) {
-    req.user.load({fetch: ['tags']}, common.handleError(function() {
+    req.user.load({fetch: ['tags']}, common.handleError(res, function() {
       var usertags = (req.user.get('tags') || []).map(function(x) {
         return x.get('name');
       });
