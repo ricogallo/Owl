@@ -20,7 +20,7 @@ middlewares.locals = function(req, res, next) {
 
 middlewares.notFound = function(req, res, next) {
   if(req.accepts('html')) {
-    return common.handleError(new Error(404), res);
+    return common.handleError(res)(new Error(404));
   }
 
   res.send('Not Found');
