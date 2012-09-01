@@ -22,7 +22,7 @@ links.create = function(req, res) {
 };
 
 links.delete = function(req, res) {
-  core.links.del({id: req.params.id, user: req.user}, handleError(res, function(_, docs) {
+  core.links.del({id: req.params.id, user: req.user}, common.handleError(res, function(_, docs) {
     res.redirect('/');
   }));
 };
