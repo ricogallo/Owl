@@ -12,7 +12,7 @@ var app = module.exports = express();
 app.set('view engine', 'jade');
 app.set('views', __dirname + '/views');
 
-/* 
+/*
  * Set up locales
 */
 app.use(express.csrf());
@@ -29,7 +29,7 @@ app.get('/', function(req, res) {
   res.render('index', { landing: true });
 });
 
-/* 
+/*
  * User routes
 */
 app.post('/sign_up'     , libs.users.create);
