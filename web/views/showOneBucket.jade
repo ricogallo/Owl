@@ -4,7 +4,7 @@ block content
   if bucket && bucket.get('links')
     h3= bucket.get('name')
     for link in bucket.get('links')
-      div.row
+      div.row-fluid
         div.span1
           img.numbee-thumb(src="#{gravatar(link.get('user').get('email'))}")
         div.span7

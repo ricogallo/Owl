@@ -1,0 +1,12 @@
+.container {
+    max-width: 960px;
+}
+.margin-right-10 {
+    margin-right: 10px !important;
+}
+.margin-top-5 {
+    margin-top: 5px !important;
+}
+.block {
+    display: block !important;
+}

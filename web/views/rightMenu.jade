@@ -1,32 +1,28 @@
 div.span3.visible-desktop
-  div.well.fromtop
+  // div.well.fromtop
     form.form-search
       .input-append
         input.span2.search-query(type='text', placeholder='Search..')
         button.btn(type='submit')
           i.icon-search
-  div.well
-    div.row
-      div.span1
-        img.numbee-thumb(src="#{gravatar(user.get('email'))}")
-      div.offset1
-        span
-          strong= user.get('username');
-          br
-        div(style="margin-top: 10px")
-          i
-            span.rname= user.get('name')
-          br
-          span
-            a(class="btn btn-mini", href="mailto:#{user.get('email')}")
-              i.icon-envelope
-  div.well
+  div.well.fromtop
+    div.row-fluid
+      img.pull-left.margin-right-10.numbee-thumb(src="#{gravatar(user.get('email'))}")
+      span.block
+        strong= user.get('username');
+      em
+        span.rname= user.get('name')
+      div.clearfix
+      // span
+        a.btn.btn-mini(href="mailto:#{user.get('email')}")
+          i.icon-envelope
+  // div.well
     ul.nav.nav-list
       li.nav-header
         i.icon-tags
         | Links
       li
-        a(href="/new") Create Link
+        a(href="/new") Create Link 
       li.nav-header
         i.icon-folder-close
         | Buckets

@@ -13,6 +13,7 @@ html
     link(rel='stylesheet', href='//netdna.bootstrapcdn.com/font-awesome/2.0/css/font-awesome-ie7.css')
     link(rel='stylesheet', href='/css/bootstrap-tagmanager.css')
     link(href="/css/mystyle.css",rel="stylesheet")
+    link(href="/css/style.css",rel="stylesheet")
     link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=PT+Sans')
     link(href="http://fonts.googleapis.com/css?family=Oleo+Script:400,700|Concert+One|Ropa+Sans",rel="stylesheet",type="text/css")
 
@@ -29,24 +30,9 @@ html
           a.brand(href="/")
             span(style='color: #5BB75B') α
             | &nbsp;urlship
-          button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
-              span.icon-bar
-              span.icon-bar
-              span.icon-bar
-          .nav-collapse.collapse.visible-phone.visible-table
-            if user
-              include mobileMenu
-            else
-              ul.nav
-                li
-                  a(href='/sign_up') Sign Up
-                li
-                  a(href='/login') Login
-                li
-                  a(href='/about') About
-                  
+
           ul.nav.pull-right.visible-desktop
-            li
+            // li
               a(href="#") About
             if !user
               li
@@ -55,15 +41,16 @@ html
                 a(href="/login") Login
             else
               li
+                // Welcome, #{user.get('username')}
                 a(href="/logout") Logout
     div.container
-      div.row
+      div.row-fluid
         if user
           include rightMenu
-          .span6
+          .span9
             .well.fromtop
               block content
-          include leftMenu
+          // include leftMenu
         else
           if landing
             div.span12

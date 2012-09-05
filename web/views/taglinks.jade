@@ -3,7 +3,7 @@ extends layout
 include mixins/linkEntry
 
 block content
-  .row
+  .row-fluid
     .span2
       h1(style='display: inline; margin-bottom: 20px')= tag
       form.pull-right(method='post', action=!~usertags.indexOf(tag) ? '/subscribe/'+tag : '/unsubscribe/'+tag)
