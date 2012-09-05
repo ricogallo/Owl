@@ -10,7 +10,7 @@ links.create = function(req, res) {
   if (
     !req.body.uri ||
     !req.body.hiddenTagList
-  ) return res.send(res.writeHead(400));
+  ) return res.redirect('/new');
   
   core.links.create({
     user: req.user, 
