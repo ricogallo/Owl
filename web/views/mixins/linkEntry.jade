@@ -4,8 +4,8 @@ mixin linkEntry(link, usr, last)
       // img.pull-left.mobile.hidden-desktop(src="#{gravatar(usr.get('email'))}")
       img.pull-left.margin-right-10.desktop.visible-desktop(src='#{gravatar(usr.get("email"))}')
       div
-        span.block.bold= usr.get('username')
-        a.link(href="#{link.get('uri')}")= link.get('uri')
+        a(href='/users/#{usr.get("username")}', style='color: black').block.bold= usr.get('username')
+        a.link(href="#{link.get('uri')}", target='_blank')= link.get('uri')
         div tags:
           for tag in link.get('tags')
             a(href="/tags/#{tag.get('name')}")= tag.get('name')+", "
@@ -22,11 +22,10 @@ mixin linkEntry(link, usr, last)
           a.btn.love
             i.icon-heart
           if usr.get('id') === user.get('id')
-            form.btn.inline-block(id=link.get('id'), method="post", action="/delete/#{link.get('id')}")
+            form.btn.inline-block(id=link.get('id'), method="post", action="/delete/#{link.get('id')}", onclick='$(this).submit()')
               input(type="hidden",name="_method",value="delete")
               input(type="hidden",name="_csrf",value=csrf)
               span
-                //.btn(type='submit')  javascript in order to submit the form
                 i.icon-remove
 
     div.clearfix

@@ -30,7 +30,6 @@ html
           a.brand(href="/")
             span(style='color: #5BB75B') α
             | &nbsp;urlship
-
           ul.nav.pull-right.visible-desktop
             // li
               a(href="#") About
@@ -41,8 +40,10 @@ html
                 a(href="/login") Login
             else
               li
-                // Welcome, #{user.get('username')}
+                p.navbar-text.bold(style='color: white') Welcome, #{user.get('username')}
+              li
                 a(href="/logout") Logout
+
     div.container
       div.row-fluid
         if user
