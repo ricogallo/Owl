@@ -1,25 +1,18 @@
-mixin linkEntry(link, usr)
-  div.row
-    div.span1
-      img.mobile.hidden-desktop(src="#{gravatar(usr.get('email'))}")
-      img.desktop.visible-desktop(src='#{gravatar(usr.get("email"))}')
-    div.span3
-      strong= usr.get('username')
-      div(style="margin-top: 5px")
+mixin linkEntry(link, usr, last)
+  div.row-fluid.position-relative
+    div.span12
+      // img.pull-left.mobile.hidden-desktop(src="#{gravatar(usr.get('email'))}")
+      img.pull-left.margin-right-10.desktop.visible-desktop(src='#{gravatar(usr.get("email"))}')
+      div
+        span.block.bold= usr.get('username')
         a.link(href="#{link.get('uri')}")= link.get('uri')
-        div(style="margin-top: 5px")
+        div tags:
           for tag in link.get('tags')
-            a(href="/tags/#{tag.get('name')}")= tag.get('name')+" "
+            a(href="/tags/#{tag.get('name')}")= tag.get('name')+", "
     div.pull-right
       .btn-toolbar
-        if usr.get('id') === user.get('id')
-          .btn-group
-            form(id=link.get('id'), method="post", action="/delete/#{link.get('id')}")
-              input(type="hidden",name="_method",value="delete")
-              input(type="hidden",name="_csrf",value=csrf)
-              button.btn(type='submit')
-                i.icon-remove
-        .btn-group
+
+        .btn-group.position-absolute
           a.btn.tweet(href='https://twitter.com/intent/tweet?text=Check%20this%20out!%20-%20&url=#{encodeURIComponent(link.get("uri"))}&via=urlship')
             i.icon-twitter
           a.btn.facebook(href='http://www.facebook.com/sharer.php?u=#{encodeURIComponent(link.get("uri"))}')
@@ -28,5 +21,15 @@ mixin linkEntry(link, usr)
             i.icon-tag
           a.btn.love
             i.icon-heart
-  hr
+          if usr.get('id') === user.get('id')
+            form.btn.inline-block(id=link.get('id'), method="post", action="/delete/#{link.get('id')}")
+              input(type="hidden",name="_method",value="delete")
+              input(type="hidden",name="_csrf",value=csrf)
+              span
+                //.btn(type='submit')  javascript in order to submit the form
+                i.icon-remove
+
+    div.clearfix
+  if !last
+    hr
 

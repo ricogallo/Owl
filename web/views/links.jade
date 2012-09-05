@@ -6,4 +6,4 @@ block content
   if user && user.get('links')
     for link in user.get('links')
       if link
-        +linkEntry(link, user)
+        = linkEntry_mixin(link, user, (user.get('links').length - 1)==user.get('links').indexOf(link))

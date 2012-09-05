@@ -1,3 +1,6 @@
+img {
+    border-radius: 5px;
+}
 .container {
     max-width: 960px;
 }
@@ -9,4 +12,18 @@
 }
 .block {
     display: block !important;
+}
+.bold {
+    font-weight: bold;
+}
+.position-relative {
+    position: relative !important;
+}
+.position-absolute {
+    position: absolute !important;
+    top: 0;
+    right: 0;
+}
+.inline-block {
+    display: inline-block !important;
 }
