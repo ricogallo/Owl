@@ -1,6 +1,6 @@
 {
   "name": "owl",
-  "version": "0.0.13-11",
+  "version": "0.0.13-16",
   "author": "yawn <yawn.localhost@gmail.com>",
   "contributors": [
     {
@@ -36,7 +36,7 @@
     "expect.js": ">= 0.0.0",
     "should": ">= 0.0.0",
     "request": ">= 0.0.0",
-    "zombie": "*"
+    "zombie": ">= 0.0.0"
   },
   "scripts": {
     "test": "mocha -t 20000 -R spec -r should test/*-test.js",
