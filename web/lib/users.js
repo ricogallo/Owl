@@ -2,31 +2,65 @@ var common   = require('./common'),
     models   = require('../../models'),
     gravatar = require('gravatar'),
     passport = require('passport'),
-    core     = require('../../core');
+    utile    = require('utile'),
+    core     = require('../../core'),
+    mail     = require('nodemailer');
 
-var users = exports;
+var users = exports,
+    gmail = mail.createTransport('SMTP', {
+      service: 'Gmail',
+      auth: {
+        user: 'no-reply@urlship.com',
+        pass: process.env.NOREPLY_PWD
+      }
+    });
+
+users.sendMail = function(req, res, next) { 
+  models.User.findOne({ where: { email: req.body.email } }, function(e, usr) {
+    if(usr) { return res.redirect('/'); }
+
+    var token = utile.randomString(40); 
+
+    models.Redis.set(token, req.body.email, function() {
+      models.Redis.expire(token, 86400, function() {
+        gmail.sendMail({
+          from   : 'urlship <no-reply@urlship.com>',
+          to     : req.body.email,
+          subject: 'Welcome to urlship!',
+          text   : 'Welcome to urlship, you\'re one step away from activating your account, please click here http://alpha.urlship.com/activate/' + token + ' here and follow instructions'
+        }, function(e) {
+          res.redirect('/');
+        });
+      });
+    });
+  });
+};
 
 users.create = function(req, res, next) {
   var username = req.body.username,
       password = req.body.password,
-      name = req.body.name,
-      surname = req.body.surname,
-      email = req.body.email,
-      salt = core.common.salt();
+      name     = req.body.name,
+      surname  = req.body.surname,
+      token    = req.body.token,
+      salt     = core.common.salt();
 
   if (
     typeof username === 'undefined' ||
     typeof password === 'undefined' ||
     typeof name     === 'undefined' ||
     typeof surname  === 'undefined' ||
-    typeof email    === 'undefined'
+    typeof token    === 'undefined'
   ) return res.send(400);
 
   password = core.common.crypt(salt + password);
 
-  models.User.create({username: username, password: password, salt: salt, name: name + ' ' + surname, email: email}, common.handleError(res, function(_, docs) {
-    passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' })(req, res, next);
-  }));
+  models.Redis.get(token, function(e, email) {
+    if(!email || e) { return res.redirect('/'); }
+
+    models.User.create({username: username, password: password, salt: salt, name: name + ' ' + surname, email: email}, common.handleError(res, function(_, docs) {
+      passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' })(req, res, next);
+    }));
+  });
 };
 
 users.me = function(req, res) {

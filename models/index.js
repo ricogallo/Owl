@@ -1,4 +1,5 @@
-var hater = require('hater');
+var hater = require('hater'),
+    redis = require('redis');
 
 function buildString() {
   if(process.env.POSTGRESQL_DB) {
@@ -56,3 +57,22 @@ hater.Relationships.manyToMany(models.User, models.Tag);
 
 
 hater.sync();
+
+// Redis
+
+models.Redis = process.env.REDIS_SESSION ? 
+  (function() { 
+    var obj    = JSON.parse(process.env.REDIS_SESSION),
+        client = redis.createClient(obj.port, obj.host); 
+    
+    client.auth(obj.pass);
+
+    return client; 
+  })() :
+  redis.createClient() ;
+
+if(process.env.REDIS_SESSION) {
+  var Redis = require('connect-redis')(express);
+  app.use(express.session({ store: new Redis(JSON.parse(process.env.REDIS_SESSION)), secret: require('utile').randomString(64) }));
+}
+

@@ -20,7 +20,11 @@ profile.logout = function(req, res) {
 };
 
 profile.signUp = function(req, res) {
-  res.render('register');
+  models.Redis.get(req.params.tok, function(e, tok) {
+    if(e || !tok) { return res.redirect('/'); }
+    
+    res.render('register', { token: req.params.tok });
+  });
 };
 
 profile.userProfile = function(req, res) {

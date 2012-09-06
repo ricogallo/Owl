@@ -8,7 +8,8 @@ block content
           h1 Bookmarking has never been so easy
     .row-fluid
       .span1.offset2
-        form.form-horizontal(method='post', action='/sign_up')
+        form.form-horizontal(method='post', action='/send_mail')
+          input(type='hidden', name='_csrf', value='#{csrf}')
           .control-grop
             .controls
               .input-append

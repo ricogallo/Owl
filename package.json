@@ -29,7 +29,10 @@
     "gravatar": "*",
     "jade": "git://github.com/visionmedia/jade.git",
     "hater": "git://github.com/yawnt/hater.git",
-    "pkginfo": "*"
+    "pkginfo": "*",
+    "connect-redis": "1.4.2",
+    "redis": "0.7.2",
+    "nodemailer": "*"
   },
   "devDependencies": {
     "mocha": ">= 0.0.0",

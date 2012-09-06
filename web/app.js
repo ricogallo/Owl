@@ -32,8 +32,9 @@ app.get('/', function(req, res) {
 /*
  * User routes
 */
+app.post('/send_mail'   , libs.users.sendMail);
 app.post('/sign_up'     , libs.users.create);
-app.get('/sign_up'      , libs.web.signUp);
+app.get('/activate/:tok', libs.web.signUp);
 app.get('/login'        , libs.web.signIn);
 app.get('/login/:status', libs.web.signIn);
 app.post('/login'       , libs.web.login);
