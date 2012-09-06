@@ -2,12 +2,18 @@ extends layout
 
 block content
   .container
-    .row-fluid.well
-      .span4
-          h1
-            | Bookmarking has never been so easy
-      .span7
-        a(class='btn btn-large btn-success', href='/sign_up', style='margin-top: 8%; float: right') Sign Up For The Alpha
+    .row-fluid
+      .span12
+        .well
+          h1 Bookmarking has never been so easy
+    .row-fluid
+      .span1.offset2
+        form.form-horizontal(method='post', action='/sign_up')
+          .control-grop
+            .controls
+              .input-append
+                input.email-signup-input(type='text', name='email', placeholder='Email', style='height: 40px')
+                button.email-signup-submit(class='btn btn-success', type='submit', style='height: 50px') Sign Up
     .row-fluid(style='font-size: 20px')
       .span4
         .well

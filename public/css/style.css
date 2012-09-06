@@ -27,3 +27,13 @@ img {
 .inline-block {
     display: inline-block !important;
 }
+
+.email-signup-input {
+  line-height: 35px !important;
+  height: 40px;
+  font-size: 20px !important;
+}
+
+.email-signup-submit {
+  height: 50px;
+}
