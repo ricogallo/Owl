@@ -71,8 +71,4 @@ models.Redis = process.env.REDIS_SESSION ?
   })() :
   redis.createClient() ;
 
-if(process.env.REDIS_SESSION) {
-  var Redis = require('connect-redis')(express);
-  app.use(express.session({ store: new Redis(JSON.parse(process.env.REDIS_SESSION)), secret: require('utile').randomString(64) }));
-}
 
