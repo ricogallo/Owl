@@ -1,4 +1,5 @@
-var models = require('../models/');
+var models = require('../models/'),
+    jerry  = require('jerry');
 
 var links = exports;
 
@@ -41,17 +42,28 @@ links.create = function(obj, callback) {
       tags = [];
   
   function done() {
-    user.set('links', [new models.Link({ uri: uri, tags: tags })]);
-    
-    user.save(function(e) {
-      if (e) {
-        if (e[0] && e[0].message === 'invalid input')
-          return callback(new Error(400));
-        else
-          return callback(new Error(500));
-      }
+    jerry(uri, function(e, infos) {
+      infos = infos || {};
 
-      callback(null);
+      user.set('links', [
+        new models.Link({ 
+          uri    : uri, 
+          tags   : tags,
+          title  : (infos.title && infos.title.length > 30 ? infos.title.slice(0,25) + '...' : infos.title) || '',
+          favicon: infos.favicon || ''
+        })
+      ]);
+      
+      user.save(function(e) {
+        if (e) {
+          if (e[0] && e[0].message === 'invalid input')
+            return callback(new Error(400));
+          else
+            return callback(new Error(500));
+        }
+
+        callback(null);
+      });
     });
   }
 

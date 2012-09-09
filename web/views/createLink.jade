@@ -1,16 +1,13 @@
-extends layout
-
-block content
-  div.row-fluid
-    div.span1
-      img.numbee-thumb(src="#{gravatar(user.get('email'))}")
-    div.span3
-      strong @#{user.get('username')}
-      div(style="margin-top: 5px")
-        form(action="/links/new",method="post")
+div.row-fluid
+  div.span12.position-relative
+    img(src="#{gravatar(user.get('email'))}", class="pull-left margin-right-10 desktop visible-desktop")
+    div
+      a(href='/users/#{user.get("username")}', style='color: black').block.bold= user.get('username') 
+      div
+        form(action="/links/new",method="post", style='margin-bottom: -10px')
           input(type="hidden",value=csrf,name="_csrf")
-          input.input-small#url-input(placeholder="URL...",type="text",style="width: 98%; margin-left: 1px",name="uri")
+          input.input-xxlarge.input#url-input(placeholder="URL...",type="text", name="uri")
           div
-            input.tagManager(placeholder='tags', type='text', name='tags')
-          button(class='btn btn-success blue pull-right', type="submit") Send
-          div(style="clear: both")
+            input.tagManager.input-small(placeholder='Tag', type='text', name='tags')
+          button(class='btn btn-success blue pull-right', style='margin-top: -40px', type="submit") Send
+hr

@@ -1,31 +1,34 @@
 mixin linkEntry(link, usr, last)
-  div.row-fluid.position-relative
+  div.row-fluid.position-relative.link
     div.span12
       // img.pull-left.mobile.hidden-desktop(src="#{gravatar(usr.get('email'))}")
       img.pull-left.margin-right-10.desktop.visible-desktop(src='#{gravatar(usr.get("email"))}')
       div
-        a(href='/users/#{usr.get("username")}', style='color: black').block.bold= usr.get('username')
-        a.link(href="#{link.get('uri')}", target='_blank')= link.get('uri')
-        div tags:
-          for tag in link.get('tags')
-            a(href="/tags/#{tag.get('name')}")= tag.get('name')+", "
-    div.pull-right
+        a(href='/users/#{usr.get("username")}', style='color: black; margin-bottom: 5px').block.bold= usr.get('username')
+        if link.get('favicon')
+          img.favicon(src=link.get('favicon'))
+        a.link(href="#{link.get('uri')}", target='_blank', style='font-size: 13px; margin-left: 5px')= link.get('title') || link.get('uri')
+        div
+          ul.tags
+            for tag in link.get('tags')
+              li
+                a(href="/tags/#{tag.get('name')}")= tag.get('name')
+    div.pull-right.link-buttons
       .btn-toolbar
-
         .btn-group.position-absolute
-          a.btn.tweet(href='https://twitter.com/intent/tweet?text=Check%20this%20out!%20-%20&url=#{encodeURIComponent(link.get("uri"))}&via=urlship')
+          a.btn.btn-link.tweet(href='https://twitter.com/intent/tweet?text=Check%20this%20out!%20-%20&url=#{encodeURIComponent(link.get("uri"))}&via=urlship')
             i.icon-twitter
-          a.btn.facebook(href='http://www.facebook.com/sharer.php?u=#{encodeURIComponent(link.get("uri"))}')
+          a.btn.btn-link.facebook(href='http://www.facebook.com/sharer.php?u=#{encodeURIComponent(link.get("uri"))}')
             i.icon-facebook-sign
-          a.btn(href='/buckets/add_link/#{link.get("id")}')
+          a.tag.btn.btn-link(href='/buckets/add_link/#{link.get("id")}')
             i.icon-tag
-          a.btn.love
+          a.btn.love.btn-link
             i.icon-heart
           if usr.get('id') === user.get('id')
-            form.btn.inline-block(id=link.get('id'), method="post", action="/delete/#{link.get('id')}", onclick='$(this).submit()')
+            form.btn.btn-link.inline-block(id=link.get('id'), method="post", action="/delete/#{link.get('id')}", onclick='$(this).submit()')
               input(type="hidden",name="_method",value="delete")
               input(type="hidden",name="_csrf",value=csrf)
-              span
+              span.love
                 i.icon-remove
 
     div.clearfix

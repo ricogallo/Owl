@@ -200,16 +200,20 @@ body
   background-color: #080808 \9;
 }
 
-.tweet:hover {
-  color: #00aceb;
+.tweet:hover i{
+  color: #00aceb !important;
 }
 
-.love:hover {
-  color: #D84A38;
+.tag:hover i {
+  color: #000 !important;
 }
 
-.facebook:hover {
-  color: #3B5998;
+.love:hover i{
+  color: #D84A38 !important;
+}
+
+.facebook:hover i{
+  color: #3B5998 !important;
 }
 
 .desktop {
