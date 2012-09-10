@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  form#signup.form-horizontal(action="/email_sign_up",method="post")
+    input(type='hidden', name='_csrf', value='#{csrf}')
+    legend Register
+    div.control-group
+      label.control-label(for="email") Email
+      div.controls
+        input.input-medium.required(type="text",placeholder="cat@cat.com",name="email")
+    div.control-group
+      label.control-label(for="name") Name
+      div.controls
+        input.input-medium.required(type="text",placeholder="Name",name="name")
+    div.control-group
+      label.control-label(for="surname") Surname
+      div.controls
+        input.input-medium.required(type="text",placeholder="Surname",name="surname")
+    div.form-actions
+      button(class='btn-success btn', type="submit") Sign Up

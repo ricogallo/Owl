@@ -13,6 +13,15 @@ profile.signIn = function(req, res) {
 
 profile.login = passpr.authenticate('local', { successReturnToOrRedirect: '/me', failureRedirect: '/login/failed' });
 
+profile.twitter = passpr.authenticate('twitter');
+
+profile.twitterDone = [
+  passpr.authenticate('twitter'),
+  function(req, res) {
+    res.redirect('/');
+  }
+];
+
 
 profile.logout = function(req, res) {
   req.logout();

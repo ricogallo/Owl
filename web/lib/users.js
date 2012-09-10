@@ -36,6 +36,20 @@ users.sendMail = function(req, res, next) {
   });
 };
 
+users.completeRegistration = function(req, res, next) {
+  var body = {
+    email  : req.body.email,
+    name   : req.body.name + ' ' + req.body.surname,
+    surname: req.body.surname
+  };
+
+  models.User.update(body, { where: { username: req.user.get('username') } }, function(e) {
+    if(e) return res.send(500);
+
+    res.redirect('/');
+  }); 
+};
+
 users.create = function(req, res, next) {
   var username = req.body.username,
       password = req.body.password,

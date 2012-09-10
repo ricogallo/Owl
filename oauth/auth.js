@@ -1,6 +1,8 @@
 var passport = require('passport'),
     models   = require('../models/'),
     Local    = require('passport-local').Strategy,
+    Twitter  = require('passport-twitter').Strategy,
+    Github   = require('passport-github').Strategy,
     Basic    = require('passport-http').BasicStrategy,
     Client   = require('passport-oauth2-client-password').Strategy,
     Bearer   = require('passport-http-bearer').Strategy,
@@ -14,6 +16,21 @@ passport.use(new Local(function(usr, pwd, done) {
     
     done(null, common.crypt(user.get('salt') + pwd) === user.get('password') ? user : false);
   });
+}));
+
+passport.use(new Twitter({
+    consumerKey   : process.env.TWITTER_ID,
+    consumerSecret: process.env.TWITTER_SECRET,
+    callback      : 'http://alpha.urlship.com:8000/twitter/callback'
+  }, function(token, tokenSecret, profile, done) {
+    models.User.findOrCreate({ where: {
+      username: profile.username,
+      email   : 'default@default.com' 
+    }}, function(e, user) {
+      if(e || !user) return done(null, false);
+
+      done(null, user);      
+    });
 }));
 
 passport.serializeUser(function(user, done) {

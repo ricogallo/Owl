@@ -1,5 +1,5 @@
 $(function() {
-  $(".tagManager").tagsManager({ preventSubmitOnEnter: false });  
+  $(".tagManager").tagsManager();  
   $("#signup").validate();
   $('.dropdown-toggle').dropdown();
   $('a[rel=popover]').popover({ trigger: 'click', placement: 'inside top'});

@@ -7,8 +7,6 @@ common.handleError = function handleError (res, fn) {
     var args = [].slice.call(arguments, 0),
         e    = args.shift();
     
-    console.dir(e);
-
     if (e) {
       res.render('error', {
         msg   : codes[e.message],

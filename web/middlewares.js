@@ -9,8 +9,6 @@ var middlewares = exports;
 
 middlewares.locals = function(req, res, next) {
   res.locals.user = req.user;
-  if (req.user)
-    console.dir(req.user.get('tags'));
   res.locals.csrf = req.session._csrf;
   res.locals.landing = false;
   res.locals.gravatar = function(id) {
@@ -26,4 +24,14 @@ middlewares.notFound = function(req, res, next) {
   }
 
   res.send('Not Found');
+};
+
+middlewares.ensureAccount = function(req, res, next) {
+  if(req.url === '/email_sign_up') return next();
+
+  if(req.user && req.user.get('email') === 'default@default.com') {
+    return res.render('completeRegistration');
+  }
+
+  next();
 };

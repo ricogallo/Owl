@@ -86,7 +86,7 @@ links.create = function(obj, callback) {
         if (e) return callback(new Error(500));
 
         iterate(names);
-      })
+      });
     });
 
   })(obj.tags);
