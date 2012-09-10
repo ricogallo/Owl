@@ -22,6 +22,14 @@ profile.twitterDone = [
   }
 ];
 
+profile.github = passpr.authenticate('github');
+
+profile.githubDone = [
+  passpr.authenticate('github'),
+  function(req, res) {
+    res.redirect('/');
+  }
+];
 
 profile.logout = function(req, res) {
   req.logout();

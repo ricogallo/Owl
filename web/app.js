@@ -48,6 +48,8 @@ app.post('/profile'        , [login.ensureLoggedIn(), libs.users.userProfile]);
 app.get('/twitter'         , libs.web.twitter);
 app.get('/twitter/callback', libs.web.twitterDone);
 app.post('/email_sign_up'  , libs.users.completeRegistration);
+app.get('/github'          , libs.web.github);
+app.get('/github/callback' , libs.web.githubDone);
 
 /*
  * Oauth routes

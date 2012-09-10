@@ -33,6 +33,21 @@ passport.use(new Twitter({
     });
 }));
 
+passport.use(new Github({
+    clientID    : process.env.GITHUB_ID,
+    clientSecret: process.env.GITHUB_SECRET,
+    callbackURL : 'http://alpha.urlship.com:8000/github/callback'
+  }, function(accessToken, refreshToken, profile, done) {
+    models.User.findOrCreate({ where: {
+      username: profile.username,
+      email   : profile.emails[0].value
+    }}, function(e, user) {
+      if(e || !user) return done(null, false);
+
+      done(null, user);
+    });
+}));
+
 passport.serializeUser(function(user, done) {
   done(null, user.get('id'));
 });
