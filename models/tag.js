@@ -2,5 +2,6 @@ var hater = require('hater');
 
 module.exports = {
   name: hater.Types.String(),
-  hits: hater.Types.Integer()
+  hits: hater.Types.Integer(),
+  followers: hater.Types.Integer()
 };

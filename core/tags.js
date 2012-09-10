@@ -1,4 +1,5 @@
-var models = require('../models/');
+var models = require('../models/'),
+    hater  = require('hater');
 
 var tags = exports;
 
@@ -33,7 +34,14 @@ tags.subscribe = function(obj, callback) {
       if (err)
         return callback(new Error(500));
 
-      callback(err);
+      var Q = new hater.builder.Query();
+      Q.query = 'UPDATE tags SET followers = CASE WHEN followers IS NULL THEN 1 ELSE followers+1 END';
+      Q.where({'name': tag});
+      Q.exec(function(e) {
+        if (e) return callback(e);
+
+        callback(e);
+      });
     });
   });
 };
@@ -53,7 +61,14 @@ tags.unsubscribe = function(obj, callback) {
       if (err)
         return callback(new Error(500));
 
-      callback(err);
+      var Q = new hater.builder.Query();
+      Q.query = 'UPDATE tags SET followers = followers-1';
+      Q.where({'name': tag});
+      Q.exec(function(e) {
+        if (e) return callback(e);
+
+        callback(e);
+      });
     });
   });
 };
