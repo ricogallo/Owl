@@ -21,8 +21,10 @@ div.span3.visible-desktop
       li.nav-header
         i.icon-tags
         | Followed Tags
-      li
-        a(href='#') UNA TAG
+      if user.get('tags')
+        each tag in user.get('tags')
+          li
+            a(href='/tags/#{tag.get("name")}')= tag.get('name')
   // div.well
     ul.nav.nav-list
       li.nav-header

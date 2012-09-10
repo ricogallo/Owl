@@ -21,7 +21,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  models.User.findOne({ where: { id: id }, fetch: ['buckets', 'tags'] }, done);
+  models.User.findOne({ where: { id: id }, fetch: ['buckets', 'tags', 'links'] }, done);
 });
 
 var findClient = function(id, secret, done) {

@@ -9,6 +9,8 @@ var middlewares = exports;
 
 middlewares.locals = function(req, res, next) {
   res.locals.user = req.user;
+  if (req.user)
+    console.dir(req.user.get('tags'));
   res.locals.csrf = req.session._csrf;
   res.locals.landing = false;
   res.locals.gravatar = function(id) {
