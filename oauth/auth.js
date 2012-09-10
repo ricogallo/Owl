@@ -7,7 +7,7 @@ var passport = require('passport'),
     common   = require('../core/common');
 
 passport.use(new Local(function(usr, pwd, done) {
-  models.User.findOne({ where: { username: usr }, fetch: ['buckets'] }, function(err, user) {
+  models.User.findOne({ where: { username: usr }, fetch: ['tags'] }, function(err, user) {
     if(err || !user) {
       return done(null, false);
     }

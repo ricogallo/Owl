@@ -12,7 +12,7 @@ mixin linkEntry(link, usr, last)
           ul.tags
             for tag in link.get('tags')
               li
-                a(href="/tags/#{tag.get('name')}")= tag.get('name')
+                a(href="#", rel='popover', data-title=tag.get('name'), data-content='<p style="float: left">Hits: 123</p><form class="popover-form" method="post" action="/subscribe/#{tag.get('name')}"><input type="hidden" value="#{csrf}" name="_csrf"><button type="submit" class="btn btn-small btn-flat btn-success btn-popover">Follow</button></form>')= tag.get('name')
     div.pull-right.link-buttons
       .btn-toolbar
         .btn-group.position-absolute
