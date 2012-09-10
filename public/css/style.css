@@ -160,3 +160,15 @@ img {
 .popover {
   width: 150px;
 }
+
+.icon:hover {
+  text-decoration: none;
+  color: #000;
+}
+
+.icon {
+  color: #555;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 50px;
+}
