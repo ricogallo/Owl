@@ -19,7 +19,7 @@ users.sendMail = function(req, res, next) {
   models.User.findOne({ where: { email: req.body.email } }, function(e, usr) {
     if(usr) { return res.redirect('/'); }
 
-    var token = utile.randomString(40); 
+    var token = utile.randomString(40);
 
     models.Redis.set(token, req.body.email, function() {
       models.Redis.expire(token, 86400, function() {
@@ -27,7 +27,7 @@ users.sendMail = function(req, res, next) {
           from   : 'urlship <no-reply@urlship.com>',
           to     : req.body.email,
           subject: 'Welcome to urlship!',
-          text   : 'Welcome to urlship, you\'re one step away from activating your account, please click here http://alpha.urlship.com/activate/' + token + ' here and follow instructions'
+          text   : 'Welcome to urlship, you\'re one step away from activating your account, please click here http://alpha.urlship.com/activate/' + token + ' and follow instructions'
         }, function(e) {
           res.redirect('/');
         });

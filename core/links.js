@@ -1,4 +1,5 @@
 var models = require('../models/'),
+    hater  = require('hater'),
     jerry  = require('jerry');
 
 var links = exports;
@@ -77,8 +78,15 @@ links.create = function(obj, callback) {
       if(e) return callback(new Error(500));
       
       tags.push(instance);
-      
-      iterate(names);
+
+      var Q = new hater.builder.Query();
+      Q.query = 'UPDATE tags SET hits = CASE WHEN hits IS NULL THEN 1 ELSE hits+1 END';
+      Q.where({'name': tag});
+      Q.exec(function(e) {
+        if (e) return callback(new Error(500));
+
+        iterate(names);
+      })
     });
 
   })(obj.tags);
