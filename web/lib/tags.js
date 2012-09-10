@@ -17,7 +17,7 @@ tags.byTag = function(req, res) {
         return x.get('name');
       });
 
-      res.render('taglinks', {links: rows, tag: tag, usertags: usertags});
+      res.render('taglinks', {links: rows, tag: tag, usertags: usertags, search: req.route.path.split('/')[1] === 'search'});
     }));
   }));
 };
