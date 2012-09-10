@@ -172,3 +172,7 @@ img {
   padding-right: 10px;
   font-size: 50px;
 }
+
+.navbar-search {
+  margin-top: 5px !important;
+}
