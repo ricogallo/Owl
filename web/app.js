@@ -25,7 +25,7 @@ require('../oauth/auth');
 
 app.get('/', function(req, res) {
   if (req.user)
-    return res.redirect('/timeline');
+    return res.redirect('/me');
 
   res.render('index', { landing: true });
 });

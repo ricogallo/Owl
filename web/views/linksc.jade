@@ -3,6 +3,7 @@ extends layout
 include mixins/linkEntry
 
 block content
+  include createLink
   if links && links.length
     for link in links
       = linkEntry_mixin(link, link.get('user')) 

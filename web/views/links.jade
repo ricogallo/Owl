@@ -3,6 +3,7 @@ extends layout
 include mixins/linkEntry
 
 block content
+  script(src='/js/tour.js')
   include createLink
   if user && user.get('links')
     for link in user.get('links')

@@ -13,7 +13,9 @@ $(function() {
   var tour = new Tour();
 
   tour.addStep({
-    
+    element: '.rname',
+    title  : 'Welcome to urlship',
+    content: 'This is you! Your profile picture can be changed at <a href="https://gravatar.com">Gravatar</a>'
   });
 });
 
