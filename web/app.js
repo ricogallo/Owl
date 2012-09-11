@@ -16,6 +16,7 @@ app.set('views', __dirname + '/views');
  * Set up locales
 */
 app.use(express.csrf());
+app.use(middlewares.tags);
 app.use(middlewares.locals);
 app.use(middlewares.ensureAccount);
 app.use(app.router);

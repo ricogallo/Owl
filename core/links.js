@@ -24,6 +24,11 @@ links.user = function(obj, callback) {
   models.User.findOne({where: { id: id }, fetch: ["links.{tags,user}", 'buckets', 'tags']}, function(e, doc) {
     if (e)
       return callback(new Error(500));
+
+    doc.tags = (doc.get('tags') || []).map(function(i) {
+      return i.get('name');
+    });
+
     callback(e, doc);
   });
 };
@@ -108,8 +113,6 @@ links.del = function(obj, callback) {
     var tags = docs.get('tags').map(function(i) {
       return i.get('name');
     });
-
-    console.dir(tags);
 
     if (docs.get('user_id') === user.get('id')) {
       var Q = new hater.builder.Query();

@@ -8,7 +8,7 @@ users.get = function(obj, callback) {
   var id = obj.id,
       whitelist = ['email', 'name'];
 
-  models.User.findOne({where: {username: id}}, function(err, user) {
+  models.User.findOne({where: {username: id}, fetch: ['tags']}, function(err, user) {
     var json = {};
 
     if (!user)
@@ -21,6 +21,10 @@ users.get = function(obj, callback) {
       json[x] = user.get(x);
     });
 
+    json.tags = (user.get('tags') || []).map(function(i) {
+      return i.get('name');
+    });
+
     callback(err, json);
   });
 };
@@ -29,10 +33,10 @@ users.me = function(obj, callback) {
   var user = obj.user,
       whitelist = ['email', 'name', 'username'];
 
-  models.User.findOne({where: {id: user.get('id')}}, function(err, docs) {
+  models.User.findOne({where: {id: user.get('id')}, fetch: ['tags']}, function(err, docs) {
     var json = {};
 
-    if (!docs)
+    if (!user)
       return callback(new Error(404));
 
     if (err)
@@ -40,6 +44,10 @@ users.me = function(obj, callback) {
 
     whitelist.forEach(function(x) {
       json[x] = user.get(x);
+    });
+
+    json.tags = (user.get('tags') || []).map(function(i) {
+      return i.get('name');
     });
 
     callback(err, json);
