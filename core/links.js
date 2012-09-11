@@ -98,18 +98,32 @@ links.del = function(obj, callback) {
       uri = obj.uri,
       user = obj.user;
 
-  models.Link.findOne({where: {id: id}}, function(err, docs) {
+  models.Link.findOne({where: {id: id}, fetch: ['tags']}, function(err, docs) {
     if (err)
       return callback(new Error(500));
 
     if(!docs)
       return callback(new Error(404));
 
+    var tags = docs.get('tags').map(function(i) {
+      return i.get('name');
+    });
+
+    console.dir(tags);
+
     if (docs.get('user_id') === user.get('id')) {
-      docs.destroy(function(err, docs) {
+      var Q = new hater.builder.Query();
+      Q.query = 'UPDATE tags SET hits=hits-1';
+      Q.where({name: tags});
+      
+      Q.exec(function(err, rows) {
         if (err) return callback(new Error(500));
+
+        docs.destroy(function(err, docs) {
+          if (err) return callback(new Error(500));
         
-        callback(err, docs);
+          callback(err, docs);
+        });
       });
     } else {
       callback(new Error(401));
