@@ -2,15 +2,9 @@ mixin linkEntry(link, usr, last)
   div.row-fluid.position-relative.link
     div.span12
       // img.pull-left.mobile.hidden-desktop(src="#{gravatar(usr.get('email'))}")
-      if usr
-        img.pull-left.margin-right-10.desktop.visible-desktop(src='#{gravatar(usr.get("email"))}')
-      else
-        img.pull-left.margin-right-10.desktop.visible-desktop(src='#{gravatar("git@urlship.com")}')
+      img.pull-left.margin-right-10.desktop.visible-desktop(src='#{gravatar(usr.get("email"))}')
       div
-        if usr
-          a(href='/users/#{usr.get("username")}', style='color: black; margin-bottom: 5px').block.bold= usr.get('username')
-        else 
-          a(href='#', style='color: black; margin-bottom: 5px').block.bold Deleted
+        a(href='/users/#{usr.get("username")}', style='color: black; margin-bottom: 5px').block.bold= usr.get('username')
         if link.get('favicon')
           img.favicon(src=link.get('favicon'))
         a.link(href="#{link.get('uri')}", target='_blank', style='font-size: 13px; margin-left: 5px')= link.get('title') || link.get('uri')
@@ -18,7 +12,7 @@ mixin linkEntry(link, usr, last)
           ul.tags
             for tag in link.get('tags')
               li
-                a(href="/tags/#{tag.get('name')}", rel='popover', data-title='<p style="float: left">Hits: #{tag.get('hits')}</p> <p style="float: right">Followers: #{tag.get('followers') || 0}</p>', data-content='<form class="popover-form" method="post" action="/subscribe/#{tag.get('name')}"><input type="hidden" value="#{csrf}" name="_csrf"><button type="submit" class="btn btn-small btn-success btn-popover">Follow</button></form>')= tag.get('name')
+                a(href="/tags/#{tag.get('name')}", rel='popover', data-title='<p style="float: left">Hits: #{tag.get('hits')}</p> <p style="float: right">Followers: #{tag.get('followers') || 0}</p>', data-content='<form class="popover-form" method="post" action="/#{!~user.tags.indexOf(tag.get("name")) ? "subscribe" : "unsubscribe"}/#{tag.get("name")}"><input type="hidden" value="#{csrf}" name="_csrf"><button type="submit" class="btn btn-small btn-success btn-popover">#{!~user.tags.indexOf(tag.get("name")) ? "Follow" : "Unfollow"}</button></form>')= tag.get('name')
     div.pull-right.link-buttons
       .btn-toolbar
         .btn-group.position-absolute
@@ -30,7 +24,7 @@ mixin linkEntry(link, usr, last)
             i.icon-tag
           a.btn.love.btn-link
             i.icon-heart
-          if usr && (usr.get('id') === user.get('id'))
+          if usr.get('id') === user.get('id')
             form.btn.btn-link.inline-block(id=link.get('id'), method="post", action="/delete/#{link.get('id')}", onclick='$(this).submit()')
               input(type="hidden",name="_method",value="delete")
               input(type="hidden",name="_csrf",value=csrf)

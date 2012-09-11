@@ -16,6 +16,7 @@ app.set('views', __dirname + '/views');
  * Set up locales
 */
 app.use(express.csrf());
+app.use(middlewares.tags);
 app.use(middlewares.locals);
 app.use(middlewares.ensureAccount);
 app.use(app.router);
@@ -25,7 +26,7 @@ require('../oauth/auth');
 
 app.get('/', function(req, res) {
   if (req.user)
-    return res.redirect('/timeline');
+    return res.redirect('/me');
 
   res.render('index', { landing: true });
 });

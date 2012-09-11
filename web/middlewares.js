@@ -7,14 +7,26 @@ var gravatar = require('gravatar'),
 
 var middlewares = exports;
 
+middlewares.tags = function(req, res, next) {
+  if (req.user)
+    req.user.tags = (req.user.get('tags') || []).map(function(i) {
+      return i.get('name');
+    });
+
+  next();
+}
+
 middlewares.locals = function(req, res, next) {
   res.locals.user = req.user;
   res.locals.csrf = req.session._csrf;
   res.locals.landing = false;
+
   res.locals.gravatar = function(id) {
     return gravatar.url(id, { s: 64 });
   };
+
   res.locals.VERSION = module.exports.version;
+  
   next();
 };
 
