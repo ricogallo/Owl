@@ -4,7 +4,7 @@ include mixins/linkEntry
 
 block content
   .row-fluid
-    .span2
+    .span12
       h1(style='display: inline; margin-bottom: 20px')= tag
       if (!search)
         form.pull-right(method='post', action=!~usertags.indexOf(tag) ? '/subscribe/'+tag : '/unsubscribe/'+tag)

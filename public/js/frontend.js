@@ -3,6 +3,18 @@ $(function() {
   $("#signup").validate();
   $('.dropdown-toggle').dropdown();
   $('a[rel=popover]').popover({ trigger: 'hover', placement: 'inside top'});
+
+
+  /*
+   * Tour for first time users
+   *
+   */
+
+  var tour = new Tour();
+
+  tour.addStep({
+    
+  });
 });
 
 function search() {
