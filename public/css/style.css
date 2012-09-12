@@ -146,8 +146,12 @@ img {
   background-color: #555;
 }
 
-.btn-popover:hover {
+.btn-popover-success:hover {
   background-color: #5BB75B;
+}
+
+.btn-popover-danger:hover {
+  background-color: #DA4F49;
 }
 
 .btn {
