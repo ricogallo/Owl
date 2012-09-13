@@ -1,6 +1,7 @@
-var models = require('../models/'),
-    utile  = require('utile'),
-    common = require('./common');
+var models  = require('../models/'),
+    utile   = require('utile'),
+    buckets = require('./buckets'),
+    common  = require('./common');
 
 var users = exports;
 
@@ -8,7 +9,7 @@ users.get = function(obj, callback) {
   var id = obj.id,
       whitelist = ['email', 'name'];
 
-  models.User.findOne({where: {username: id}, fetch: ['tags']}, function(err, user) {
+  models.User.findOne({where: {username: id}, fetch: ['tags', 'bucket']}, function(err, user) {
     var json = {};
 
     if (!user)
@@ -56,6 +57,8 @@ users.me = function(obj, callback) {
 
 users.create = function(obj, callback) {
   models.User.create(obj, function(e, r) {
+    var bucket;
+
     if (e) {
       if (e.validate)
         return callback(new Error(400));
@@ -63,7 +66,7 @@ users.create = function(obj, callback) {
         return callback(new Error(500));
     }
 
-    callback(e, r);
+    buckets.create({name: r.get('username'), user: r}, callback);
   });
 };
 

@@ -71,7 +71,7 @@ users.create = function(req, res, next) {
   models.Redis.get(token, function(e, email) {
     if(!email || e) { return res.redirect('/'); }
 
-    models.User.create({username: username, password: password, salt: salt, name: name + ' ' + surname, email: email}, common.handleError(res, function(_, docs) {
+    core.users.create({username: username, password: password, salt: salt, name: name + ' ' + surname, email: email}, common.handleError(res, function(_, docs) {
       passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' })(req, res, next);
     }));
   });

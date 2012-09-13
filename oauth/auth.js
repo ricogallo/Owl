@@ -9,7 +9,7 @@ var passport = require('passport'),
     common   = require('../core/common');
 
 passport.use(new Local(function(usr, pwd, done) {
-  models.User.findOne({ where: { username: usr }, fetch: ['tags'] }, function(err, user) {
+  models.User.findOne({ where: { username: usr }, fetch: ['tags', 'bucket'] }, function(err, user) {
     if(err || !user) {
       return done(null, false);
     }
@@ -43,7 +43,6 @@ passport.use(new Github({
       email   : profile.emails[0].value
     }}, function(e, user) {
       if(e || !user) return done(null, false);
-
       done(null, user);
     });
 }));
@@ -53,7 +52,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  models.User.findOne({ where: { id: id }, fetch: ['buckets', 'tags', 'links'] }, done);
+  models.User.findOne({ where: { id: id }, fetch: ['bucket', 'tags', 'links'] }, done);
 });
 
 var findClient = function(id, secret, done) {

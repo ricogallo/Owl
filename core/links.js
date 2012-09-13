@@ -1,6 +1,7 @@
-var models = require('../models/'),
-    hater  = require('hater'),
-    jerry  = require('jerry');
+var models  = require('../models/'),
+    buckets = require('./buckets'),
+    hater   = require('hater'),
+    jerry   = require('jerry');
 
 var links = exports;
 
@@ -20,8 +21,8 @@ links.get = function(obj, callback) {
 
 links.user = function(obj, callback) {
   var id = obj.id;
-
-  models.User.findOne({where: { id: id }, fetch: ["links.{tags,user}", 'buckets', 'tags']}, function(e, doc) {
+  
+  models.User.findOne({where: { id: id }, fetch: ["links.{tags,user}", 'bucket', 'tags']}, function(e, doc) {
     if (e)
       return callback(new Error(500));
 
@@ -68,7 +69,7 @@ links.create = function(obj, callback) {
             return callback(new Error(500));
         }
 
-        callback(null);
+        buckets.addLink({link: user.get('links')[0].get('id'), bucket: user.get('bucket').get('id')}, callback);
       });
     });
   }
