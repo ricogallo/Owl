@@ -1,5 +1,6 @@
 var passport = require('passport'),
     models   = require('../models/'),
+    core     = require('../core'),
     Local    = require('passport-local').Strategy,
     Twitter  = require('passport-twitter').Strategy,
     Github   = require('passport-github').Strategy,
@@ -23,13 +24,13 @@ passport.use(new Twitter({
     consumerSecret: process.env.TWITTER_SECRET,
     callback      : 'http://alpha.urlship.com:8000/twitter/callback'
   }, function(token, tokenSecret, profile, done) {
-    models.User.findOrCreate({ where: {
+    core.users.create({
       username: profile.username,
-      email   : 'default@default.com' 
-    }}, function(e, user) {
+      email   : 'default@default.com'
+    }, function(e, user) {
       if(e || !user) return done(null, false);
 
-      done(null, user);      
+      done(null, user);
     });
 }));
 
@@ -38,10 +39,10 @@ passport.use(new Github({
     clientSecret: process.env.GITHUB_SECRET,
     callbackURL : 'http://alpha.urlship.com:8000/github/callback'
   }, function(accessToken, refreshToken, profile, done) {
-    models.User.findOrCreate({ where: {
+    core.users.create({
       username: profile.username,
       email   : profile.emails[0].value
-    }}, function(e, user) {
+    }, function(e, user) {
       if(e || !user) return done(null, false);
       done(null, user);
     });
