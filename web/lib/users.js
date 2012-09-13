@@ -46,7 +46,11 @@ users.completeRegistration = function(req, res, next) {
   models.User.update(body, { where: { username: req.user.get('username') } }, function(e) {
     if(e) return res.send(500);
 
-    res.redirect('/');
+    models.User.findOne({ where: { username: req.user.get('username') } }, function(e, r) {
+      core.buckets.create({name: r.get('username'), user: r}, function() { 
+        res.redirect('/');
+      });
+    });
   }); 
 };
 
