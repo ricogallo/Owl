@@ -66,7 +66,11 @@ users.create = function(obj, callback) {
         return callback(new Error(500));
     }
 
-    buckets.create({name: r.get('username'), user: r}, callback);
+    buckets.create({name: r.get('username'), user: r}, function(e) {
+      if (e) return callback(new Error(500));
+
+      callback(e, r);
+    });
   });
 };
 
