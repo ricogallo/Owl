@@ -21,6 +21,15 @@ links.create = function(req, res) {
   }));
 };
 
+links.vote = function(req, res) {
+  core.links.vote({
+    linkId: req.params.id,
+    user  : req.user
+  }, common.handleError(res, function() {
+    res.redirect('/');
+  }));
+};
+
 links.delete = function(req, res) {
   core.links.del({id: req.params.id, user: req.user}, common.handleError(res, function(_, docs) {
     res.redirect('/');

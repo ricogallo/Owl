@@ -74,6 +74,7 @@ app.get('/clients'   , [login.ensureLoggedIn(), libs.client.show]);
 app.get('/new'       , [login.ensureLoggedIn(), libs.links.createForm]);
 app.post('/links/new', [login.ensureLoggedIn(), libs.links.create]);
 app.del('/delete/:id', [login.ensureLoggedIn(), libs.links.delete]);
+app.get('/vote/:id'  , [login.ensureLoggedIn(), libs.links.vote]);
 
 /*
  * Tags routes

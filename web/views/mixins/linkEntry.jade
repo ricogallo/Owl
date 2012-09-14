@@ -28,14 +28,16 @@ mixin linkEntry(link, usr, last)
             i.icon-facebook-sign
           a.tag.btn.btn-link(href='/buckets/add_link/#{link.get("id")}')
             i.icon-tag
-          a.btn.love.btn-link
-            i.icon-heart
           if usr && (usr.get('id') === user.get('id'))
             form.btn.btn-link.inline-block(id=link.get('id'), method="post", action="/delete/#{link.get('id')}", onclick='$(this).submit()')
               input(type="hidden",name="_method",value="delete")
               input(type="hidden",name="_csrf",value=csrf)
               span.love
                 i.icon-remove
+          a.btn.love.btn-link(href='/vote/#{link.get("id")}')
+            i.icon-heart
+              span(style='margin-left: 5px')= link.votes
+  
 
     div.clearfix
   if !last

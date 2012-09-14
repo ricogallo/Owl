@@ -1,6 +1,7 @@
 var models  = require('../models/'),
     buckets = require('./buckets'),
     hater   = require('hater'),
+    async   = require('utile').async,
     jerry   = require('jerry');
 
 var links = exports;
@@ -29,8 +30,10 @@ links.user = function(obj, callback) {
     doc.tags = (doc.get('tags') || []).map(function(i) {
       return i.get('name');
     });
-
-    callback(e, doc);
+    
+    exports.findVote(doc.get('links'), function() {
+      callback(e, doc);
+    });
   });
 };
 
@@ -97,6 +100,22 @@ links.create = function(obj, callback) {
 
   })(obj.tags);
 
+};
+
+links.vote = function(obj, callback) { 
+  var voteObj = {
+    link_id: obj.linkId,
+    user_id: obj.user.get('id')
+  };
+
+  models.Vote.findOne({ where: voteObj }, function(e, vote) {
+    if(vote) {
+      vote.destroy(callback);
+    }
+    else {
+      models.Vote.create(voteObj, callback);
+    }
+  });
 };
 
 links.del = function(obj, callback) {
@@ -197,6 +216,17 @@ links.timeline = function(obj, callback) {
       );
     }
 
-    callback(err, links);
+    exports.findVote(links, function() {
+      callback(err, links);
+    });
   });
+};
+
+links.findVote = function(links, callback) {
+  async.forEach(links, function(item, cbl) {
+    models.Vote.find({ where: { link_id: item.get('id') } }, function(e, res) {
+      item.votes = (res && res.length) || 0;
+      cbl();
+    });
+  }, callback);
 };

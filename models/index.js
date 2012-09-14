@@ -47,6 +47,10 @@ models.Code.schema(require('./code'));
 models.Bucket = hater.define('bucket');
 models.Bucket.schema(require('./bucket'));
 
+// Vote Model
+models.Vote   = hater.define('vote');
+models.Vote.schema(require('./vote'));
+
 // Relationships
 
 hater.Relationships.oneToMany(models.User, models.Link);
