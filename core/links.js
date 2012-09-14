@@ -223,6 +223,8 @@ links.timeline = function(obj, callback) {
 };
 
 links.findVote = function(links, callback) {
+  if(!links) return callback();
+
   async.forEach(links, function(item, cbl) {
     models.Vote.find({ where: { link_id: item.get('id') } }, function(e, res) {
       item.votes = (res && res.length) || 0;
