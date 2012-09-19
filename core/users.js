@@ -7,9 +7,9 @@ var users = exports;
 
 users.get = function(obj, callback) {
   var id = obj.id,
-      whitelist = ['email', 'name'];
+      whitelist = ['email', 'name', 'id', 'username'];
 
-  models.User.findOne({where: {username: id}, fetch: ['tags', 'bucket']}, function(err, user) {
+  models.User.findOne({where: {username: id}, fetch: ['tags', 'bucket', 'links']}, function(err, user) {
     var json = {};
 
     if (!user)

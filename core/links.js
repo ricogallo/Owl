@@ -32,7 +32,7 @@ links.user = function(obj, callback) {
     });
     
     exports.findVote(doc.get('links'), function() {
-      callback(e, doc);
+      callback(e, doc.get('links'));
     });
   });
 };
