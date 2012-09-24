@@ -60,7 +60,7 @@ users.create = function(obj, callback) {
     var bucket;
 
     if (e) {
-      if (e.validate)
+      if (Array.isArray(e) && e[0].attribute)
         return callback(new Error(400));
       else
         return callback(new Error(500));

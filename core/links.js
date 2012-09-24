@@ -120,7 +120,6 @@ links.vote = function(obj, callback) {
 
 links.del = function(obj, callback) {
   var id = obj.id,
-      uri = obj.uri,
       user = obj.user;
 
   models.Link.findOne({where: {id: id}, fetch: ['tags']}, function(err, docs) {
