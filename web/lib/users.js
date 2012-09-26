@@ -83,7 +83,7 @@ users.create = function(req, res, next) {
 
 users.me = function(req, res) {
   core.links.user({ id: req.user.get('id') }, common.handleError(res, function(_, docs) {
-    res.render('links', { usr: docs });
+    res.render('links', { links: docs });
   }));
 };
 
