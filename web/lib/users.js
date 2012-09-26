@@ -45,8 +45,12 @@ users.completeRegistration = function(req, res, next) {
 
   models.User.update(body, { where: { username: req.user.get('username') } }, function(e) {
     if(e) return res.send(500);
-    
-    res.redirect('/');
+
+    models.User.findOne({ where: { username: req.user.get('username') } }, function(e, r) {
+      core.buckets.create({name: r.get('username'), user: r}, function() { 
+        res.redirect('/');
+      });
+    });
   }); 
 };
 
@@ -79,7 +83,7 @@ users.create = function(req, res, next) {
 
 users.me = function(req, res) {
   core.links.user({ id: req.user.get('id') }, common.handleError(res, function(_, docs) {
-    res.render('links', { user: docs });
+    res.render('links', { usr: docs });
   }));
 };
 
