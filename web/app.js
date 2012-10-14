@@ -26,7 +26,7 @@ require('../oauth/auth');
 
 app.get('/', function(req, res) {
   if (req.user)
-    return res.redirect('/me');
+    return res.redirect('/timeline');
 
   res.render('index', { landing: true });
 });
@@ -34,23 +34,24 @@ app.get('/', function(req, res) {
 /*
  * User routes
 */
-app.post('/send_mail'      , libs.users.sendMail);
-app.post('/sign_up'        , libs.users.create);
-app.get('/activate/:tok'   , libs.web.signUp);
-app.get('/login'           , libs.web.signIn);
-app.get('/login/:status'   , libs.web.signIn);
-app.post('/login'          , libs.web.login);
-app.get('/logout'          , [login.ensureLoggedIn(), libs.web.logout]);
-app.get('/users/:id'       , [login.ensureLoggedIn(), libs.users.get]);
-app.get('/me'              , [login.ensureLoggedIn(), libs.users.me]);
-app.get('/account/:id'     , [login.ensureLoggedIn(), libs.users.account]);
-app.get('/profile'         , [login.ensureLoggedIn(), libs.web.userProfile]);
-app.post('/profile'        , [login.ensureLoggedIn(), libs.users.userProfile]);
-app.get('/twitter'         , libs.web.twitter);
-app.get('/twitter/callback', libs.web.twitterDone);
-app.post('/email_sign_up'  , libs.users.completeRegistration);
-app.get('/github'          , libs.web.github);
-app.get('/github/callback' , libs.web.githubDone);
+app.post('/send_mail'        , libs.users.sendMail);
+app.post('/sign_up'          , libs.users.create);
+app.get('/activate/:tok'     , libs.web.signUp);
+app.get('/login'             , libs.web.signIn);
+app.get('/login/:status'     , libs.web.signIn);
+app.post('/login'            , libs.web.login);
+app.get('/logout'            , [login.ensureLoggedIn(), libs.web.logout]);
+app.get('/users/:id'         , [login.ensureLoggedIn(), libs.users.get]);
+app.get('/me'                , [login.ensureLoggedIn(), libs.users.me]);
+app.get('/account/:id'       , [login.ensureLoggedIn(), libs.users.account]);
+app.get('/profile'           , [login.ensureLoggedIn(), libs.web.userProfile]);
+app.post('/profile'          , [login.ensureLoggedIn(), libs.users.userProfile]);
+app.get('/twitter'           , libs.web.twitter);
+app.get('/twitter/callback'  , libs.web.twitterDone);
+app.post('/email_sign_up'    , libs.users.completeRegistration);
+app.get('/github'            , libs.web.github);
+app.get('/github/callback'   , libs.web.githubDone);
+app.get('/email_sent/:status', libs.users.sent);
 
 /*
  * Oauth routes

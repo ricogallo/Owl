@@ -5,7 +5,8 @@ include mixins/linkEntry
 block content
   script(src='/js/tour.js')
   include createLink
-  if links
+  if links && links.length
+    //= links.indexOf(2)
     for link in links
       if link
-        = linkEntry_mixin(link, user, (user.get('links').length - 1)==user.get('links').indexOf(link))
+        = linkEntry_mixin(link, user, (links.length - 1) == links.indexOf(link))

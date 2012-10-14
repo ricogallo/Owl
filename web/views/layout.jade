@@ -29,7 +29,7 @@ html
     div.navbar.navbar-fixed-top
       div.navbar-inner
         div.container
-          a.brand(href="/")
+          a.brand(href=(!user) ? "/" : "/timeline")
             span(style='color: #5BB75B') α
             | &nbsp;urlship
           form.navbar-search.pull-left.offset2(onsubmit='return search()')
@@ -39,12 +39,12 @@ html
               a(href="#") About
             if !user
               li
-                a(href="/sign_up") Sign Up
-              li
                 a(href="/login") Login
             else
               li
-                p.navbar-text.bold(style='color: white') Welcome, #{user.get('username')}
+                p.navbar-text.bold(style='color: white') 
+                  | Welcome, 
+                  a(href="/me") #{user.get('username')}
               li
                 a(href="/logout") Logout
 

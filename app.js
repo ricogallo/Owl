@@ -17,4 +17,6 @@ app.use(express.static(__dirname + '/public'));
 app.use('/api', api);
 app.use(web);
 
-app.listen(8000);
+app.listen(8000, function() {
+  console.log('Listening on port 8000');
+});

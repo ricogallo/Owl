@@ -4,7 +4,7 @@ var common = exports;
 
 common.handleError = function handleError (res, fn) {
   return function () {
-    var args = [].slice.call(arguments, 0),
+    var args = [].slice.call(arguments),
         e    = args.shift();
     
     if (e) {

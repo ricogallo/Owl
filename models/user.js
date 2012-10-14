@@ -4,6 +4,6 @@ module.exports = {
   'username': hater.Types.String({length: 20, validate: {minLength: 4, maxLength: 20}, unique: true}),
   'salt': hater.Types.String(),
   'password': hater.Types.String(),
-  'email': hater.Types.String({length: 30,validate: {pattern: /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/}, unique: true}),
+  'email': hater.Types.String({length: 30, validate: {pattern: /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/}, unique: true}),
   'name': hater.Types.String({validate: {pattern: /[a-zA-Z]+ [a-zA-Z]+/}})
 };

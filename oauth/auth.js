@@ -24,9 +24,9 @@ passport.use(new Twitter({
     consumerSecret: process.env.TWITTER_SECRET,
     callback      : 'http://alpha.urlship.com:8000/twitter/callback'
   }, function(token, tokenSecret, profile, done) {
-    core.users.create({
+    core.users.findOrCreate({
       username: profile.username,
-      email   : 'default@default.com'
+      email   : Date.now() + '@' + Date.now() + '.com'
     }, function(e, user) {
       if(e || !user) return done(null, false);
 
@@ -39,7 +39,10 @@ passport.use(new Github({
     clientSecret: process.env.GITHUB_SECRET,
     callbackURL : 'http://alpha.urlship.com:8000/github/callback'
   }, function(accessToken, refreshToken, profile, done) {
-    core.users.create({
+    if (!profile.emails[0].value)
+      return done(null, false, {message: 'Email is needed'});
+
+    core.users.findOrCreate({
       username: profile.username,
       email   : profile.emails[0].value
     }, function(e, user) {

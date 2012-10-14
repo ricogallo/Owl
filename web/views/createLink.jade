@@ -2,7 +2,7 @@ div.row-fluid
   div.span12.position-relative
     img(src="#{gravatar(user.get('email'))}", class="pull-left margin-right-10 desktop visible-desktop")
     div
-      a(href='/users/#{user.get("username")}', style='color: black').block.bold= user.get('username') 
+      a(href='/users/#{user.get("username")}', style='color: black').block.bold= user.get('username')
       div
         form(action="/links/new",method="post", style='margin-bottom: -10px')
           input(type="hidden",value=csrf,name="_csrf")

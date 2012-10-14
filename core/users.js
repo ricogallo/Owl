@@ -26,7 +26,9 @@ users.get = function(obj, callback) {
       return i.get('name');
     });
 
-    callback(err, json);
+    user.tags = json.tags;
+
+    callback(err, json, user);
   });
 };
 
@@ -71,6 +73,18 @@ users.create = function(obj, callback) {
 
       callback(e, r);
     });
+  });
+};
+
+users.findOrCreate = function(obj, callback) {
+  models.User.findOne(obj.where || obj, function(e, user) {
+    if (e) 
+      return callback(new Error(500));
+
+    if (user)
+      return callback(e, user);
+
+    user.create(obj.where || obj, callback);
   });
 };
 

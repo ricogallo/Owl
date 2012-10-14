@@ -29,11 +29,16 @@ users.sendMail = function(req, res, next) {
           subject: 'Welcome to urlship!',
           text   : 'Welcome to urlship, you\'re one step away from activating your account, please click here http://alpha.urlship.com/activate/' + token + ' and follow instructions'
         }, function(e) {
-          res.redirect('/');
+          res.redirect('/email_sent/' + (!e) ? 'success' : 'failed');
         });
       });
     });
   });
+};
+
+users.sent = function(req, res) {
+  var status = req.params.status;
+  res.render('sent', { status: status });
 };
 
 users.completeRegistration = function(req, res, next) {
@@ -88,11 +93,12 @@ users.me = function(req, res) {
 };
 
 users.get = function(req, res) {
-  models.User.findOne({ where: { username: req.params.id } }, function(e, user) {
-    core.links.user({ id: user && user.get('id') }, function(e, docs) {
-      res.render('links', { user: docs });
-    });
-  });
+  core.users.get({ id: req.params.id }, common.handleError(res, function(_, json, user) {
+    core.links.user({ id: user && user.get('id') }, common.handleError(res, function(e, docs) {
+      console.dir(docs);
+      res.render('links', { user: user, links: docs });
+    }));
+  }));
 };
 
 users.userProfile = function(req, res) {
