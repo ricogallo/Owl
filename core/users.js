@@ -9,14 +9,14 @@ users.get = function(obj, callback) {
   var id = obj.id,
       whitelist = ['email', 'name', 'id', 'username'];
 
-  models.User.findOne({where: {username: id}, fetch: ['tags', 'bucket', 'links']}, function(err, user) {
+  models.User.findOne({where: {username: id}, fetch: ['tags', 'bucket', 'links']}, function(e, user) {
     var json = {};
 
     if (!user)
-      return callback(common.error(404, e));
+      return callback(common.error(e, 404));
 
-    if (err)
-      return callback(common.error(500, e));
+    if (e)
+      return callback(common.error(e, 500));
 
     whitelist.forEach(function(x) {
       json[x] = user.get(x);
@@ -28,7 +28,7 @@ users.get = function(obj, callback) {
 
     user.tags = json.tags;
 
-    callback(err, json, user);
+    callback(e, json, user);
   });
 };
 
@@ -36,14 +36,14 @@ users.me = function(obj, callback) {
   var user = obj.user,
       whitelist = ['email', 'name', 'username'];
 
-  models.User.findOne({where: {id: user.get('id')}, fetch: ['tags']}, function(err, docs) {
+  models.User.findOne({where: {id: user.get('id')}, fetch: ['tags']}, function(e, docs) {
     var json = {};
 
     if (!user)
-      return callback(common.error(404, e));
+      return callback(common.error(e, 404));
 
-    if (err)
-      return callback(common.error(500, e));
+    if (e)
+      return callback(common.error(e, 500));
 
     whitelist.forEach(function(x) {
       json[x] = user.get(x);
@@ -53,7 +53,7 @@ users.me = function(obj, callback) {
       return i.get('name');
     });
 
-    callback(err, json);
+    callback(e, json);
   });
 };
 
@@ -63,13 +63,13 @@ users.create = function(obj, callback) {
 
     if (e) {
       if (Array.isArray(e) && e[0].attribute)
-        return callback(common.error(400, e));
+        return callback(common.error(e, 400));
       else
-        return callback(common.error(500, e));
+        return callback(common.error(e, 500));
     }
 
     buckets.create({name: r.get('username'), user: r}, function(e) {
-      if (e) return callback(common.error(500, e));
+      if (e) return callback(common.error(e, 500));
 
       callback(e, r);
     });
@@ -79,7 +79,7 @@ users.create = function(obj, callback) {
 users.findOrCreate = function(obj, callback) {
   models.User.findOne(obj.where || obj, function(e, user) {
     if (e) 
-      return callback(common.error(500, e));
+      return callback(common.error(e, 500));
 
     if (user)
       return callback(e, user);
@@ -100,10 +100,10 @@ users.settings = function(obj, callback) {
     return ~whitelist.indexOf(k);
   });
 
-  models.User.update(body, {where: {id: id}}, function(err) {
-    if (err)
-      return callback(common.error(500, e));
+  models.User.update(body, {where: {id: id}}, function(e) {
+    if (e)
+      return callback(common.error(e, 500));
 
-    callback(err);
+    callback(e);
   });
 };

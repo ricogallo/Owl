@@ -10,14 +10,14 @@ var links = exports;
 links.get = function(obj, callback) {
   var id = obj.id;
 
-  models.Link.findOne({where: {id: id}}, function(err, docs) {
+  models.Link.findOne({where: {id: id}}, function(e, docs) {
     if (!docs)
-      return callback(common.error(404, e));
+      return callback(common.error(e, 404));
 
-    if (err)
-      return callback(common.error(500, e));
+    if (e)
+      return callback(common.error(e, 500));
 
-    callback(err, docs);
+    callback(e, docs);
   });
 };
 
@@ -26,7 +26,7 @@ links.user = function(obj, callback) {
   
   models.User.findOne({where: { id: id }, fetch: ["links.{tags,user}", 'bucket', 'tags']}, function(e, doc) {
     if (e)
-      return callback(common.error(500, e));
+      return callback(common.error(e, 500));
 
     doc.tags = (doc.get('tags') || []).map(function(i) {
       return i.get('name');
@@ -39,11 +39,11 @@ links.user = function(obj, callback) {
 };
 
 links.all = function(callback) {
-  models.Link.find({}, function(err, docs) {
-    if (err)
-      return callback(common.error(500, e));
+  models.Link.find({}, function(e, docs) {
+    if (e)
+      return callback(common.error(e, 500));
 
-    callback(err, docs);
+    callback(e, docs);
   });
 };
 
@@ -68,9 +68,9 @@ links.create = function(obj, callback) {
       user.save(function(e) {
         if (e) {
           if (e[0] && e[0].message === 'invalid input')
-            return callback(common.error(400, e));
+            return callback(common.error(e, 400));
           else
-            return callback(common.error(500, e));
+            return callback(common.error(e, 500));
         }
 
         buckets.addLink({link: user.get('links')[0].get('id'), bucket: user.get('bucket').get('id')}, callback);
@@ -85,7 +85,7 @@ links.create = function(obj, callback) {
     if(!tag) { return done(); }
 
     models.Tag.findOrCreate({ where: { name: tag } }, function(e, instance) {
-      if(e) return callback(common.error(500, e));
+      if(e) return callback(common.error(e, 500));
       
       tags.push(instance);
 
@@ -93,7 +93,7 @@ links.create = function(obj, callback) {
       Q.query = 'UPDATE tags SET hits = CASE WHEN hits IS NULL THEN 1 ELSE hits+1 END';
       Q.where({'name': tag});
       Q.exec(function(e) {
-        if (e) return callback(common.error(500, e));
+        if (e) return callback(common.error(e, 500));
 
         iterate(names);
       });
@@ -123,12 +123,12 @@ links.del = function(obj, callback) {
   var id = obj.id,
       user = obj.user;
 
-  models.Link.findOne({where: {id: id}, fetch: ['tags']}, function(err, docs) {
-    if (err)
-      return callback(common.error(500, e));
+  models.Link.findOne({where: {id: id}, fetch: ['tags']}, function(e, docs) {
+    if (e)
+      return callback(common.error(e, 500));
 
     if(!docs)
-      return callback(common.error(404, e));
+      return callback(common.error(e, 404));
 
     var tags = docs.get('tags').map(function(i) {
       return i.get('name');
@@ -139,17 +139,17 @@ links.del = function(obj, callback) {
       Q.query = 'UPDATE tags SET hits=hits-1';
       Q.where({name: tags});
       
-      Q.exec(function(err, rows) {
-        if (err) return callback(common.error(500, e));
+      Q.exec(function(e, rows) {
+        if (e) return callback(common.error(e, 500));
 
-        docs.destroy(function(err, docs) {
-          if (err) return callback(common.error(500, e));
+        docs.destroy(function(e, docs) {
+          if (e) return callback(common.error(e, 500));
         
-          callback(err, docs);
+          callback(e, docs);
         });
       });
     } else {
-      callback(common.error(401, e));
+      callback(common.error(e, 401));
     }
   });
 };
@@ -159,25 +159,25 @@ links.update = function(obj, callback) {
       uri = obj.uri,
       user = obj.user;
 
-  models.Link.findOne({where: {id: id}}, function(err, docs) {
+  models.Link.findOne({where: {id: id}}, function(e, docs) {
     var update = {};
 
-    if (err)
-      return callback(common.error(500, e));
+    if (e)
+      return callback(common.error(e, 500));
 
     if(!docs)
-      return callback(common.error(404, e));
+      return callback(common.error(e, 404));
 
     update.uri = uri;
 
     if (docs.get('user_id') === id) { // TODO: change this with real column from hater
-      models.Link.update(update, {id: id}, function(err, docs) {
-        if (err) return callback(common.error(500, e));
+      models.Link.update(update, {id: id}, function(e, docs) {
+        if (e) return callback(common.error(e, 500));
         
-        callback(err, docs);
+        callback(e, docs);
       });
     } else {
-      callback(common.error(401, e));
+      callback(common.error(e, 401));
     }
   });
 };
@@ -186,27 +186,27 @@ links.byTag = function(obj, callback) {
   var limit = obj.limit || 10,
       tag   = (obj.search) ? new RegExp('%'+obj.tag+'%') : obj.tag;
 
-  models.Tag.findOne({where: {name: tag}, fetch: ["links.{tags,user}"]}, function(err, rows) {
+  models.Tag.findOne({where: {name: tag}, fetch: ["links.{tags,user}"]}, function(e, rows) {
     var links;
 
-    if (err)
-      return callback(common.error(500, e));
+    if (e)
+      return callback(common.error(e, 500));
 
     if (!rows)
-      return callback(common.error(404, e));
+      return callback(common.error(e, 404));
 
-    callback(err, rows.get('links'));
+    callback(e, rows.get('links'));
   });
 };
 
 links.timeline = function(obj, callback) {
   var user = obj.user;
 
-  models.User.findOne({where: {id: user.get('id')}, fetch: ["tags.links.{user,tags}"], orderby: {id: "desc"}}, function(err, docs) {
+  models.User.findOne({where: {id: user.get('id')}, fetch: ["tags.links.{user,tags}"], orderby: {id: "desc"}}, function(e, docs) {
     var links = [];
 
-    if (err)
-      return callback(common.error(500, e));
+    if (e)
+      return callback(common.error(e, 500));
     
     if(docs.get('tags') && docs.get('tags').length) {
       links = links.concat.apply(links, 
@@ -217,7 +217,7 @@ links.timeline = function(obj, callback) {
     }
 
     exports.findVote(links, function() {
-      callback(err, links);
+      callback(e, links);
     });
   });
 };
