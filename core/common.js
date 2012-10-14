@@ -5,10 +5,11 @@ var crypto  = require('crypto'),
 
 var common = exports;
 
-winston.add(Loggly, {
-  subdomain: 'urlship',
-  inputToken: process.env.LOGGLY_TOKEN
-});
+if (process.env.LOGGLY_TOKEN)
+  winston.add(Loggly, {
+    subdomain: 'urlship',
+    inputToken: process.env.LOGGLY_TOKEN
+  });
 
 common.error = function(e, code) {
   if (code === 500)
