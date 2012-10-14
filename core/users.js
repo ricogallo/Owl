@@ -13,10 +13,10 @@ users.get = function(obj, callback) {
     var json = {};
 
     if (!user)
-      return callback(new Error(404));
+      return callback(common.error(404, e));
 
     if (err)
-      return callback(new Error(500));
+      return callback(common.error(500, e));
 
     whitelist.forEach(function(x) {
       json[x] = user.get(x);
@@ -40,10 +40,10 @@ users.me = function(obj, callback) {
     var json = {};
 
     if (!user)
-      return callback(new Error(404));
+      return callback(common.error(404, e));
 
     if (err)
-      return callback(new Error(500));
+      return callback(common.error(500, e));
 
     whitelist.forEach(function(x) {
       json[x] = user.get(x);
@@ -63,13 +63,13 @@ users.create = function(obj, callback) {
 
     if (e) {
       if (Array.isArray(e) && e[0].attribute)
-        return callback(new Error(400));
+        return callback(common.error(400, e));
       else
-        return callback(new Error(500));
+        return callback(common.error(500, e));
     }
 
     buckets.create({name: r.get('username'), user: r}, function(e) {
-      if (e) return callback(new Error(500));
+      if (e) return callback(common.error(500, e));
 
       callback(e, r);
     });
@@ -79,7 +79,7 @@ users.create = function(obj, callback) {
 users.findOrCreate = function(obj, callback) {
   models.User.findOne(obj.where || obj, function(e, user) {
     if (e) 
-      return callback(new Error(500));
+      return callback(common.error(500, e));
 
     if (user)
       return callback(e, user);
@@ -102,7 +102,7 @@ users.settings = function(obj, callback) {
 
   models.User.update(body, {where: {id: id}}, function(err) {
     if (err)
-      return callback(new Error(500));
+      return callback(common.error(500, e));
 
     callback(err);
   });

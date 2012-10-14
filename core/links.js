@@ -1,6 +1,7 @@
 var models  = require('../models/'),
     buckets = require('./buckets'),
     hater   = require('hater'),
+    common  = require('./common'),
     async   = require('utile').async,
     jerry   = require('jerry');
 
@@ -11,10 +12,10 @@ links.get = function(obj, callback) {
 
   models.Link.findOne({where: {id: id}}, function(err, docs) {
     if (!docs)
-      return callback(new Error(404));
+      return callback(common.error(404, e));
 
     if (err)
-      return callback(new Error(500));
+      return callback(common.error(500, e));
 
     callback(err, docs);
   });
@@ -25,7 +26,7 @@ links.user = function(obj, callback) {
   
   models.User.findOne({where: { id: id }, fetch: ["links.{tags,user}", 'bucket', 'tags']}, function(e, doc) {
     if (e)
-      return callback(new Error(500));
+      return callback(common.error(500, e));
 
     doc.tags = (doc.get('tags') || []).map(function(i) {
       return i.get('name');
@@ -40,7 +41,7 @@ links.user = function(obj, callback) {
 links.all = function(callback) {
   models.Link.find({}, function(err, docs) {
     if (err)
-      return callback(new Error(500));
+      return callback(common.error(500, e));
 
     callback(err, docs);
   });
@@ -67,9 +68,9 @@ links.create = function(obj, callback) {
       user.save(function(e) {
         if (e) {
           if (e[0] && e[0].message === 'invalid input')
-            return callback(new Error(400));
+            return callback(common.error(400, e));
           else
-            return callback(new Error(500));
+            return callback(common.error(500, e));
         }
 
         buckets.addLink({link: user.get('links')[0].get('id'), bucket: user.get('bucket').get('id')}, callback);
@@ -84,7 +85,7 @@ links.create = function(obj, callback) {
     if(!tag) { return done(); }
 
     models.Tag.findOrCreate({ where: { name: tag } }, function(e, instance) {
-      if(e) return callback(new Error(500));
+      if(e) return callback(common.error(500, e));
       
       tags.push(instance);
 
@@ -92,7 +93,7 @@ links.create = function(obj, callback) {
       Q.query = 'UPDATE tags SET hits = CASE WHEN hits IS NULL THEN 1 ELSE hits+1 END';
       Q.where({'name': tag});
       Q.exec(function(e) {
-        if (e) return callback(new Error(500));
+        if (e) return callback(common.error(500, e));
 
         iterate(names);
       });
@@ -124,10 +125,10 @@ links.del = function(obj, callback) {
 
   models.Link.findOne({where: {id: id}, fetch: ['tags']}, function(err, docs) {
     if (err)
-      return callback(new Error(500));
+      return callback(common.error(500, e));
 
     if(!docs)
-      return callback(new Error(404));
+      return callback(common.error(404, e));
 
     var tags = docs.get('tags').map(function(i) {
       return i.get('name');
@@ -139,16 +140,16 @@ links.del = function(obj, callback) {
       Q.where({name: tags});
       
       Q.exec(function(err, rows) {
-        if (err) return callback(new Error(500));
+        if (err) return callback(common.error(500, e));
 
         docs.destroy(function(err, docs) {
-          if (err) return callback(new Error(500));
+          if (err) return callback(common.error(500, e));
         
           callback(err, docs);
         });
       });
     } else {
-      callback(new Error(401));
+      callback(common.error(401, e));
     }
   });
 };
@@ -162,21 +163,21 @@ links.update = function(obj, callback) {
     var update = {};
 
     if (err)
-      return callback(new Error(500));
+      return callback(common.error(500, e));
 
     if(!docs)
-      return callback(new Error(404));
+      return callback(common.error(404, e));
 
     update.uri = uri;
 
     if (docs.get('user_id') === id) { // TODO: change this with real column from hater
       models.Link.update(update, {id: id}, function(err, docs) {
-        if (err) return callback(new Error(500));
+        if (err) return callback(common.error(500, e));
         
         callback(err, docs);
       });
     } else {
-      callback(new Error(401));
+      callback(common.error(401, e));
     }
   });
 };
@@ -189,10 +190,10 @@ links.byTag = function(obj, callback) {
     var links;
 
     if (err)
-      return callback(new Error(500));
+      return callback(common.error(500, e));
 
     if (!rows)
-      return callback(new Error(404));
+      return callback(common.error(404, e));
 
     callback(err, rows.get('links'));
   });
@@ -205,7 +206,7 @@ links.timeline = function(obj, callback) {
     var links = [];
 
     if (err)
-      return callback(new Error(500));
+      return callback(common.error(500, e));
     
     if(docs.get('tags') && docs.get('tags').length) {
       links = links.concat.apply(links, 
