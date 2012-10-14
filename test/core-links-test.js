@@ -80,7 +80,6 @@ describe('links.js', function() {
 
     it('should return 404 when id does not exist', function(done) {
       links.del({user: user, id: 1337}, function(e) {
-        console.dir(e);
         expect(e.message).to.be.eql(404);
         done();
       });
