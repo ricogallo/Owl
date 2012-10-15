@@ -1,6 +1,11 @@
 var hater = require('hater'),
     redis = require('redis');
 
+if (process.env.VCAP_SERVICES) {
+  var vservices = JSON.parse(process.env.VCAP_SERVICES)['postgresql-9.1'].credentials;
+  process.env.POSTGRESQL_DB = 'tcp://' + vservices.user + ':' + vservices.password + '@' + vservices.host + ':' + vservices.port + '/' + vservices.name;
+}
+
 function buildString() {
   if(process.env.POSTGRESQL_DB) {
    return {
