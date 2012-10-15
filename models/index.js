@@ -2,7 +2,7 @@ var hater = require('hater'),
     redis = require('redis');
 
 if (process.env.VCAP_SERVICES) {
-  var vservices = JSON.parse(process.env.VCAP_SERVICES)['postgresql-9.1'].credentials;
+  var vservices = JSON.parse(process.env.VCAP_SERVICES)['postgresql-9.1'][0].credentials;
   process.env.POSTGRESQL_DB = 'tcp://' + vservices.user + ':' + vservices.password + '@' + vservices.host + ':' + vservices.port + '/' + vservices.name;
 }
 
@@ -69,15 +69,18 @@ hater.sync();
 
 // Redis
 
-models.Redis = process.env.REDIS_SESSION ? 
+models.Redis = (process.env.REDIS_HOST) ? 
   (function() { 
-    var obj    = JSON.parse(process.env.REDIS_SESSION),
-        client = redis.createClient(obj.port, obj.host); 
+    console.log(process.env.REDIS_SESSION);
+    var client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST);
+
+    client.on("error", function (err) {
+      console.log("Error " + err);
+      throw new Error(err);
+    });
     
-    client.auth(obj.pass);
+    client.auth(process.env.REDIS_PASS);
 
     return client; 
   })() :
   redis.createClient() ;
-
-
